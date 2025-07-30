@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { ContactoComponent } from './pages/contacto/contacto.component';
 import { NosotrosComponent } from './pages/nosotros/nosotros.component';
+import { FormularioProductoComponent } from './pages/productos/formulario-producto/formulario-producto.component';
+import { ListaProductosComponent } from './pages/productos/lista-productos/lista-productos.component';
 
 export const routes: Routes = [
 
@@ -10,9 +12,9 @@ export const routes: Routes = [
     { path: "", redirectTo: "home", pathMatch: "full" },
 
     { path: "contacto", component: ContactoComponent },
-    { path: "contacto", component: NosotrosComponent },
-    { path: "contacto", component: ContactoComponent },
-    { path: "contacto", component: ContactoComponent },
+    { path: "nosotros", component: NosotrosComponent },
+    { path: "listaProducto", component: ListaProductosComponent },
+    { path: "formularioProducto", component: FormularioProductoComponent },
 
 
     //Clientes
