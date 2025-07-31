@@ -35,9 +35,58 @@
                 </li>
                 <li>
                     <a routerLink="/formularioProducto"
-                        class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Crear Producto</a>
+                        class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Crear
+                        Producto</a>
                 </li>
             </ul>
         </div>
+    </div>
+</nav>
+
+
+<nav class="navbar" [class.open]="menuOpen">
+    <div class="container">
+        <a href="/" class="logo" title="McDonald's">
+            <img src="https://www.mcdonaldspuebla.com/img/logomc.png" alt="McDonald's Logo" />
+            <span>McDonald's</span>
+        </a>
+
+        <button class="menu-btn" aria-label="Toggle menu" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen">
+            <svg class="icon" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" viewBox="0 0 24 24">
+                <path class="line1" d="M4 7h16"></path>
+                <path class="line2" d="M4 12h16"></path>
+                <path class="line3" d="M4 17h16"></path>
+            </svg>
+        </button>
+
+        <div class="menu" [class.open]="menuOpen">
+            <a routerLink="/home" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Inicio</a>
+            <a routerLink="/nosotros" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Nosotros</a>
+            <a routerLink="/listaProducto" routerLinkActive="active" (click)="closeMenu()"
+                class="nav-link">Productos</a>
+            <a routerLink="/contacto" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Contacto</a>
+            <a routerLink="/formularioProducto" routerLinkActive="active" (click)="closeMenu()"
+                class="nav-link create-btn">Crear Producto</a>
+
+            <!-- Nuevo botón usuario -->
+            <!-- Botón de usuario con texto -->
+            <button routerLink="/login"
+                class="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg transition-transform duration-300 ease-in-out transform hover:bg-red-800 hover:scale-105"
+                (click)="onUserClick()" aria-label="Iniciar sesión">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M5.121 17.804A9.969 9.969 0 0112 15c2.21 0 4.243.72 5.879 1.947M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 100 20 10 10 0 000-20z" />
+                </svg>
+
+                <span class="text-base font-medium">Iniciar sesión</span>
+            </button>
+
+        </div>
+
+
     </div>
 </nav>

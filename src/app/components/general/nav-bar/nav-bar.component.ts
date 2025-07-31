@@ -10,4 +10,20 @@ import { RouterLink } from '@angular/router';
 })
 export class NavBarComponent {
 
+  menuOpen = false;
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu() {
+    this.menuOpen = false;
+  }
+
+  onUserClick() {
+    // Aquí puedes agregar la lógica para el botón de usuario
+    console.log('Usuario clickeó el botón de perfil/roles');
+    // Por ejemplo, abrir un modal o navegar a una página de perfil
+  }
+
 }

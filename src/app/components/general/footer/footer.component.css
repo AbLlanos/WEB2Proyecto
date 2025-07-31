@@ -1,0 +1,147 @@
+.footer {
+    background-color: #db0007;
+    color: #fffbea;
+    padding: 2rem 1rem;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 -3px 10px rgba(219, 0, 7, 0.6);
+    position: relative;
+    overflow: hidden;
+    animation: footerFadeIn 1.2s ease forwards;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-left {
+    max-width: 500px;
+}
+
+.footer-left .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.footer-left .logo img {
+    height: 40px;
+    filter: drop-shadow(0 0 3px #ffc72c);
+    transition: filter 0.3s ease;
+}
+
+.footer-left .logo:hover img {
+    filter: drop-shadow(0 0 10px #ffc72c);
+    transform: scale(1.1);
+}
+
+.footer-left .logo span {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ffc72c;
+    text-shadow: 0 0 6px #ffc72c;
+}
+
+.footer-left p {
+    margin: 0.2rem 0;
+    font-size: 0.9rem;
+    text-shadow: 0 0 2px #00000050;
+}
+
+.footer-right h4 {
+    color: #ffc72c;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    text-shadow: 0 0 6px #ffc72c;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: #fffbea;
+    color: #db0007;
+    box-shadow: 0 0 5px #db0007;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    filter: drop-shadow(0 0 3px #db0007);
+}
+
+.social-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.social-icon:hover {
+    background-color: #ffc72c;
+    color: #db0007;
+    box-shadow: 0 0 15px #ffc72c;
+    transform: scale(1.2);
+}
+
+/* Social brand colors on hover */
+.social-icon.facebook:hover {
+    box-shadow: 0 0 15px #3b5998;
+    color: #3b5998;
+}
+
+.social-icon.twitter:hover {
+    box-shadow: 0 0 15px #1da1f2;
+    color: #1da1f2;
+}
+
+.social-icon.instagram:hover {
+    box-shadow: 0 0 15px #e4405f;
+    color: #e4405f;
+}
+
+.social-icon.youtube:hover {
+    box-shadow: 0 0 15px #ff0000;
+    color: #ff0000;
+}
+
+@keyframes footerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-left,
+    .footer-right {
+        max-width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}

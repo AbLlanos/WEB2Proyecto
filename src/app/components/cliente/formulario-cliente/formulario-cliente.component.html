@@ -1,1 +1,91 @@
-<p>formulario-cliente works!</p>
+<div class="w-full min-h-screen flex items-center justify-center bg-gray-100 px-4 py-10">
+    <div class="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+
+        <!-- LADO IZQUIERDO: IMAGEN -->
+        <div class="w-full md:w-1/2 h-96 md:h-auto">
+            <img src="https://1000marcas.net/wp-content/uploads/2019/11/McDonalds-logo.png" alt="Imagen representativa"
+                class="w-full h-full object-cover object-center">
+        </div>
+
+        <!-- LADO DERECHO: FORMULARIO -->
+        <div class="w-full md:w-1/2 p-8 space-y-5">
+            <h1 class="text-3xl font-bold text-red-600 text-center">Crear Cliente</h1>
+            <p class="text-gray-600 text-center">Complete todos los campos para registrar un nuevo cliente.</p>
+
+            <form (ngSubmit)="agregarCliente(formulario)" #formulario="ngForm" class="space-y-4">
+
+                <!-- Nombre completo -->
+                <div>
+                    <label for="nombreCompleto" class="block text-sm font-medium">Nombre completo</label>
+                    <input type="text" [(ngModel)]="nombreCompleto" name="nombreCompleto" id="nombreCompleto" required
+                        placeholder="Ingrese el nombre completo"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
+                </div>
+
+                <!-- Cédula -->
+                <div>
+                    <label for="cedula" class="block text-sm font-medium">Cédula</label>
+                    <input type="text" [(ngModel)]="cedula" name="cedula" id="cedula" required
+                        placeholder="Ingrese la cédula"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
+                </div>
+
+                <!-- Dirección -->
+                <div>
+                    <label for="direccion" class="block text-sm font-medium">Dirección</label>
+                    <input type="text" [(ngModel)]="direccion" name="direccion" id="direccion" required
+                        placeholder="Ingrese la dirección"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
+                </div>
+
+                <!-- Teléfono -->
+                <div>
+                    <label for="telefono" class="block text-sm font-medium">Teléfono</label>
+                    <input type="text" [(ngModel)]="telefono" name="telefono" id="telefono"
+                        placeholder="Ingrese el número de teléfono"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
+                </div>
+
+                <!-- Correo electrónico -->
+                <div>
+                    <label for="correoElectronico" class="block text-sm font-medium">Correo electrónico</label>
+                    <input type="email" [(ngModel)]="correoElectronico" name="correoElectronico" id="correoElectronico"
+                        placeholder="ejemplo@correo.com"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
+                </div>
+
+                <!-- Fecha de nacimiento -->
+                <div>
+                    <label for="fechaNacimiento" class="block text-sm font-medium">Fecha de nacimiento</label>
+                    <input type="date" [(ngModel)]="fechaNacimiento" name="fechaNacimiento" id="fechaNacimiento"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
+                </div>
+
+                <!-- Género -->
+                <div>
+                    <label for="genero" class="block text-sm font-medium">Género</label>
+                    <select [(ngModel)]="genero" name="genero" id="genero"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
+                        <option value="" disabled selected>Seleccione una opción</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+
+                <!-- Fecha de registro -->
+                <div>
+                    <label for="fechaRegistro" class="block text-sm font-medium">Fecha de registro</label>
+                    <input type="date" [(ngModel)]="fechaRegistro" name="fechaRegistro" id="fechaRegistro"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
+                </div>
+
+                <!-- Botón -->
+                <button type="submit"
+                    class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105">
+                    Guardar Cliente
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

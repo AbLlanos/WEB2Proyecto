@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { ProductoService } from '../../../services/producto.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-lista-productos',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './lista-productos.component.html',
   styleUrl: './lista-productos.component.css'
 })
@@ -26,7 +27,7 @@ export class ListaProductosComponent {
     });
   }
 
-  eliminar(id: string): void {
+  eliminarProducto(id: string): void {
     this.servicioProducto.eliminarProducto(id).subscribe(() => {
       this.productos = this.productos.filter(cliente => cliente.id !== id)
     }, error => {

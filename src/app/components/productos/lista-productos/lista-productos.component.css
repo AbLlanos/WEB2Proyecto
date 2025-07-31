@@ -20,28 +20,77 @@ button:hover {
 
 /* Altura fija y estructura clara */
 .seccion1 {
-    height: 60px;
-    text-align: center;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10px;
+    overflow: hidden;
 }
 
 .seccion2 {
     height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
 }
 
+.seccion2 img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    /* o 'cover' si prefieres */
+    max-height: 100%;
+    max-width: 100%;
+}
+
 .seccion3 {
-    height: 150px;
-    text-align: center;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    text-align: center;
+    overflow: auto;
+    padding: 5px;
 }
 
 .seccion4 {
-    height: 100px;
+    height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: stretch;
+    margin-bottom: 50px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.container1 {
+    background-color: #F5B027;
+}
+
+input:hover,
+select:hover,
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+.card-hover:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }

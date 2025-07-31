@@ -6,7 +6,7 @@ import { NavBarComponent } from "../../general/nav-bar/nav-bar.component";
 @Component({
   selector: 'app-formulario-producto',
   standalone: true,
-  imports: [FormsModule, NavBarComponent],
+  imports: [FormsModule],
   templateUrl: './formulario-producto.component.html',
   styleUrl: './formulario-producto.component.css'
 })

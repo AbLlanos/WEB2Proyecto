@@ -1,0 +1,24 @@
+<div class="carrusel-container">
+  <div class="main-image" [style.backgroundImage]="'url(' + slides[currentSlide].url + ')'">
+    <div class="content" [ngClass]="{
+      'left-position': currentSlide === 0 || currentSlide === 2,
+      'right-position': currentSlide === 1
+    }">
+      <div class="name" [ngClass]="{'center-text': currentSlide === 0 || currentSlide === 1}">
+        {{ slides[currentSlide].title }}
+      </div>
+      <div class="des">{{ slides[currentSlide].description }}</div>
+      <button (click)="nextSlide()">Ver más</button>
+    </div>
+  </div>
+
+  <div class="side-thumbs">
+    <div
+      *ngFor="let slide of slides; let i = index"
+      class="thumb"
+      [style.backgroundImage]="'url(' + slide.url + ')'"
+      [class.active]="i === currentSlide"
+      (click)="goToSlide(i)"
+    ></div>
+  </div>
+</div>

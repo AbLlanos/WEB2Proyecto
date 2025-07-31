@@ -4,6 +4,11 @@ import { ContactoComponent } from './pages/contacto/contacto.component';
 import { NosotrosComponent } from './pages/nosotros/nosotros.component';
 import { FormularioProductoPageComponent } from './pages/productos/formulario-producto-page/formulario-producto-page.component';
 import { ListaProductosPageComponent } from './pages/productos/lista-productos-page/lista-productos-page.component';
+import { EditarProductosVistaComponent } from './pages/productos/editar-productos-vista/editar-productos-vista.component';
+import { LoginVistaComponent } from './pages/login-vista/login-vista.component';
+import { RegistroClienteComponent } from './pages/registro-cliente/registro-cliente.component';
+import { PerfilClienteVistaComponent } from './pages/cliente/perfil-cliente-vista/perfil-cliente-vista.component';
+import { PaginaNoEncontradaComponent } from './components/Error/pagina-no-encontrada/pagina-no-encontrada.component';
 
 export const routes: Routes = [
 
@@ -13,19 +18,26 @@ export const routes: Routes = [
 
     { path: "contacto", component: ContactoComponent },
     { path: "nosotros", component: NosotrosComponent },
+
+    //Inciar sesion
+
+    { path: "login", component: LoginVistaComponent },
+
+
+    //Productos
+
     { path: "listaProducto", component: ListaProductosPageComponent },
     { path: "formularioProducto", component: FormularioProductoPageComponent },
+    { path: "editarFormulario/:id", component: EditarProductosVistaComponent },
 
 
     //Clientes
-    { path: "home", component: HomeComponent },
-    { path: "", redirectTo: "home", pathMatch: "full" },
-
-
+    { path: "registroCliente", component: RegistroClienteComponent },
+    { path: "perfilCliente", component: PerfilClienteVistaComponent },
 
 
     //Empleados
-    { path: "home", component: HomeComponent },
+    { path: "", component: HomeComponent },
     { path: "", redirectTo: "home", pathMatch: "full" },
 
 
@@ -34,6 +46,10 @@ export const routes: Routes = [
     { path: "home", component: HomeComponent },
     { path: "", redirectTo: "home", pathMatch: "full" },
 
+
+    //Pagina No encontrada
+
+    { path: "**", component: PaginaNoEncontradaComponent }
 
 
 ];
