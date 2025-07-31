@@ -1,0 +1,119 @@
+<form (ngSubmit)="agregarProducto(formulario)" #formulario="ngForm" class="max-w-md mx-auto">
+
+    <!-- Nombre -->
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" [(ngModel)]="nombre" name="nombre" id="nombre"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none
+      dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <label for="nombre"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform
+      -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-blue-600 peer-focus:dark:text-blue-500
+      peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            Nombre
+        </label>
+    </div>
+
+    <!-- Precio -->
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="number" [(ngModel)]="precio" name="precio" id="precio" min="0" step="0.01"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none
+      dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <label for="precio"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform
+      -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-blue-600 peer-focus:dark:text-blue-500
+      peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            Precio
+        </label>
+    </div>
+
+    <!-- Cantidad -->
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="number" [(ngModel)]="cantidad" name="cantidad" id="cantidad" min="0"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none
+      dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <label for="cantidad"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform
+      -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-blue-600 peer-focus:dark:text-blue-500
+      peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            Cantidad
+        </label>
+    </div>
+
+    <!-- IVA -->
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="number" [(ngModel)]="iva" name="iva" id="iva" min="0" step="0.01"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none
+      dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <label for="iva"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform
+      -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-blue-600 peer-focus:dark:text-blue-500
+      peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            IVA (%)
+        </label>
+    </div>
+
+    <!-- Ingredientes -->
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" [(ngModel)]="ingredientes" name="ingredientes" id="ingredientes"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none
+      dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <label for="ingredientes"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform
+      -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-blue-600 peer-focus:dark:text-blue-500
+      peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            Ingredientes
+        </label>
+    </div>
+
+    <!-- Categoría -->
+    <div class="relative z-0 w-full mb-5 group">
+        <select [(ngModel)]="categoria" name="categoria" id="categoria" class="block w-full py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300
+      appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            required>
+            <option value="" disabled selected>Seleccione una categoría</option>
+            <option value="hamburguesa">Hamburguesa</option>
+            <option value="combo">Combo</option>
+            <option value="bebida">Bebida</option>
+            <option value="postre">Postre</option>
+        </select>
+        <label for="categoria" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform
+      -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-blue-600 peer-focus:dark:text-blue-500">
+            Categoría
+        </label>
+    </div>
+
+    <!-- Imagen -->
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" [(ngModel)]="img" name="img" id="img"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none
+      dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <label for="img"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform
+      -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-blue-600 peer-focus:dark:text-blue-500
+      peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            URL de Imagen
+        </label>
+    </div>
+
+    <!-- Disponible -->
+    <div class="relative z-0 w-full mb-5 group">
+        <select [(ngModel)]="disponible" name="disponible" id="disponible" class="block w-full py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300
+      appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            required>
+            <option value="" disabled selected>¿Disponible?</option>
+            <option value="sí">Sí</option>
+            <option value="no">No</option>
+        </select>
+        <label for="disponible" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform
+      -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:text-blue-600 peer-focus:dark:text-blue-500">
+            Disponible
+        </label>
+    </div>
+
+    <!-- Botón -->
+    <button type="submit"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium
+    rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        Guardar Producto
+    </button>
+</form>
