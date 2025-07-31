@@ -1,0 +1,28 @@
+<section class="imagenes-section">
+  <h2 class="section-title">Conoce Más Sobre McDonald's</h2>
+  <p class="intro-text">
+    En McDonald's, nos enorgullece nuestra historia, nuestro compromiso con la calidad, la innovación constante y el
+    apoyo a nuestras comunidades alrededor del mundo.
+    Aquí te presentamos algunos aspectos que hacen de McDonald's una empresa líder en comida rápida y responsabilidad social.
+  </p>
+
+  <div class="cards-container">
+    <div class="card" *ngFor="let card of cards" tabindex="0" [attr.aria-label]="card.title">
+      <div class="card-inner">
+        <div class="card-front">
+          <img [src]="card.imageUrl" [alt]="card.title" />
+          <h3>{{ card.title }}</h3>
+          <p class="front-short-desc">Haz hover o presiona para descubrir más.</p>
+        </div>
+        <div class="card-back">
+          <h4>{{ card.title }}</h4>
+          <p>{{ card.description }}</p>
+          <p class="extra-info">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
