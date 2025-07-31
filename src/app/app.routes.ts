@@ -4,6 +4,7 @@ import { ContactoComponent } from './pages/contacto/contacto.component';
 import { NosotrosComponent } from './pages/nosotros/nosotros.component';
 import { FormularioProductoComponent } from './pages/productos/formulario-producto/formulario-producto.component';
 import { ListaProductosComponent } from './pages/productos/lista-productos/lista-productos.component';
+import { CarruselComponent } from './components/home/carrusel/carrusel.component';
 
 export const routes: Routes = [
 
@@ -12,6 +13,7 @@ export const routes: Routes = [
     { path: "", redirectTo: "home", pathMatch: "full" },
 
     { path: "contacto", component: ContactoComponent },
+    { path: "carrusel", component: CarruselComponent },
     { path: "nosotros", component: NosotrosComponent },
     { path: "listaProducto", component: ListaProductosComponent },
     { path: "formularioProducto", component: FormularioProductoComponent },
