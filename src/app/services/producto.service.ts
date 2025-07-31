@@ -26,5 +26,20 @@ export class ProductoService {
     return this.http.post(`${this.API_PRODUCTOS}/productos.json`, producto);
   }
 
+  //BuscarPorId
+  buscarProductobyId(id: string): Observable<any> {
+    return this.http.get(`${this.API_PRODUCTOS}/productos/${id}.json`)
+  }
+
+  //EliminarProducto
+  eliminarProducto(id: string): Observable<any> {
+    return this.http.delete(`${this.API_PRODUCTOS}/productos/${id}.json`)
+  }
+
+  //EditarProducto
+  editarProducto(id: string, producto: any): Observable<any> {
+    return this.http.put(`${this.API_PRODUCTOS}/productos/${id}.json`, producto)
+  }
+
 
 }

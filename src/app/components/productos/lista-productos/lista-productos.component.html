@@ -1,42 +1,220 @@
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<div class="max-w-7xl mx-auto p-4 mt-10">
+    <h1 class="text-3xl font-bold text-center text-gray-900 mb-10">Lista de productos</h1>
 
-    <div class="text-xl font-semibold mb-4">Lista de productos</div>
+    <!-- Hamburguesas -->
+    <h2 class="text-2xl font-bold text-gray-800 mt-8 mb-4 text-center bg-yellow-100 rounded-xl py-2 px-4 w-full mx-auto">
+        🍔 Hamburguesas
+    </h2>
 
-    @for (producto of productos; track producto.id) {
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-4">
 
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th class="px-6 py-3">ID</th>
-                <th class="px-6 py-3">Nombre</th>
-                <th class="px-6 py-3">Precio</th>
-                <th class="px-6 py-3">Cantidad</th>
-                <th class="px-6 py-3">IVA</th>
-                <th class="px-6 py-3">Total</th>
-                <th class="px-6 py-3">Ingredientes</th>
-                <th class="px-6 py-3">Categoría</th>
-                <th class="px-6 py-3">Disponible</th>
-                <th class="px-6 py-3">Imagen</th>
-            </tr>
-        </thead>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
 
-        <tbody>
-            <tr
-                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">
-                <td class="px-6 py-4">{{ producto.id }}</td>
-                <td class="px-6 py-4">{{ producto.nombre }}</td>
-                <td class="px-6 py-4">{{ producto.precio }}</td>
-                <td class="px-6 py-4">{{ producto.cantidad }}</td>
-                <td class="px-6 py-4">{{ producto.iva }}%</td>
-                <td class="px-6 py-4">{{ producto.precioTotal}}</td>
-                <td class="px-6 py-4">{{ producto.ingredientes }}</td>
-                <td class="px-6 py-4">{{ producto.categoria }}</td>
-                <td class="px-6 py-4">{{ producto.disponible }}</td>
-                <td class="px-6 py-4">
-                    <img [src]="producto.img" alt="Imagen del producto" class="w-12 h-12 object-cover rounded" />
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    }
+        @for (producto of hamburguesas; track producto.id) {
+        <div
+            class="w-full max-w-xs mx-auto bg-white rounded-2xl shadow-xl p-5 border border-gray-200 hover:border-yellow-500 transition-transform duration-300 hover:scale-105 h-[580px] flex flex-col justify-between overflow-hidden mt-4">
+
+            <div class="overflow-hidden flex flex-col h-full justify-center ">
+                <!-- Nombre y categoría -->
+                <div class="seccion1">
+                    <h2 class="text-lg font-bold text-yellow-500 mb-1 truncate text-center">{{ producto.nombre }}</h2>
+                    <p class="text-sm text-gray-600 text-center">{{ producto.categoria }}</p>
+                </div>
+
+                <!-- Imagen -->
+                <div class="seccion2">
+                    <img [src]="producto.img" alt="{{ producto.nombre }}"
+                        class="w-full h-full object-cover rounded-xl shadow-sm" />
+                </div>
+
+                <!-- Información -->
+                <div class="seccion3 text-sm text-gray-700 space-y-1 px-1">
+                    <p><strong>Ingredientes:</strong> {{ producto.ingredientes }}</p>
+                    <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+                    <p><strong>IVA:</strong> {{ producto.iva }}%</p>
+                    <p><strong>Total:</strong> ${{ producto.precioTotal }}</p>
+                    <p><strong>Cantidad:</strong> {{ producto.cantidad }}</p>
+                    <p><strong>Disponible:</strong> {{ producto.disponible }}</p>
+                </div>
+
+                <!-- Botones -->
+                <div class="seccion4">
+                    <button
+                        class="w-full font-semibold rounded-xl text-sm px-5 py-2.5 flex items-center justify-center gap-2"
+                        [ngClass]="{
+            'bg-red-600 hover:bg-red-700 text-white': producto.cantidad > 0,
+            'bg-gray-400 text-white cursor-not-allowed': producto.cantidad === 0
+          }" [disabled]="producto.cantidad === 0">
+                        🛒 <span>{{ producto.cantidad === 0 ? 'Agotado' : 'Comprar' }}</span>
+                    </button>
+
+                    <button
+                        class="w-full mt-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5">
+                        ✏️ Editar
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+
+    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4 text-center bg-red-100 rounded-xl py-2 px-4 w-full mx-auto">
+        🥤 Bebidas
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
+
+        @for (producto of bebidas; track producto.id) {
+        <div
+            class="w-full max-w-xs mx-auto bg-white rounded-2xl shadow-xl p-5 border border-gray-200 hover:border-yellow-500 transition-transform duration-300 hover:scale-105 h-[580px] flex flex-col justify-between overflow-hidden mt-4">
+
+            <div class="overflow-hidden flex flex-col h-full justify-center ">
+                <!-- Nombre y categoría -->
+                <div class="seccion1">
+                    <h2 class="text-lg font-bold text-yellow-500 mb-1 truncate text-center">{{ producto.nombre }}</h2>
+                    <p class="text-sm text-gray-600 text-center">{{ producto.categoria }}</p>
+                </div>
+
+                <!-- Imagen -->
+                <div class="seccion2">
+                    <img [src]="producto.img" alt="{{ producto.nombre }}"
+                        class="w-full h-full object-cover rounded-xl shadow-sm" />
+                </div>
+
+                <!-- Información -->
+                <div class="seccion3 text-sm text-gray-700 space-y-1 px-1">
+                    <p><strong>Ingredientes:</strong> {{ producto.ingredientes }}</p>
+                    <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+                    <p><strong>IVA:</strong> {{ producto.iva }}%</p>
+                    <p><strong>Total:</strong> ${{ producto.precioTotal }}</p>
+                    <p><strong>Cantidad:</strong> {{ producto.cantidad }}</p>
+                    <p><strong>Disponible:</strong> {{ producto.disponible }}</p>
+                </div>
+
+                <!-- Botones -->
+                <div class="seccion4">
+                    <button
+                        class="w-full font-semibold rounded-xl text-sm px-5 py-2.5 flex items-center justify-center gap-2"
+                        [ngClass]="{
+            'bg-red-600 hover:bg-red-700 text-white': producto.cantidad > 0,
+            'bg-gray-400 text-white cursor-not-allowed': producto.cantidad === 0
+          }" [disabled]="producto.cantidad === 0">
+                        🛒 <span>{{ producto.cantidad === 0 ? 'Agotado' : 'Comprar' }}</span>
+                    </button>
+
+                    <button
+                        class="w-full mt-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5">
+                        ✏️ Editar
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4 text-center bg-yellow-100 rounded-xl py-2 px-4 w-full mx-auto">
+        🍟 Combos
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
+
+        @for (producto of combos; track producto.id) {
+        <div
+            class="w-full max-w-xs mx-auto bg-white rounded-2xl shadow-xl p-5 border border-gray-200 hover:border-yellow-500 transition-transform duration-300 hover:scale-105 h-[580px] flex flex-col justify-between overflow-hidden mt-4">
+
+            <div class="overflow-hidden flex flex-col h-full justify-center ">
+                <!-- Nombre y categoría -->
+                <div class="seccion1">
+                    <h2 class="text-lg font-bold text-yellow-500 mb-1 truncate text-center">{{ producto.nombre }}</h2>
+                    <p class="text-sm text-gray-600 text-center">{{ producto.categoria }}</p>
+                </div>
+
+                <!-- Imagen -->
+                <div class="seccion2">
+                    <img [src]="producto.img" alt="{{ producto.nombre }}"
+                        class="w-full h-full object-cover rounded-xl shadow-sm" />
+                </div>
+
+                <!-- Información -->
+                <div class="seccion3 text-sm text-gray-700 space-y-1 px-1">
+                    <p><strong>Ingredientes:</strong> {{ producto.ingredientes }}</p>
+                    <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+                    <p><strong>IVA:</strong> {{ producto.iva }}%</p>
+                    <p><strong>Total:</strong> ${{ producto.precioTotal }}</p>
+                    <p><strong>Cantidad:</strong> {{ producto.cantidad }}</p>
+                    <p><strong>Disponible:</strong> {{ producto.disponible }}</p>
+                </div>
+
+                <!-- Botones -->
+                <div class="seccion4">
+                    <button
+                        class="w-full font-semibold rounded-xl text-sm px-5 py-2.5 flex items-center justify-center gap-2"
+                        [ngClass]="{
+            'bg-red-600 hover:bg-red-700 text-white': producto.cantidad > 0,
+            'bg-gray-400 text-white cursor-not-allowed': producto.cantidad === 0
+          }" [disabled]="producto.cantidad === 0">
+                        🛒 <span>{{ producto.cantidad === 0 ? 'Agotado' : 'Comprar' }}</span>
+                    </button>
+
+                    <button
+                        class="w-full mt-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5">
+                        ✏️ Editar
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4 text-center bg-red-100 rounded-xl py-2 px-4 w-full mx-auto">
+        🍰 Postres
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
+
+        @for (producto of postres; track producto.id) {
+        <div
+            class="w-full max-w-xs mx-auto bg-white rounded-2xl shadow-xl p-5 border border-gray-200 hover:border-yellow-500 transition-transform duration-300 hover:scale-105 h-[580px] flex flex-col justify-between overflow-hidden mt-4">
+
+            <div class="overflow-hidden flex flex-col h-full justify-center ">
+                <!-- Nombre y categoría -->
+                <div class="seccion1">
+                    <h2 class="text-lg font-bold text-yellow-500 mb-1 truncate text-center">{{ producto.nombre }}</h2>
+                    <p class="text-sm text-gray-600 text-center">{{ producto.categoria }}</p>
+                </div>
+
+                <!-- Imagen -->
+                <div class="seccion2">
+                    <img [src]="producto.img" alt="{{ producto.nombre }}"
+                        class="w-full h-full object-cover rounded-xl shadow-sm" />
+                </div>
+
+                <!-- Información -->
+                <div class="seccion3 text-sm text-gray-700 space-y-1 px-1">
+                    <p><strong>Ingredientes:</strong> {{ producto.ingredientes }}</p>
+                    <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+                    <p><strong>IVA:</strong> {{ producto.iva }}%</p>
+                    <p><strong>Total:</strong> ${{ producto.precioTotal }}</p>
+                    <p><strong>Cantidad:</strong> {{ producto.cantidad }}</p>
+                    <p><strong>Disponible:</strong> {{ producto.disponible }}</p>
+                </div>
+
+                <!-- Botones -->
+                <div class="seccion4">
+                    <button
+                        class="w-full font-semibold rounded-xl text-sm px-5 py-2.5 flex items-center justify-center gap-2"
+                        [ngClass]="{
+            'bg-red-600 hover:bg-red-700 text-white': producto.cantidad > 0,
+            'bg-gray-400 text-white cursor-not-allowed': producto.cantidad === 0
+          }" [disabled]="producto.cantidad === 0">
+                        🛒 <span>{{ producto.cantidad === 0 ? 'Agotado' : 'Comprar' }}</span>
+                    </button>
+
+                    <button
+                        class="w-full mt-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5">
+                        ✏️ Editar
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
 </div>

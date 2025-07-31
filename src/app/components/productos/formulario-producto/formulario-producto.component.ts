@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { ProductoService } from '../../../services/producto.service';
 import { FormsModule } from '@angular/forms';
+import { NavBarComponent } from "../../general/nav-bar/nav-bar.component";
 
 @Component({
   selector: 'app-formulario-producto',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NavBarComponent],
   templateUrl: './formulario-producto.component.html',
   styleUrl: './formulario-producto.component.css'
 })
@@ -27,7 +28,6 @@ export class FormularioProductoComponent {
   agregarProducto(formulario:any)
   {
     this.servicioProducto.guardarProducto(formulario.value).subscribe(()=>
-    
       window.location.reload()
     )
   }

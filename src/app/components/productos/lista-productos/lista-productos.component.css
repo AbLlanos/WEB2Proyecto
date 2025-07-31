@@ -1,0 +1,47 @@
+/* Ocultar scrollbar globalmente */
+body {
+    overflow: hidden;
+}
+
+/* Estilos globales para input y select con hover */
+input:hover,
+select:hover {
+    border-color: #facc15;
+    outline: none;
+}
+
+input:hover,
+select:hover,
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease, box-shadow 0.2s ease;
+}
+
+/* Altura fija y estructura clara */
+.seccion1 {
+    height: 60px;
+    text-align: center;
+    justify-content: center;
+}
+
+.seccion2 {
+    height: 200px;
+    overflow: hidden;
+}
+
+.seccion3 {
+    height: 150px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.seccion4 {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
