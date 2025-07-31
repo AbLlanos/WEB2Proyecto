@@ -1,0 +1,225 @@
+/* Navbar container */
+.navbar {
+    background-color: #b80000;
+    /* rojo McDonald's */
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+    animation: pulseShadow 4s infinite ease-in-out;
+}
+
+@keyframes pulseShadow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 1);
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: #ffd700;
+    text-shadow: 1px 1px 2px #a66400;
+    user-select: none;
+    transition: transform 0.3s ease;
+}
+
+.logo img {
+    height: 40px;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+/* Menu button - hamburger */
+.menu-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #ffd700;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+}
+
+.menu-btn:hover,
+.menu-btn:focus {
+    color: #fff;
+    outline: none;
+}
+
+/* Hamburger lines */
+.menu-btn .icon {
+    width: 28px;
+    height: 28px;
+    transition: all 0.3s ease;
+}
+
+.menu-btn.open .line1 {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.menu-btn.open .line2 {
+    opacity: 0;
+}
+
+.menu-btn.open .line3 {
+    transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Menu */
+.menu {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.menu.open {
+    /* for mobile menu open state */
+}
+
+/* Nav links */
+.nav-link {
+    color: #ffd700;
+    font-weight: 600;
+    text-transform: uppercase;
+    position: relative;
+    padding: 0.4rem 0.6rem;
+    transition: color 0.3s ease;
+    text-decoration: none;
+    user-select: none;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #fff;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0%;
+    height: 2px;
+    background-color: #ffd700;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Create button */
+.create-btn {
+    background-color: #ffd700;
+    color: #b80000;
+    font-weight: 700;
+    padding: 0.4rem 1.2rem;
+    border-radius: 25px;
+    box-shadow: 0 0 10px #ffd700aa;
+    user-select: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.create-btn:hover {
+    background-color: #fff;
+    color: #b80000;
+    box-shadow: 0 0 15px #ffcc00;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .menu-btn {
+        display: flex;
+    }
+
+    .menu {
+        position: fixed;
+        top: 60px;
+        right: 0;
+        height: calc(100vh - 60px);
+        width: 70vw;
+        max-width: 280px;
+        background-color: #b80000;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 2rem;
+        box-shadow: -4px 0 8px rgba(255, 215, 0, 0.6);
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 9999;
+    }
+
+    .menu.open {
+        transform: translateX(0);
+    }
+
+    .nav-link {
+        color: #fff;
+        font-size: 1.25rem;
+        text-transform: none;
+    }
+
+    .create-btn {
+        box-shadow: none;
+        border-radius: 12px;
+    }
+}
+
+/* Hide menu button on desktop */
+@media (min-width: 769px) {
+    .menu-btn {
+        display: none;
+    }
+}
+.user-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--mcd-yellow);
+  padding: 0.3rem;
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  justify-content: center;
+}
+
+.user-btn:hover {
+  color: #fff;
+  background-color: rgba(255, 199, 44, 0.3);
+}
+
+.user-icon {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.8;
+}

@@ -1,43 +1,77 @@
-<nav class="bg-white border-gray-200 dark:bg-gray-900">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
-        </a>
-        <button data-collapse-toggle="navbar-default" type="button"
-            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-default" aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M1 1h15M1 7h15M1 13h15" />
-            </svg>
-        </button>
-        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul
-                class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                <li>
-                    <a routerLink="/home"
-                        class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
-                        aria-current="page">Inicio</a>
-                </li>
-                <li>
-                    <a routerLink="/nosotros"
-                        class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Nosotros</a>
-                </li>
-                <li>
-                    <a routerLink="/listaProducto"
-                        class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Productos</a>
-                </li>
-                <li>
-                    <a routerLink="/contacto"
-                        class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contacto</a>
-                </li>
-                <li>
-                    <a routerLink="/formularioProducto"
-                        class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Crear Producto</a>
-                </li>
-            </ul>
-        </div>
+<nav class="navbar" [class.open]="menuOpen">
+  <div class="container">
+    <a href="/" class="logo" title="McDonald's">
+      <img src="https://www.mcdonaldspuebla.com/img/logomc.png"
+        alt="McDonald's Logo" />
+      <span>McDonald's</span>
+    </a>
+
+    <button
+      class="menu-btn"
+      aria-label="Toggle menu"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="menuOpen"
+    >
+      <svg
+        class="icon"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        viewBox="0 0 24 24"
+      >
+        <path class="line1" d="M4 7h16"></path>
+        <path class="line2" d="M4 12h16"></path>
+        <path class="line3" d="M4 17h16"></path>
+      </svg>
+    </button>
+
+    <div class="menu" [class.open]="menuOpen">
+      <a routerLink="/home" routerLinkActive="active" (click)="closeMenu()" class="nav-link"
+        >Inicio</a
+      >
+      <a routerLink="/nosotros" routerLinkActive="active" (click)="closeMenu()" class="nav-link"
+        >Nosotros</a
+      >
+      <a
+        routerLink="/listaProducto"
+        routerLinkActive="active"
+        (click)="closeMenu()"
+        class="nav-link"
+        >Productos</a
+      >
+      <a routerLink="/contacto" routerLinkActive="active" (click)="closeMenu()" class="nav-link"
+        >Contacto</a
+      >
+      <a
+        routerLink="/formularioProducto"
+        routerLinkActive="active"
+        (click)="closeMenu()"
+        class="nav-link create-btn"
+        >Crear Producto</a
+      >
+
+      <!-- Nuevo botón usuario -->
+      <button class="user-btn" aria-label="Perfil de usuario" (click)="onUserClick()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+          class="user-icon"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5.121 17.804A9.969 9.969 0 0112 15c2.21 0 4.243.72 5.879 1.947M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 100 20 10 10 0 000-20z" />
+        </svg>
+      </button>
     </div>
+  </div>
 </nav>
+
+
