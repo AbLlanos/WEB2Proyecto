@@ -11,14 +11,4 @@
       <button (click)="nextSlide()">Ver más</button>
     </div>
   </div>
-
-  <div class="side-thumbs">
-    <div
-      *ngFor="let slide of slides; let i = index"
-      class="thumb"
-      [style.backgroundImage]="'url(' + slide.url + ')'"
-      [class.active]="i === currentSlide"
-      (click)="goToSlide(i)"
-    ></div>
-  </div>
 </div>
