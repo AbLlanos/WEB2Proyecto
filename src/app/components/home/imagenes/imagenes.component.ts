@@ -13,7 +13,7 @@ export class ImagenesComponent {
   {
     title: 'Nuestra Historia',
     description: 'Desde 1940, McDonald’s ha revolucionado la comida rápida con innovación y calidad.',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png'
+    imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC3E6QfvJ4C37HU9sUMAz4HqJh00mP2z0pGg&s'
   },
   {
     title: 'Compromiso Social',
