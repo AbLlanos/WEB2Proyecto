@@ -1,26 +1,37 @@
 <section class="imagenes-section">
-  <h2 class="section-title" style="text-align: center; color: #db0007; font-weight: bold; margin-bottom: 1rem;">
-    Conoce Más Sobre McDonald's
-  </h2>
-  <p class="intro-text" style="text-align: center; max-width: 700px; margin: 0 auto 2rem auto; font-size: 1.1rem; color: #333;">
+  <h2 class="section-title">Conoce Más Sobre McDonald's</h2>
+  <p class="intro-text">
     En McDonald's nos enorgullece nuestra historia, nuestro compromiso con la calidad, la innovación constante y el apoyo a las comunidades alrededor del mundo.
   </p>
 
-  <div class="cards-container" aria-label="Tarjetas informativas sobre McDonald's" style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
-    <div class="card" *ngFor="let card of cards" tabindex="0" [attr.aria-label]="card.title" style="width: 280px; perspective: 1000px;">
-      <div class="card-inner" style="position: relative; width: 100%; height: 360px; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; cursor: pointer;">
-        <div class="card-front" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); background: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem;">
-          <img src="{{ card.imageUrl }}" alt="{{ card.title }}" style="max-width: 100px; margin-bottom: 1rem;" />
-          <h3 style="color: #db0007; margin-bottom: 0.5rem;">{{ card.title }}</h3>
-          <p class="front-short-desc" style="color: #555;">Haz hover o presiona para descubrir más.</p>
-        </div>
-        <div class="card-back" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); background: #ffc72c; color: #333; transform: rotateY(180deg); padding: 1rem; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-          <h4 style="margin-bottom: 1rem;">{{ card.title }}</h4>
-          <p>{{ card.description }}</p>
-          <p class="extra-info" style="margin-top: 1rem; font-size: 0.9rem; color: #5a5a5a;">
-            McDonald's siempre busca entregar lo mejor a sus clientes con compromiso y calidad.
-          </p>
-        </div>
+  <div class="cards-container" aria-label="Tarjetas informativas sobre McDonald's">
+    <div
+      class="card"
+      *ngFor="let card of cards; let i = index"
+      tabindex="0"
+      (click)="toggleDescription(i)"
+      (keyup.enter)="toggleDescription(i)"
+      [attr.aria-expanded]="card.showDescription"
+      [attr.aria-controls]="'desc-' + i"
+    >
+      <img [src]="card.imageUrl" [alt]="card.title" />
+      <h3>{{ card.title }}</h3>
+
+      <p class="front-short-desc" *ngIf="!card.showDescription">
+        Haz clic o presiona Enter para descubrir más.
+      </p>
+
+      <div
+        class="description"
+        *ngIf="card.showDescription"
+        [id]="'desc-' + i"
+        role="region"
+        aria-live="polite"
+      >
+        <p>{{ card.description }}</p>
+        <p class="extra-info">
+          McDonald's siempre busca entregar lo mejor a sus clientes con compromiso y calidad.
+        </p>
       </div>
     </div>
   </div>
