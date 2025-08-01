@@ -1,14 +1,14 @@
 <div class="max-w-7xl mx-auto p-4 mt-10">
-    <h1 class="text-3xl font-bold text-center text-gray-900 mb-10">Lista de productos</h1>
+    <h1 class="text-5xl font-bold text-center text-gray-900 mb-5">Lista de productos</h1>
 
     <!-- Hamburguesas -->
     <h2
-        class="text-2xl font-bold text-gray-800 mt-8 mb-4 text-center bg-yellow-100 rounded-xl py-2 px-4 w-full mx-auto">
-        🍔 Hamburguesas
+        class="text-2xl font-bold text-gray-800 mt-8 mb-4 text-center bg-yellow-200 rounded-xl py-2 px-4 w-full mx-auto">
+        Hamburguesas
     </h2>
 
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
+    <div class=" p-4 bg-gray-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
 
         @for (producto of hamburguesas; track producto.id) {
         <div
@@ -66,10 +66,10 @@
     </div>
 
 
-    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4 text-center bg-red-100 rounded-xl py-2 px-4 w-full mx-auto">
-        🥤 Bebidas
+    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4 text-center bg-red-200 rounded-xl py-2 px-4 w-full mx-auto">
+        Bebidas
     </h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
+    <div class="p-4 bg-gray-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
 
         @for (producto of bebidas; track producto.id) {
         <div
@@ -128,7 +128,7 @@
 
     <!--
     <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4 text-center bg-yellow-100 rounded-xl py-2 px-4 w-full mx-auto">
-        🍟 Combos
+        Combos
     </h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
@@ -192,10 +192,10 @@
 -->
 
 
-    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4 text-center bg-red-100 rounded-xl py-2 px-4 w-full mx-auto">
-        🍰 Postres
+    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4 text-center bg-yellow-200 rounded-xl py-2 px-4 w-full mx-auto">
+        Postres
     </h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
+    <div class="p-4 bg-gray-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
 
         @for (producto of postres; track producto.id) {
         <div

@@ -1,1 +1,77 @@
-<p>perfil-cliente works!</p>
+<div class="max-w-6xl mx-auto p-6">
+    <!-- Recuadro superior con imagen y datos -->
+    <div class="bg-gray-200 rounded-2xl shadow-lg p-6 flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
+        <!-- Imagen de usuario centrada -->
+        <div class="flex-shrink-0 flex items-center justify-center w-full sm:w-auto bg-red-100 rounded-xl shadow p-3">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-z31-byNeE307ReTDio0-9Y6_k0DnTTAhA&s"
+                alt="Usuario" class="w-48 h-48 rounded-full object-cover border-4 border-yellow-400 shadow-md">
+        </div>
+
+        <!-- Datos del usuario -->
+        <div class="text-center sm:text-left flex-1">
+            <h2 class="text-2xl font-bold text-red-600 mb-4">Gabriel Ramírez</h2>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-gray-700">
+                <div class="bg-yellow-100 rounded-xl shadow p-3">
+                    <span class="font-semibold">Cédula:</span><br>1723456789
+                </div>
+                <div class="bg-yellow-100 rounded-xl shadow p-3">
+                    <span class="font-semibold">Correo:</span><br>gabriel
+                </div>
+                <div class="bg-yellow-100 rounded-xl shadow p-3">
+                    <span class="font-semibold">Teléfono:</span><br>0991234567
+                </div>
+                <div class="bg-yellow-100 rounded-xl shadow p-3">
+                    <span class="font-semibold">Dirección:</span><br>Av. Siempre Viva 123
+                </div>
+                <div class="bg-yellow-100 rounded-xl shadow p-3">
+                    <span class="font-semibold">Fecha de nacimiento:</span><br>01/01/2000
+                </div>
+                <div class="bg-yellow-100 rounded-xl shadow p-3">
+                    <span class="font-semibold">Género:</span><br>Masculino
+                </div>
+                <div class="bg-yellow-100 rounded-xl shadow p-3">
+                    <span class="font-semibold">Rol:</span><br>Cliente
+                </div>
+                <div class="bg-yellow-100 rounded-xl shadow p-3">
+                    <span class="font-semibold">Suscripción:</span><br>Activada - Premium
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cuadro con 4 botones como tarjetas -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 container1">
+        <!-- Botón 1 -->
+        <button
+            class="bg-white rounded-2xl shadow-2xl p-6 min-h-[280px] hover:shadow-yellow-500/50 transition-transform hover:scale-105 flex flex-col items-center justify-between text-center focus:outline-none">
+            <img src="https://api-middleware-mcd.mcdonaldscupones.com/media/image/product$kaXTZPtb/200/200/original?country=ec"
+                alt="Generar Pedido" class="w-28 h-28 mb-4 object-contain">
+            <h3 class="text-lg font-semibold text-yellow-600">Generar Pedido</h3>
+        </button>
+
+        <!-- Botón 2 -->
+        <button
+            class="bg-white rounded-2xl shadow-2xl p-6 min-h-[280px] hover:shadow-yellow-500/50 transition-transform hover:scale-105 flex flex-col items-center justify-between text-center focus:outline-none">
+            <img src="https://cdn-icons-png.flaticon.com/128/18883/18883963.png" alt="Historial"
+                class="w-28 h-28 mb-4 object-contain">
+            <h3 class="text-lg font-semibold text-yellow-600 text-center">Revisar Historial de Pedidos</h3>
+        </button>
+
+        <!-- Botón 3 -->
+        <button
+            class="bg-white rounded-2xl shadow-2xl p-6 min-h-[280px] hover:shadow-yellow-500/50 transition-transform hover:scale-105 flex flex-col items-center justify-between text-center focus:outline-none">
+            <img src="https://cdn-icons-png.flaticon.com/128/18091/18091018.png" alt="Cambiar Credenciales"
+                class="w-28 h-28 mb-4 object-contain">
+            <h3 class="text-lg font-semibold text-yellow-600 text-center">Cambiar Credenciales</h3>
+        </button>
+
+        <!-- Botón 4 -->
+        <button
+            class="bg-white rounded-2xl shadow-2xl p-6 min-h-[280px] hover:shadow-yellow-500/50 transition-transform hover:scale-105 flex flex-col items-center justify-between text-center focus:outline-none">
+            <img src="https://cdn-icons-png.flaticon.com/128/1260/1260241.png" alt="Suscripción"
+                class="w-28 h-28 mb-4 object-contain">
+            <h3 class="text-lg font-semibold text-yellow-600 text-center">Comprar Suscripción</h3>
+        </button>
+    </div>
+</div>

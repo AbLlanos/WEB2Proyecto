@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ClienteService } from '../../../services/cliente.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-formulario-cliente',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './formulario-cliente.component.html',
   styleUrl: './formulario-cliente.component.css'
 })
