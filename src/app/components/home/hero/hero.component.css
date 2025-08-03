@@ -72,3 +72,103 @@
   font-size: 1rem;
   color: #444;
 }
+/* Sección de Promociones */
+.promo-section {
+  background-color: #fff;
+  padding: 60px 30px;
+  text-align: center;
+  border-top: 4px solid #e40e0e; /* Un borde superior rojo */
+}
+
+.promo-section h2 {
+  font-size: 2.2rem;
+  color: #e40e0e;
+  margin-bottom: 40px;
+}
+
+.promo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px; /* Espaciado entre las tarjetas */
+}
+
+.promo-card {
+  background-color: #ffe8e8; /* Fondo suave para las tarjetas */
+  border-radius: 10px;
+  padding: 25px 20px;
+  width: 280px; /* Ancho fijo para las tarjetas */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease; /* Efecto hover para agrandar */
+}
+
+.promo-card:hover {
+  transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+}
+
+.promo-card img {
+  width: 100%; /* Que la imagen ocupe todo el ancho de la tarjeta */
+  max-height: 160px; /* Limitar la altura de la imagen */
+  object-fit: cover; /* Para que la imagen cubra bien el espacio sin distorsionarse */
+  border-radius: 8px; /* Bordes redondeados para la imagen */
+  margin-bottom: 15px; /* Espaciado debajo de la imagen */
+}
+
+.promo-card h3 {
+  color: #b30000; /* Rojo fuerte para los títulos */
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.promo-card p {
+  color: #333; /* Texto oscuro para mayor legibilidad */
+  font-size: 1rem;
+  line-height: 1.4; /* Mejor espacio entre líneas */
+}
+/* Sección Cajita Feliz */
+.cajita-feliz-section {
+  background-color: #fff8e1; /* Color suave similar al amarillo */
+  padding: 60px 30px;
+  text-align: center;
+  border-top: 4px solid #e40e0e; /* Borde superior rojo */
+}
+
+.cajita-feliz-section h2 {
+  font-size: 2.2rem;
+  color: #e40e0e;
+  margin-bottom: 40px;
+}
+
+.cajita-feliz-card {
+  background-color: #ffe8e8; /* Fondo suave */
+  border-radius: 10px;
+  padding: 25px 20px;
+  width: 280px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+}
+
+.cajita-feliz-card:hover {
+  transform: scale(1.05);
+}
+
+.cajita-feliz-card img {
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.cajita-feliz-card h3 {
+  color: #b30000;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.cajita-feliz-card p {
+  color: #333;
+  font-size: 1rem;
+  line-height: 1.4;
+}
