@@ -32,4 +32,27 @@ export class FormularioClienteComponent {
     )
   }
 
+
+  //DETECTA QUE ESTE COMPLETO Y NO DEJE CAMBIAR
+
+  enviado: boolean = false;
+
+  registroCliente = {
+
+    nombreCompleto: "",
+    cedula: "",
+    direccion: "",
+    telefono: "",
+    correoElectronico: "",
+    fechaNacimiento: "",
+    genero: "",
+    fechaRegistro: "",
+
+  };
+
+  camposSinLlenar = () => {
+    return !this.enviado && Object.values(this.registroCliente).some(valor => valor.trim?.() !== "");
+  }
+
+
 }

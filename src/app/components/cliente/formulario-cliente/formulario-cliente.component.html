@@ -13,11 +13,11 @@
                 <h1 class="text-3xl font-bold text-red-600 text-center">Crear cuenta</h1>
                 <p class="text-gray-700 text-center">Complete todos los campos para registrar un nuevo cliente.</p>
 
-                <form (ngSubmit)="agregarCliente(formulario)" #formulario="ngForm" class="space-y-4">
+                <form (ngSubmit)="agregarCliente(formulario);camposSinLlenar()" #formulario="ngForm" class="space-y-4">
                     <!-- Nombre completo -->
                     <div>
                         <label for="nombreCompleto" class="block text-sm font-medium">Nombre completo</label>
-                        <input type="text" [(ngModel)]="nombreCompleto" name="nombreCompleto" id="nombreCompleto"
+                        <input type="text" [(ngModel)]="registroCliente.nombreCompleto" name="nombreCompleto" id="nombreCompleto"
                             required placeholder="Ingrese el nombre completo"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
                     </div>
@@ -25,7 +25,7 @@
                     <!-- Cédula -->
                     <div>
                         <label for="cedula" class="block text-sm font-medium">Cédula</label>
-                        <input type="text" [(ngModel)]="cedula" name="cedula" id="cedula" required
+                        <input type="text" [(ngModel)]="cedula" [(ngModel)]="registroCliente.cedula"  name="cedula" id="cedula" required
                             placeholder="Ingrese la cédula"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
                     </div>
@@ -33,7 +33,7 @@
                     <!-- Dirección -->
                     <div>
                         <label for="direccion" class="block text-sm font-medium">Dirección</label>
-                        <input type="text" [(ngModel)]="direccion" name="direccion" id="direccion" required
+                        <input type="text" [(ngModel)]="direccion" [(ngModel)]="registroCliente.direccion" name="direccion" id="direccion" required
                             placeholder="Ingrese la dirección"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
                     </div>
@@ -41,7 +41,7 @@
                     <!-- Teléfono -->
                     <div>
                         <label for="telefono" class="block text-sm font-medium">Teléfono</label>
-                        <input type="text" [(ngModel)]="telefono" name="telefono" id="telefono"
+                        <input type="text" [(ngModel)]="telefono" [(ngModel)]="registroCliente.telefono" name="telefono" id="telefono"
                             placeholder="Ingrese el número de teléfono"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
                     </div>
@@ -49,7 +49,7 @@
                     <!-- Correo electrónico -->
                     <div>
                         <label for="correoElectronico" class="block text-sm font-medium">Correo electrónico</label>
-                        <input type="email" [(ngModel)]="correoElectronico" name="correoElectronico"
+                        <input type="email" [(ngModel)]="correoElectronico" [(ngModel)]="registroCliente.correoElectronico" name="correoElectronico"
                             id="correoElectronico" placeholder="ejemplo@correo.com"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
                     </div>
@@ -57,14 +57,14 @@
                     <!-- Fecha de nacimiento -->
                     <div>
                         <label for="fechaNacimiento" class="block text-sm font-medium">Fecha de nacimiento</label>
-                        <input type="date" [(ngModel)]="fechaNacimiento" name="fechaNacimiento" id="fechaNacimiento"
+                        <input type="date" [(ngModel)]="fechaNacimiento" [(ngModel)]="registroCliente.fechaNacimiento" name="fechaNacimiento" id="fechaNacimiento"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
                     </div>
 
                     <!-- Género -->
                     <div>
                         <label for="genero" class="block text-sm font-medium">Género</label>
-                        <select [(ngModel)]="genero" name="genero" id="genero"
+                        <select [(ngModel)]="genero" [(ngModel)]="registroCliente.genero" name="genero" id="genero"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
                             <option value="" disabled selected>Seleccione una opción</option>
                             <option value="Masculino">Masculino</option>
@@ -76,7 +76,7 @@
                     <!-- Fecha de registro -->
                     <div>
                         <label for="fechaRegistro" class="block text-sm font-medium">Fecha de registro</label>
-                        <input type="date" [(ngModel)]="fechaRegistro" name="fechaRegistro" id="fechaRegistro"
+                        <input type="date" [(ngModel)]="fechaRegistro" [(ngModel)]="registroCliente.fechaRegistro" name="fechaRegistro" id="fechaRegistro"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
                     </div>
 
