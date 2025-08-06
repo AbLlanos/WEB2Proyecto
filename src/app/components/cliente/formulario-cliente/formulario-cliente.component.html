@@ -1,5 +1,7 @@
+<app-nav-bar></app-nav-bar>
+
 <div class="p-10 bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+    <div class="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row pt-10">
 
         <!-- LADO IZQUIERDO: IMAGEN -->
         <div class="w-full md:w-1/2 h-96 md:h-auto">
@@ -13,72 +15,136 @@
                 <h1 class="text-3xl font-bold text-red-600 text-center">Crear cuenta</h1>
                 <p class="text-gray-700 text-center">Complete todos los campos para registrar un nuevo cliente.</p>
 
-                <form (ngSubmit)="agregarCliente(formulario);camposSinLlenar()" #formulario="ngForm" class="space-y-4">
+                <form [formGroup]="clienteForm" (ngSubmit)="agregarCliente()" class="space-y-4">
+
                     <!-- Nombre completo -->
                     <div>
                         <label for="nombreCompleto" class="block text-sm font-medium">Nombre completo</label>
-                        <input type="text" [(ngModel)]="registroCliente.nombreCompleto" name="nombreCompleto" id="nombreCompleto"
+                        <input type="text" formControlName="nombreCompleto" name="nombreCompleto" id="nombreCompleto"
                             required placeholder="Ingrese el nombre completo"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
+
+
+                        @if (clienteForm.get("nombreCompleto")?.invalid &&
+                        clienteForm.get("nombreCompleto")?.touched) {
+                        <span class="text-red-500 text-sm mb-5">El nombre es obligatorio</span>
+                        }
+
                     </div>
+
+
 
                     <!-- Cédula -->
                     <div>
                         <label for="cedula" class="block text-sm font-medium">Cédula</label>
-                        <input type="text" [(ngModel)]="cedula" [(ngModel)]="registroCliente.cedula"  name="cedula" id="cedula" required
+                        <input type="text" formControlName="cedula" name="cedula" id="cedula" required
                             placeholder="Ingrese la cédula"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
+
+                        @if (clienteForm.get("cedula")?.invalid &&
+                        clienteForm.get("cedula")?.touched) {
+                        <span class="text-red-500 text-sm mb-5">La cédula es obligatorio</span>
+                        }
+
                     </div>
+
+
 
                     <!-- Dirección -->
                     <div>
                         <label for="direccion" class="block text-sm font-medium">Dirección</label>
-                        <input type="text" [(ngModel)]="direccion" [(ngModel)]="registroCliente.direccion" name="direccion" id="direccion" required
+                        <input type="text" formControlName="direccion" name="direccion" id="direccion" required
                             placeholder="Ingrese la dirección"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
+
+                        @if (clienteForm.get("direccion")?.invalid &&
+                        clienteForm.get("direccion")?.touched) {
+                        <span class="text-red-500 text-sm mb-5">La dirección es obligatorio</span>
+                        }
+
                     </div>
+
+
+
 
                     <!-- Teléfono -->
                     <div>
-                        <label for="telefono" class="block text-sm font-medium">Teléfono</label>
-                        <input type="text" [(ngModel)]="telefono" [(ngModel)]="registroCliente.telefono" name="telefono" id="telefono"
+                        <label for="telefono" class="block text-sm font-medium">Número de contacto</label>
+                        <input type="text" formControlName="telefono" name="telefono" id="telefono"
                             placeholder="Ingrese el número de teléfono"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
+
+
+                        @if (clienteForm.get("telefono")?.invalid &&
+                        clienteForm.get("telefono")?.touched) {
+                        <span class="text-red-500 text-sm mb-5">El número de contacto es obligatorio</span>
+                        }
+
                     </div>
+
+
 
                     <!-- Correo electrónico -->
                     <div>
                         <label for="correoElectronico" class="block text-sm font-medium">Correo electrónico</label>
-                        <input type="email" [(ngModel)]="correoElectronico" [(ngModel)]="registroCliente.correoElectronico" name="correoElectronico"
+                        <input type="email" formControlName="correoElectronico" name="correoElectronico"
                             id="correoElectronico" placeholder="ejemplo@correo.com"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
+
+                        @if (clienteForm.get("correoElectronico")?.invalid &&
+                        clienteForm.get("correoElectronico")?.touched) {
+                        <span class="text-red-500 text-sm mb-5">El correo electrónico es obligatorio</span>
+                        }
+
+
                     </div>
+
 
                     <!-- Fecha de nacimiento -->
                     <div>
                         <label for="fechaNacimiento" class="block text-sm font-medium">Fecha de nacimiento</label>
-                        <input type="date" [(ngModel)]="fechaNacimiento" [(ngModel)]="registroCliente.fechaNacimiento" name="fechaNacimiento" id="fechaNacimiento"
+                        <input type="date" formControlName="fechaNacimiento" name="fechaNacimiento" id="fechaNacimiento"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
+
+                        @if (clienteForm.get("fechaNacimiento")?.invalid &&
+                        clienteForm.get("fechaNacimiento")?.touched) {
+                        <span class="text-red-500 text-sm mb-5">La fecha de nacimiento es obligatorio</span>
+                        }
+
                     </div>
+
+
 
                     <!-- Género -->
                     <div>
                         <label for="genero" class="block text-sm font-medium">Género</label>
-                        <select [(ngModel)]="genero" [(ngModel)]="registroCliente.genero" name="genero" id="genero"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
+                        <select formControlName="genero" name="genero" id="genero"
+                            class="w-full px-4  border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
                             <option value="" disabled selected>Seleccione una opción</option>
                             <option value="Masculino">Masculino</option>
                             <option value="Femenino">Femenino</option>
                             <option value="Otro">Otro</option>
                         </select>
+
+                        @if (clienteForm.get("genero")?.invalid &&
+                        clienteForm.get("genero")?.touched) {
+                        <span class="text-red-500 text-sm mb-5">Seleccionar un género es obligatorio</span>
+                        }
+
                     </div>
 
-                    <!-- Fecha de registro -->
+
+
+                    <!-- Fecha de registro 
                     <div>
                         <label for="fechaRegistro" class="block text-sm font-medium">Fecha de registro</label>
-                        <input type="date" [(ngModel)]="fechaRegistro" [(ngModel)]="registroCliente.fechaRegistro" name="fechaRegistro" id="fechaRegistro"
+                        <input type="date" formControlName="fechaRegistro" name="fechaRegistro"
+                            id="fechaRegistro"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
                     </div>
+                    -->
+
+
 
                     <!-- Botón -->
                     <button type="submit"
@@ -87,13 +153,16 @@
                     </button>
                 </form>
 
+
                 <div class="text-center mt-4">
                     <p class="text-sm text-gray-600">¿Ya tienes una cuenta?</p>
-                    <button class="mt-2 text-red-600 hover:underline font-semibold"
-                        routerLink="/login">Inicia Sesión</button>
+                    <button class="mt-2 text-red-600 hover:underline font-semibold" routerLink="/login">Inicia
+                        Sesión</button>
                 </div>
 
             </div>
         </div>
     </div>
 </div>
+
+<app-footer></app-footer>

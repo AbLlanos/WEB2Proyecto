@@ -9,6 +9,8 @@ import { LoginVistaComponent } from './pages/login-vista/login-vista.component';
 import { RegistroClienteComponent } from './pages/registro-cliente/registro-cliente.component';
 import { PerfilClienteVistaComponent } from './pages/cliente/perfil-cliente-vista/perfil-cliente-vista.component';
 import { PaginaNoEncontradaComponent } from './components/Error/pagina-no-encontrada/pagina-no-encontrada.component';
+import { registroEmpleadoGuard } from './guards/registro-empleado.guard';
+import { FormularioClienteComponent } from './components/cliente/formulario-cliente/formulario-cliente.component';
 
 export const routes: Routes = [
 
@@ -32,7 +34,16 @@ export const routes: Routes = [
 
 
     //Clientes
-    { path: "registroCliente", component: RegistroClienteComponent },
+    {
+        path: "registroCliente",
+        component: RegistroClienteComponent,
+        canDeactivate: [registroEmpleadoGuard]
+    },
+    {
+        path: "registroCliente1",
+        component: FormularioClienteComponent,
+        canDeactivate: [registroEmpleadoGuard]
+    },
     { path: "perfilCliente", component: PerfilClienteVistaComponent },
 
 
