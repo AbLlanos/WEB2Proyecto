@@ -32,13 +32,14 @@ export class FormularioClienteComponent {
     correoElectronico: ['', [Validators.required, Validators.email]],
     fechaNacimiento: ['', Validators.required],
     genero: ['', Validators.required],
-    fechaRegistro: [{ value: new Date().toISOString().split('T')[0], disabled: true }] // autogenerado
+    password: ["", [Validators.required, Validators.minLength(6)]],
+    fechaRegistro: [{ value: new Date().toISOString().split('T')[0], disabled: true }]
   });
 
   constructor(
     private servicioCliente: ClienteService,
     private router: Router
-  ) {}
+  ) { }
 
   // Detecta si hay datos llenos en el formulario sin enviar
   camposSinLlenar = (): boolean => {
@@ -53,8 +54,8 @@ export class FormularioClienteComponent {
       this.enviado = true;
 
       const clienteData = {
-        ...this.clienteForm.getRawValue(), 
-        fechaRegistro: new Date().toISOString().split('T')[0] 
+        ...this.clienteForm.getRawValue(),
+        fechaRegistro: new Date().toISOString().split('T')[0]
       };
 
       this.servicioCliente.guardarCliente(clienteData).subscribe({

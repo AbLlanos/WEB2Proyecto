@@ -94,3 +94,61 @@ button:hover {
     transform: scale(1.08);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
+
+
+.card-producto {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #fff;
+    z-index: 0;
+}
+
+.card-producto::before {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    top: -100%;
+    left: -100%;
+    background-image: linear-gradient(180deg, #ffe695, #ff0000);
+    animation: rotCardBorder 3s linear infinite;
+    z-index: 0;
+}
+
+.card-producto::after {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    background: #fff;
+    border-radius: 15px;
+    z-index: 1;
+}
+
+@keyframes rotCardBorder {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Asegura que el contenido esté encima del fondo blanco del ::after */
+.card-producto > * {
+    position: relative;
+    z-index: 2;
+}
+
+
+
+
+
+button {
+    transition: ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: scale(1.1) rotate(2deg);
+}

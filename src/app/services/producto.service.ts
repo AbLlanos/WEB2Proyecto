@@ -12,7 +12,7 @@ export class ProductoService {
 
   }
 
-  private API_PRODUCTOS = "https://web2proyecto-eb88f-default-rtdb.firebaseio.com/";
+  private API_PRODUCTOS = "https://web2proyecto-eb88f-default-rtdb.firebaseio.com";
 
 
   //Mostrar

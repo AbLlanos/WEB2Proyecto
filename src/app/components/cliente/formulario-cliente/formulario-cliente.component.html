@@ -1,6 +1,6 @@
 <app-nav-bar></app-nav-bar>
 
-<div class="p-10 bg-gray-100 min-h-screen flex items-center justify-center">
+<div class=" bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row pt-10">
 
         <!-- LADO IZQUIERDO: IMAGEN -->
@@ -20,10 +20,12 @@
                     <!-- Nombre completo -->
                     <div>
                         <label for="nombreCompleto" class="block text-sm font-medium">Nombre completo</label>
-                        <input type="text" formControlName="nombreCompleto" name="nombreCompleto" id="nombreCompleto"
-                            required placeholder="Ingrese el nombre completo"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
 
+                        <div class="input-card">
+                            <input type="text" formControlName="nombreCompleto" name="nombreCompleto"
+                                id="nombreCompleto" required placeholder="Ingrese el nombre completo"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
+                        </div>
 
                         @if (clienteForm.get("nombreCompleto")?.invalid &&
                         clienteForm.get("nombreCompleto")?.touched) {
@@ -37,10 +39,12 @@
                     <!-- Cédula -->
                     <div>
                         <label for="cedula" class="block text-sm font-medium">Cédula</label>
-                        <input type="text" formControlName="cedula" name="cedula" id="cedula" required
-                            placeholder="Ingrese la cédula"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
 
+                        <div class="input-card">
+                            <input type="text" formControlName="cedula" name="cedula" id="cedula" required
+                                placeholder="Ingrese la cédula" oninput="this.value = this.value.replace(/\D/g, '')" maxlength="10"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
+                        </div>
                         @if (clienteForm.get("cedula")?.invalid &&
                         clienteForm.get("cedula")?.touched) {
                         <span class="text-red-500 text-sm mb-5">La cédula es obligatorio</span>
@@ -53,10 +57,12 @@
                     <!-- Dirección -->
                     <div>
                         <label for="direccion" class="block text-sm font-medium">Dirección</label>
-                        <input type="text" formControlName="direccion" name="direccion" id="direccion" required
-                            placeholder="Ingrese la dirección"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
 
+                        <div class="input-card">
+                            <input type="text" formControlName="direccion" name="direccion" id="direccion" required
+                                placeholder="Ingrese la dirección"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
+                        </div>
                         @if (clienteForm.get("direccion")?.invalid &&
                         clienteForm.get("direccion")?.touched) {
                         <span class="text-red-500 text-sm mb-5">La dirección es obligatorio</span>
@@ -70,10 +76,12 @@
                     <!-- Teléfono -->
                     <div>
                         <label for="telefono" class="block text-sm font-medium">Número de contacto</label>
-                        <input type="text" formControlName="telefono" name="telefono" id="telefono"
-                            placeholder="Ingrese el número de teléfono"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
 
+                        <div class="input-card">
+                            <input type="text" formControlName="telefono" name="telefono" oninput="this.value = this.value.replace(/\D/g, '')" maxlength="10" id="telefono"
+                                placeholder="Ingrese el número de teléfono"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
+                        </div>
 
                         @if (clienteForm.get("telefono")?.invalid &&
                         clienteForm.get("telefono")?.touched) {
@@ -87,10 +95,12 @@
                     <!-- Correo electrónico -->
                     <div>
                         <label for="correoElectronico" class="block text-sm font-medium">Correo electrónico</label>
-                        <input type="email" formControlName="correoElectronico" name="correoElectronico"
-                            id="correoElectronico" placeholder="ejemplo@correo.com"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
 
+                        <div class="input-card">
+                            <input type="email" formControlName="correoElectronico" name="correoElectronico"
+                                id="correoElectronico" placeholder="ejemplo@correo.com"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
+                        </div>
                         @if (clienteForm.get("correoElectronico")?.invalid &&
                         clienteForm.get("correoElectronico")?.touched) {
                         <span class="text-red-500 text-sm mb-5">El correo electrónico es obligatorio</span>
@@ -100,12 +110,36 @@
                     </div>
 
 
+
+
+                    <!-- Contraseña -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium">Contraseña</label>
+
+                        <div class="input-card">
+                            <input type="password" formControlName="password" name="password" id="password"
+                                placeholder="contraseña"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
+                        </div>
+                        @if (clienteForm.get("password")?.invalid &&
+                        clienteForm.get("password")?.touched) {
+                        <span class="text-red-600 text-sm mt-1 block">La contraseña es obligatoria y debe tener 6
+                            letras como mínimo</span>
+                        }
+
+
+                    </div>
+
+
                     <!-- Fecha de nacimiento -->
                     <div>
                         <label for="fechaNacimiento" class="block text-sm font-medium">Fecha de nacimiento</label>
-                        <input type="date" formControlName="fechaNacimiento" name="fechaNacimiento" id="fechaNacimiento"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
 
+                        <div class="input-card">
+                            <input type="date" formControlName="fechaNacimiento" name="fechaNacimiento"
+                                id="fechaNacimiento"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400" />
+                        </div>
                         @if (clienteForm.get("fechaNacimiento")?.invalid &&
                         clienteForm.get("fechaNacimiento")?.touched) {
                         <span class="text-red-500 text-sm mb-5">La fecha de nacimiento es obligatorio</span>
@@ -118,14 +152,15 @@
                     <!-- Género -->
                     <div>
                         <label for="genero" class="block text-sm font-medium">Género</label>
-                        <select formControlName="genero" name="genero" id="genero"
-                            class="w-full px-4  border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
-                            <option value="" disabled selected>Seleccione una opción</option>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Femenino">Femenino</option>
-                            <option value="Otro">Otro</option>
-                        </select>
-
+                        <div class="input-card">
+                            <select formControlName="genero" name="genero" id="genero"
+                                class="w-full px-4  border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
+                                <option value="" disabled selected>Seleccione una opción</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
                         @if (clienteForm.get("genero")?.invalid &&
                         clienteForm.get("genero")?.touched) {
                         <span class="text-red-500 text-sm mb-5">Seleccionar un género es obligatorio</span>

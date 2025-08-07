@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AutenticacionService } from '../../../services/autenticacion.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -26,4 +27,20 @@ export class NavBarComponent {
     // Por ejemplo, abrir un modal o navegar a una página de perfil
   }
 
+
+  //Fuuncionalidad
+  constructor(public authServicio: AutenticacionService, private router: Router) { }
+
+  get logueado(): boolean {
+    return this.authServicio.sessionIniciada();
+  }
+
+  logOut(): void {
+    this.authServicio.logOut();
+    this.router.navigate(['/login']);
+  }
+
+
 }
+
+
