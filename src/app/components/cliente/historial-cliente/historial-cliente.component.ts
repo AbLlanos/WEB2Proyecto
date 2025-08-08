@@ -23,7 +23,10 @@ export class HistorialClienteComponent {
     if (!user.id) return;
 
     this.pedidosService.obtenerHistorialUsuario(user.id).subscribe(data => {
-      this.pedidosUsuario = Object.values(data || {});
+      this.pedidosUsuario = Object.entries(data || {}).map(([id, pedido]: any) => ({
+        id,
+        ...pedido
+      }));
       this.pedidosUsuario.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
     });
   }
@@ -31,5 +34,6 @@ export class HistorialClienteComponent {
   trackById(index: number, item: any) {
     return item.id || index;
   }
-
 }
+
+

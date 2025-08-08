@@ -3,49 +3,63 @@
 <div class="max-w-6xl mx-auto my-10 p-6 bg-white rounded-lg shadow-lg">
     <h2 class="text-3xl font-semibold mb-6 text-center text-gray-800">Historial de pedidos</h2>
 
-    <table class="w-full border-collapse border border-gray-300 rounded-lg overflow-hidden">
-        <thead>
-            <tr class="bg-yellow-600 text-white text-left">
-                <th class="px-5 py-3 border border-yellow-700">Fecha</th>
-                <th class="px-5 py-3 border border-yellow-700">Producto</th>
-                <th class="px-5 py-3 border border-yellow-700 text-center">Cantidad</th>
-                <th class="px-5 py-3 border border-yellow-700 text-right">Precio Unitario</th>
-                <th class="px-5 py-3 border border-yellow-700 text-center">IVA</th>
-                <th class="px-5 py-3 border border-yellow-700 text-right">Subtotal</th>
-                <th class="px-5 py-3 border border-yellow-700 text-right">Total Pedido</th>
-            </tr>
-        </thead>
-        <tbody>
-            <ng-container *ngFor="let pedido of pedidosUsuario; trackBy: trackById">
-                <!-- Primera fila del pedido -->
-                <tr class="hover:bg-gray-100 transition-colors duration-200">
-                    <td class="border border-gray-300 px-5 py-3 align-top">
-                        {{ pedido.fecha | date:'short' }}
-                    </td>
-                    <td class="border border-gray-300 px-5 py-3">{{ pedido.productos[0]?.nombre }}</td>
-                    <td class="border border-gray-300 px-5 py-3 text-center">{{ pedido.productos[0]?.cantidad }}</td>
-                    <td class="border border-gray-300 px-5 py-3 text-right">${{
-                        pedido.productos[0]?.precioUnitario.toFixed(2) }}</td>
-                    <td class="border border-gray-300 px-5 py-3 text-center">{{ (pedido.productos[0]?.iva *
-                        100).toFixed(0) }}%</td>
-                    <td class="border border-gray-300 px-5 py-3 text-right">${{ pedido.productos[0]?.subtotal.toFixed(2)
-                        }}</td>
-                    <td class="border border-gray-300 px-5 py-3 text-right" >
-                        ${{ pedido.total.toFixed(2) }}
-                    </td>
-                </tr>
+    <div class="overflow-x-auto max-h-[400px] mx-auto">
+        <table class="min-w-full border-collapse border border-gray-300 rounded-lg overflow-hidden text-center">
 
-                <!-- Filas adicionales para productos restantes -->
-                <tr *ngFor="let producto of pedido.productos; let i = index" [hidden]="i === 0"
-                    class="hover:bg-gray-50 transition-colors duration-200">
-                    <td class="border border-gray-300 px-5 py-3">{{ producto.nombre }}</td>
-                    <td class="border border-gray-300 px-5 py-3 text-center">{{ producto.cantidad }}</td>
-                    <td class="border border-gray-300 px-5 py-3 text-right">${{ producto.precioUnitario.toFixed(2) }}
-                    </td>
-                    <td class="border border-gray-300 px-5 py-3 text-center">{{ (producto.iva * 100).toFixed(0) }}%</td>
-                    <td class="border border-gray-300 px-5 py-3 text-right">${{ producto.subtotal.toFixed(2) }}</td>
+            <thead>
+                <tr class="bg-yellow-600 text-white text-center">
+                    <th class="px-5 py-3 border border-yellow-700">ID Pedido</th>
+                    <th class="px-5 py-3 border border-yellow-700">Fecha</th>
+                    <th class="px-5 py-3 border border-yellow-700">Producto</th>
+                    <th class="px-5 py-3 border border-yellow-700 ">Cantidad</th>
+                    <th class="px-5 py-3 border border-yellow-700 ">Precio Unitario</th>
+                    <th class="px-5 py-3 border border-yellow-700 ">IVA</th>
+                    <th class="px-5 py-3 border border-yellow-700 ">Subtotal</th>
+                    <th class="px-5 py-3 border border-yellow-700 ">Total Pedido</th>
                 </tr>
-            </ng-container>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let pedido of pedidosUsuario; trackBy: trackById">
+                    <!-- Primera fila del pedido -->
+                    <tr class="hover:bg-gray-100 transition-colors duration-200">
+                        <td class="border border-gray-300 px-5 py-3">{{ pedido.id }}</td>
+                        <td class="border border-gray-300 px-5 py-3 align-top">
+                            {{ pedido.fecha | date:'short' }}
+                        </td>
+                        <td class="border border-gray-300 px-5 py-3">{{ pedido.productos[0]?.nombre }}</td>
+                        <td class="border border-gray-300 px-5 py-3 ">{{ pedido.productos[0]?.cantidad }}</td>
+                        <td class="border border-gray-300 px-5 py-3 ">
+                            ${{ pedido.productos[0]?.precioUnitario.toFixed(2) }}
+                        </td>
+                        <td class="border border-gray-300 px-5 py-3">
+                            {{ (pedido.productos[0]?.iva * 100).toFixed(0) }}%
+                        </td>
+                        <td class="border border-gray-300 px-5 py-3 ">
+                            ${{ pedido.productos[0]?.subtotal.toFixed(2) }}
+                        </td>
+                        <td class="border border-gray-300 px-5 py-3">
+                            ${{ pedido.total.toFixed(2) }}
+                        </td>
+                    </tr>
+
+                    <!-- Filas adicionales del pedido -->
+                    <tr *ngFor="let producto of pedido.productos.slice(1)">
+                        <td class="border border-gray-300 px-5 py-3"></td>
+                        <td class="border border-gray-300 px-5 py-3">{{ producto.nombre }}</td>
+                        <td class="border border-gray-300 px-5 py-3 ">{{ producto.cantidad }}</td>
+                        <td class="border border-gray-300 px-5 py-3 ">
+                            ${{ producto.precioUnitario.toFixed(2) }}
+                        </td>
+                        <td class="border border-gray-300 px-5 py-3">
+                            {{ (producto.iva * 100).toFixed(0) }}%
+                        </td>
+                        <td class="border border-gray-300 px-5 py-3 ">
+                            ${{ producto.subtotal.toFixed(2) }}
+                        </td>
+                        <td class="border border-gray-300 px-5 py-3 "></td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
 </div>

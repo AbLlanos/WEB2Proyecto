@@ -71,14 +71,28 @@
             <a routerLink="/perfilCliente" routerLinkActive="active" (click)="closeMenu()" class="nav-link">
                 Perfil
             </a>
+
+
             }
+
+            @if (logueado) {
+
+            <a routerLink="/suscripcionCliente" routerLinkActive="active" (click)="closeMenu()" class="nav-link">
+                Suscripción
+            </a>
+
+            }
+
             @if (!logueado) {
             <a routerLink="/nosotros" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Nosotros</a>
             }
 
+
+
+
             <a routerLink="/listaProducto" routerLinkActive="active" (click)="closeMenu()"
                 class="nav-link">Productos</a>
-                
+
             @if (!logueado) {
             <a routerLink="/contacto" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Contacto</a>
             }
