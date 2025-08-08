@@ -16,6 +16,7 @@ import { autenticaGuard } from './guards/autentica.guard';
 import { FormularioLoginComponent } from './components/credenciales/formulario-login/formulario-login.component';
 import { PerfilClienteComponent } from './components/cliente/perfil-cliente/perfil-cliente.component';
 import { EditarClienteComponent } from './components/cliente/editar-cliente/editar-cliente.component';
+import { HistorialClienteComponent } from './components/cliente/historial-cliente/historial-cliente.component';
 
 export const routes: Routes = [
 
@@ -33,7 +34,8 @@ export const routes: Routes = [
 
     //Productos
 
-    { path: "listaProducto", component: ListaProductosPageComponent },
+    { path: "historialCliente", component: HistorialClienteComponent, canActivate: [autenticaGuard] },
+    { path: "listaProducto", component: ListaProductosPageComponent, canActivate: [autenticaGuard] },
     { path: "formularioProducto", component: FormularioProductoPageComponent, canActivate: [autenticaGuard] },
     { path: "editarFormulario/:id", component: EditarProductosVistaComponent, canActivate: [autenticaGuard] },
 

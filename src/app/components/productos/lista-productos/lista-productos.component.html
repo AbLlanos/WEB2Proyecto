@@ -8,9 +8,10 @@
     </h2>
 
 
-    <div class=" card-producto p-4 bg-gray-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
+    <div
+        class=" card-producto p-4 bg-gray-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
 
-        @for (producto of hamburguesas; track producto.id) {
+            @for (producto of productos; track producto.id) {
         <div
             class="card-producto w-full max-w-xs mx-auto shadow-xl p-5 transition-transform duration-300 hover:scale-105 h-[580px] flex flex-col justify-between mt-4">
             <div class="overflow-hidden flex flex-col h-full justify-center card-hover ">
@@ -40,83 +41,27 @@
                     <button
                         class="w-full font-semibold rounded-xl text-sm px-5 py-2.5 flex items-center justify-center gap-2"
                         [ngClass]="{
-                        'bg-red-600 hover:bg-red-700 text-white': producto.cantidad > 0,
-                        'bg-gray-400 text-white cursor-not-allowed': producto.cantidad === 0
-                    }" [disabled]="producto.cantidad === 0">
+        'bg-red-600 hover:bg-red-700 text-white': producto.cantidad > 0,
+        'bg-gray-400 text-white cursor-not-allowed': producto.cantidad === 0
+    }" [disabled]="producto.cantidad === 0" (click)="abrirModal(producto)">
                         <span>{{ producto.cantidad === 0 ? 'Agotado' : 'Comprar' }}</span>
                     </button>
 
+
+                    <!--
                     <button
                         class="w-full mt-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5"
                         [routerLink]="['/editarFormulario', producto.id]">
                         Editar
                     </button>
 
-                    <button
-                        class="w-full mt-2 bg-yellow-600 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5"
-                        (click)="eliminarProducto(producto.id)">
-                        Eliminar
-                    </button>
-                </div>
-
-            </div>
-        </div>
-        }
-    </div>
-
-
-    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4 text-center bg-red-200 rounded-xl py-2 px-4 w-full mx-auto">
-        Bebidas
-    </h2>
-    <div class="card-producto p-4 bg-gray-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
-
-        @for (producto of bebidas; track producto.id) {
-        <div
-            class="card-producto w-full max-w-xs mx-auto shadow-xl p-5 transition-transform duration-300 hover:scale-105 h-[580px] flex flex-col justify-between mt-4">
-            <div class="overflow-hidden flex flex-col h-full justify-center card-hover ">
-                <!-- Nombre y categoría -->
-                <div class="seccion1">
-                    <h2 class="text-lg font-bold text-yellow-500 mb-1 truncate text-center">{{ producto.nombre }}</h2>
-                    <p class="text-sm text-gray-600 text-center">{{ producto.categoria }}</p>
-                </div>
-
-                <!-- Imagen -->
-                <div class="seccion2">
-                    <img [src]="producto.img" alt="{{ producto.nombre }}"
-                        class="w-full h-full object-cover rounded-xl shadow-sm" />
-                </div>
-
-                <!-- Información -->
-                <div class="seccion3 text-sm text-gray-700 space-y-1 px-1">
-                    <p><strong>Ingredientes:</strong> {{ producto.ingredientes }}</p>
-                    <p><strong>Precio:</strong> ${{ producto.precio }}</p>
-                    <p><strong>Total:</strong> ${{ producto.precioTotal }}</p>
-                    <p><strong>Cantidad:</strong> {{ producto.cantidad }}</p>
-                    <p><strong>Disponible:</strong> {{ producto.disponible }}</p>
-                </div>
-
-                <!-- Botones -->
-                <div class="seccion4">
-                    <button
-                        class="w-full font-semibold rounded-xl text-sm px-5 py-2.5 flex items-center justify-center gap-2"
-                        [ngClass]="{
-                        'bg-red-600 hover:bg-red-700 text-white': producto.cantidad > 0,
-                        'bg-gray-400 text-white cursor-not-allowed': producto.cantidad === 0
-                    }" [disabled]="producto.cantidad === 0">
-                        <span>{{ producto.cantidad === 0 ? 'Agotado' : 'Comprar' }}</span>
-                    </button>
-
-                    <button
-                        class="w-full mt-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5"
-                        [routerLink]="['/editarFormulario', producto.id]">
-                        Editar
-                    </button>
 
                     <button
                         class="w-full mt-2 bg-yellow-600 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5"
                         (click)="eliminarProducto(producto.id)">
                         Eliminar
                     </button>
+                    -->
                 </div>
 
             </div>
@@ -124,128 +69,37 @@
         }
     </div>
 
-    <!--
-    <h2 class="text-2xl font-bold text-gray-800 mt-10 mb-4 text-center bg-yellow-100 rounded-xl py-2 px-4 w-full mx-auto">
-        Combos
-    </h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
+    <!-- Modal -->
+    <div *ngIf="productoSeleccionado"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-xl shadow-lg max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-4">{{ productoSeleccionado.nombre }}</h2>
+            <p>Precio unitario: ${{ productoSeleccionado.precio }}</p>
+            <p>IVA: {{ productoSeleccionado.iva * 100 }}%</p>
 
-        @for (producto of combos; track producto.id) {
-        <div
-            class="w-full max-w-xs mx-auto bg-white rounded-2xl shadow-xl p-5 border border-gray-200 hover:border-yellow-500 transition-transform duration-300 hover:scale-105 h-[580px] flex flex-col justify-between overflow-hidden mt-4">
-
-            <div class="overflow-hidden flex flex-col h-full justify-center ">
-               
-                <div class="seccion1">
-                    <h2 class="text-lg font-bold text-yellow-500 mb-1 truncate text-center">{{ producto.nombre }}</h2>
-                    <p class="text-sm text-gray-600 text-center">{{ producto.categoria }}</p>
-                </div>
-
-                
-                <div class="seccion2">
-                    <img [src]="producto.img" alt="{{ producto.nombre }}"
-                        class="w-full h-full object-cover rounded-xl shadow-sm" />
-                </div>
-
-                
-                <div class="seccion3 text-sm text-gray-700 space-y-1 px-1">
-                    <p><strong>Ingredientes:</strong> {{ producto.ingredientes }}</p>
-                    <p><strong>Precio:</strong> ${{ producto.precio }}</p>
-                    <p><strong>IVA:</strong> {{ producto.iva }}%</p>
-                    <p><strong>Total:</strong> ${{ producto.precioTotal }}</p>
-                    <p><strong>Cantidad:</strong> {{ producto.cantidad }}</p>
-                    <p><strong>Disponible:</strong> {{ producto.disponible }}</p>
-                </div>
-
-                
-                <div class="seccion4">
-                    <button
-                        class="w-full font-semibold rounded-xl text-sm px-5 py-2.5 flex items-center justify-center gap-2"
-                        [ngClass]="{
-                        'bg-red-600 hover:bg-red-700 text-white': producto.cantidad > 0,
-                        'bg-gray-400 text-white cursor-not-allowed': producto.cantidad === 0
-                    }" [disabled]="producto.cantidad === 0">
-                        🛒 <span>{{ producto.cantidad === 0 ? 'Agotado' : 'Comprar' }}</span>
-                    </button>
-
-                    <button
-                        class="w-full mt-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5"
-                        [routerLink]="['/editarFormulario', producto.id]">
-                        ✏️ Editar
-                    </button>
-
-                    <button
-                        class="w-full mt-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5"
-                        (click)="eliminarProducto(producto.id)">
-                        Eliminar
-                    </button>
-                </div>
-
+            <!-- Cantidad -->
+            <div class="mt-4">
+                <label class="block mb-1 font-medium">Cantidad:</label>
+                <input type="number" [(ngModel)]="cantidadSeleccionada" (ngModelChange)="calcularTotal()" min="1"
+                    class="border rounded px-2 py-1 w-full" />
 
             </div>
-        </div>
-        }
-    </div>
--->
 
+            <!-- Totales -->
+            <div class="mt-4">
+                <p>Subtotal: ${{ subtotal }}</p>
+                <p>Total (con IVA): ${{ total }}</p>
+            </div>
 
-    <h2 class=" text-2xl font-bold text-gray-800 mt-10 mb-4 text-center bg-yellow-200 rounded-xl py-2 px-4 w-full mx-auto">
-        Postres
-    </h2>
-    <div class=" card-producto p-4 bg-gray-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-center">
-
-        @for (producto of postres; track producto.id) {
-        <div
-            class="card-producto w-full max-w-xs mx-auto shadow-xl p-5 transition-transform duration-300 hover:scale-105 h-[580px] flex flex-col justify-between mt-4">
-            <div class="overflow-hidden flex flex-col h-full justify-center card-hover ">
-                <!-- Nombre y categoría -->
-                <div class="seccion1">
-                    <h2 class="text-lg font-bold text-yellow-500 mb-1 truncate text-center">{{ producto.nombre }}</h2>
-                    <p class="text-sm text-gray-600 text-center">{{ producto.categoria }}</p>
-                </div>
-
-                <!-- Imagen -->
-                <div class="seccion2">
-                    <img [src]="producto.img" alt="{{ producto.nombre }}"
-                        class="w-full h-full object-cover rounded-xl shadow-sm" />
-                </div>
-
-                <!-- Información -->
-                <div class="seccion3 text-sm text-gray-700 space-y-1 px-1">
-                    <p><strong>Ingredientes:</strong> {{ producto.ingredientes }}</p>
-                    <p><strong>Precio:</strong> ${{ producto.precio }}</p>
-                    <p><strong>Total:</strong> ${{ producto.precioTotal }}</p>
-                    <p><strong>Cantidad:</strong> {{ producto.cantidad }}</p>
-                    <p><strong>Disponible:</strong> {{ producto.disponible }}</p>
-                </div>
-
-                <!-- Botones -->
-                <div class="seccion4">
-                    <button
-                        class="w-full font-semibold rounded-xl text-sm px-5 py-2.5 flex items-center justify-center gap-2"
-                        [ngClass]="{
-                        'bg-red-600 hover:bg-red-700 text-white': producto.cantidad > 0,
-                        'bg-gray-400 text-white cursor-not-allowed': producto.cantidad === 0
-                    }" [disabled]="producto.cantidad === 0">
-                        <span>{{ producto.cantidad === 0 ? 'Agotado' : 'Comprar' }}</span>
-                    </button>
-
-                    <button
-                        class="w-full mt-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5"
-                        [routerLink]="['/editarFormulario', producto.id]">
-                        Editar
-                    </button>
-
-                    <button
-                        class="w-full mt-2 bg-yellow-600 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5"
-                        (click)="eliminarProducto(producto.id)">
-                        Eliminar
-                    </button>
-                </div>
-
+            <!-- Botones -->
+            <div class="mt-6 flex justify-end gap-2">
+                <button class="px-4 py-2 bg-gray-400 text-white rounded"
+                    (click)="productoSeleccionado = null">Cancelar</button>
+                <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                    (click)="confirmarCompra()">
+                    Confirmar compra
+                </button>
             </div>
         </div>
-        }
     </div>
-</div>
