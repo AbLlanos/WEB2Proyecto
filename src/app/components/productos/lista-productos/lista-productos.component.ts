@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { ProductoService } from '../../../services/producto.service';
+import { PedidosService } from '../../../services/pedidos.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { PedidosService } from '../../../services/pedidos.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -15,10 +14,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ListaProductosComponent {
   productos: any[] = [];
-  productoSeleccionado: any = null;
-  cantidadSeleccionada: number = 1;
-  subtotal = 0;
-  total = 0;
+  carrito: any[] = [];
+  mostrarCarrito: boolean = false;
 
   constructor(
     private productoService: ProductoService,
@@ -32,60 +29,74 @@ export class ListaProductosComponent {
     });
   }
 
-  abrirModal(producto: any) {
-    this.productoSeleccionado = producto;
-    this.cantidadSeleccionada = 1;
-    this.calcularTotal();
+  agregarAlCarrito(producto: any) {
+    const existente = this.carrito.find(p => p.id === producto.id);
+    if (existente) {
+      existente.cantidad += 1;
+      existente.subtotal = existente.precio * existente.cantidad;
+      existente.total = existente.subtotal * (1 + existente.iva);
+    } else {
+      this.carrito.push({
+        ...producto,
+        cantidad: 1,
+        subtotal: producto.precio,
+        total: producto.precio * (1 + producto.iva)
+      });
+    }
   }
 
-  onCantidadChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.cantidadSeleccionada = Number(input.value) || 1;
-    this.calcularTotal();
+  eliminarDelCarrito(id: string) {
+    this.carrito = this.carrito.filter(p => p.id !== id);
   }
 
-  calcularTotal() {
-    if (!this.productoSeleccionado) return;
-    this.subtotal = this.productoSeleccionado.precio * this.cantidadSeleccionada;
-    const ivaMonto = this.subtotal * this.productoSeleccionado.iva;
-    this.total = +(this.subtotal + ivaMonto).toFixed(2);
+  calcularTotalesCarrito() {
+    return this.carrito.reduce(
+      (acc, p) => {
+        acc.subtotal += p.subtotal;
+        acc.total += p.total;
+        return acc;
+      },
+      { subtotal: 0, total: 0 }
+    );
   }
 
-  confirmarCompra() {
+  confirmarPedido() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    console.log('User desde localStorage:', user);
     if (!user.id) {
-      console.error('No hay id de usuario en localStorage!');
       alert('Error: Usuario no identificado. Por favor, inicie sesión.');
       return;
     }
+
+    const totales = this.calcularTotalesCarrito();
     const pedido = {
       fecha: new Date().toISOString(),
-      total: this.total,
-      productos: [
-        {
-          nombre: this.productoSeleccionado.nombre,
-          cantidad: this.cantidadSeleccionada,
-          precioUnitario: this.productoSeleccionado.precio,
-          iva: this.productoSeleccionado.iva,
-          subtotal: this.subtotal
-        }
-      ]
+      total: +totales.total.toFixed(2),
+      productos: this.carrito.map(p => ({
+        nombre: p.nombre,
+        cantidad: p.cantidad,
+        precioUnitario: p.precio,
+        iva: p.iva,
+        subtotal: +p.subtotal.toFixed(2)
+      }))
     };
 
+    // Guardar pedido del usuario
     this.pedidosService.guardarPedidoUsuario(user.id, pedido).subscribe({
       next: () => {
+        // Guardar pedido global
         this.pedidosService.guardarPedidoGlobal({ ...pedido, idUsuario: user.id }).subscribe({
           next: () => {
-            const nuevaCantidad = this.productoSeleccionado.cantidad - this.cantidadSeleccionada;
-            this.pedidosService.actualizarStock(this.productoSeleccionado.id, nuevaCantidad).subscribe({
-              next: () => {
-                alert('Pedido realizado con éxito');
-                this.productoSeleccionado = null; // Cerrar modal
-              },
-              error: () => {
-                alert('Error al actualizar stock');
-              }
+            // Actualizar stock
+            const actualizaciones = this.carrito.map(p =>
+              this.pedidosService.actualizarStock(p.id, p.cantidad > p.disponible ? 0 : p.disponible - p.cantidad)
+            );
+
+            Promise.all(actualizaciones.map(req => req.toPromise())).then(() => {
+              alert('Pedido realizado con éxito');
+              this.carrito = [];
+              this.mostrarCarrito = false;
+            }).catch(() => {
+              alert('Error al actualizar stock');
             });
           },
           error: () => {
