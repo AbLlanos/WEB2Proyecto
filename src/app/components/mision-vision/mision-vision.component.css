@@ -1,7 +1,8 @@
 /* Contenedor principal */
 .mision-vision-container {
   padding: 20px;
-  background-color: #f9f9f9; /* Color suave para todo el contenedor */
+  background-color: #f9f9f9;
+  overflow: hidden; /* Asegura que los elementos en movimiento no se desborden */
 }
 
 /* Misión y Visión */
@@ -13,25 +14,33 @@
   justify-content: center;
   gap: 40px;
   text-align: center;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
 }
 
+/* Bloques de misión/visión con movimiento constante */
 .mision-vision-section .bloque {
   background-color: #ffffff;
   border-left: 6px solid #e40e0e;
   border-radius: 10px;
   padding: 30px 25px;
   max-width: 500px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   flex: 1;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUp 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards, floatY 4s infinite alternate;
 }
 
 .mision-vision-section .bloque:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
 }
 
+/* Títulos */
 .mision-vision-section h2 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: #e40e0e;
   margin-bottom: 15px;
 }
@@ -44,15 +53,17 @@
 
 /* Sección Nuestros Valores */
 .nuestros-valores-section {
-  background-color: #f2f2f2; /* Fondo suave gris */
+  background-color: #f2f2f2;
   padding: 60px 30px;
   text-align: center;
-  border-top: 4px solid #e40e0e; /* Borde rojo */
+  border-top: 4px solid #e40e0e;
   margin-top: 40px;
+  opacity: 0;
+  animation: fadeIn 1s 0.5s ease-out forwards;
 }
 
 .nuestros-valores-section h2 {
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   color: #e40e0e;
   margin-bottom: 40px;
 }
@@ -63,43 +74,89 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
-  padding: 0 15px; /* Para evitar que las tarjetas toquen el borde */
+  padding: 0 15px;
 }
 
 /* Estilo para las tarjetas de valores */
 .valor-card {
   background-color: #ffffff;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 25px 20px;
-  width: 300px; /* Aumento el tamaño de las tarjetas para que las imágenes sean más grandes */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  width: 320px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s ease-out, box-shadow 0.3s ease, opacity 0.3s ease;
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Alinea todo el contenido dentro de la tarjeta al centro */
-  justify-content: center; /* Centra el contenido verticalmente */
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUp 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards, floatY 4s infinite alternate;
 }
 
+/* Hover en las tarjetas */
 .valor-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.1) rotate(3deg) translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .valor-card img {
-  width: 120px;  /* Imágenes más grandes */
-  height: 120px; /* Mantiene el tamaño proporcional */
+  width: 140px;
+  height: 140px;
   margin-bottom: 15px;
-  object-fit: contain; /* Mantiene la imagen proporcional y centrada */
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+/* Efecto de zoom en la imagen */
+.valor-card img:hover {
+  transform: scale(1.1);
 }
 
 .valor-card h3 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   color: #b30000;
   margin-bottom: 15px;
+  transition: color 0.3s ease;
 }
 
 .valor-card p {
   font-size: 1rem;
   color: #333;
   line-height: 1.5;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animación de flotación continua (bouncing) para los bloques y tarjetas */
+@keyframes floatY {
+  0% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(10px);
+  }
 }

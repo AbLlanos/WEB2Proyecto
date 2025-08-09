@@ -8,9 +8,9 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [NavBarComponent, FormsModule, CommonModule],
   templateUrl: './suscripcion-cliente.component.html',
-  styleUrl: './suscripcion-cliente.component.css'
+  styleUrls: ['./suscripcion-cliente.component.css']
 })
-export class FormularioTarjetaComponent implements OnInit {
+export class SuscripcionClienteComponent implements OnInit {  // Cambié el nombre de la clase a SuscripcionClienteComponent
   tarjetaForm!: FormGroup;
 
   constructor(private fb: FormBuilder) { }
@@ -23,7 +23,6 @@ export class FormularioTarjetaComponent implements OnInit {
       cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]],
     });
   }
-
 
   formatCardNumber() {
     let val = this.tarjetaForm.get('numeroTarjeta')?.value || '';
@@ -50,5 +49,3 @@ export class FormularioTarjetaComponent implements OnInit {
     }
   }
 }
-
-

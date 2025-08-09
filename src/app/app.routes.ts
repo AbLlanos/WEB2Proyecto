@@ -17,32 +17,26 @@ import { FormularioLoginComponent } from './components/credenciales/formulario-l
 import { PerfilClienteComponent } from './components/cliente/perfil-cliente/perfil-cliente.component';
 import { EditarClienteComponent } from './components/cliente/editar-cliente/editar-cliente.component';
 import { HistorialClienteComponent } from './components/cliente/historial-cliente/historial-cliente.component';
-import { SuscripcionClienteComponent } from './components/suscripcion-cliente/suscripcion-cliente.component';
+import { SuscripcionClienteComponent } from './components/suscripcion-cliente/suscripcion-cliente.component';  // Importamos el componente
 
 export const routes: Routes = [
-
-    //Rutas generales
+    // Rutas generales
     { path: "home", component: HomeComponent },
     { path: "", redirectTo: "home", pathMatch: "full" },
-
     { path: "contacto", component: ContactoComponent },
     { path: "nosotros", component: NosotrosComponent },
 
-    //Inciar sesion
+    // Iniciar sesión
+    { path: "login", component: FormularioLoginComponent, canMatch: [loginCanMatchGuard] },
 
-    { path: "login", component: FormularioLoginComponent , canMatch: [loginCanMatchGuard]  },
-
-
-    //Productos
-
-    { path: "suscripcionCliente", component: SuscripcionClienteComponent, canActivate: [autenticaGuard] },
+    // Productos
+    { path: "suscripcionCliente", component: SuscripcionClienteComponent, canActivate: [autenticaGuard] },  // Ruta a SuscripcionClienteComponent
     { path: "historialCliente", component: HistorialClienteComponent, canActivate: [autenticaGuard] },
     { path: "listaProducto", component: ListaProductosPageComponent, canActivate: [autenticaGuard] },
     { path: "formularioProducto", component: FormularioProductoPageComponent, canActivate: [autenticaGuard] },
     { path: "editarFormulario/:id", component: EditarProductosVistaComponent, canActivate: [autenticaGuard] },
 
-
-    //Clientes
+    // Clientes
     {
         path: "registroCliente",
         component: RegistroClienteComponent,
@@ -55,17 +49,12 @@ export const routes: Routes = [
     },
 
     { path: "perfilCliente", component: PerfilClienteComponent, canActivate: [autenticaGuard] },
-
     { path: "editarCliente", component: EditarClienteComponent, canActivate: [autenticaGuard] },
 
-
-    //Empleados
+    // Empleados
     { path: "", component: HomeComponent },
     { path: "", redirectTo: "home", pathMatch: "full" },
 
-    //Pagina No encontrada
-
+    // Página No encontrada
     { path: "**", component: PaginaNoEncontradaComponent }
-
-
 ];
