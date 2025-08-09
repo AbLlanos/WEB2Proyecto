@@ -1,19 +1,20 @@
 .carrusel-container {
-    display: flex;
-    width: 110%;
-    height: 80vh;
-    overflow: hidden;
+  display: flex;
+  width: 110%;
+  height: 80vh;
+  overflow: hidden;
 }
 
 .main-image {
-    flex: 1;
-    position: relative; /* Importante para que content absolute se posicione bien */
-    background-size: cover;
-    background-position: center;
-    transition: background-image 0.5s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  flex: 1;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.7s ease-in-out, transform 0.6s ease-in-out; /* transiciones más suaves */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: zoomIn 7s ease-in-out infinite; /* Animación de zoom */
 }
 
 .content {
@@ -28,31 +29,28 @@
 
   align-self: flex-start;
   position: absolute;
-  top: 160px;     /* mueve hacia abajo */
-  left: 20px;     /* mueve hacia la izquierda */
+  top: 160px;
+  left: 20px;
   transition: all 0.5s ease;
 }
 
-
 .left-position {
-  left: 300px; /* separación a la izquierda */
-  right: auto;
-  margin: 0;
+  left: 300px;
 }
 
 .right-position {
-  right: 300px; /* separación a la derecha */
+  right: 300px;
   left: auto;
-  margin: 0;
 }
 
 .name {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    animation: slideInLeft 0.8s ease-out;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  animation: slideInLeft 0.8s ease-out;
 }
+
 .center-text {
   text-align: center;
   width: 100%;
@@ -60,87 +58,106 @@
   margin: 0 auto;
 }
 
-
 .des {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    animation: slideInLeft 1s ease-out;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  animation: slideInLeft 1s ease-out;
 }
 
 button {
   display: block;
-  margin: 15px auto 0 auto; /* centra el botón dentro del .content */
+  margin: 15px auto 0 auto;
   padding: 10px 15px;
   background-color: #f7ca05;
   color: #000;
   border: none;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #ffdd33;
+  background-color: #ffdd33;
 }
 
 .side-thumbs {
-    width: 120px;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    overflow-y: auto;
+  width: 120px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  overflow-y: auto;
 }
 
 .thumb {
-    width: 100px;
-    height: 60px;
-    background-size: cover;
-    background-position: center;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: transform 0.3s ease;
+  width: 100px;
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .thumb:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
+  opacity: 0.8;
 }
 
 .thumb.active {
-    border-color: #e40e0e;
+  border-color: #e40e0e;
 }
 
+/* Animaciones */
+
+/* Animación del zoom constante */
+@keyframes zoomIn {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Animación de desvanecimiento hacia arriba */
 @keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(40px);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
 
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* Animación de deslizamiento desde la izquierda */
 @keyframes slideInLeft {
-    0% {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
 
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
+/* Animación de desvanecimiento */
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }

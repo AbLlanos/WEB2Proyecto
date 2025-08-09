@@ -16,6 +16,15 @@
   width: 180px;
   height: auto;
 }
+.inicio-bloque img {
+  width: 180px;
+  height: auto;
+  transition: transform 0.5s ease; /* Transición suave de la rotación */
+}
+
+.inicio-bloque img:hover {
+  transform: rotate(360deg); /* Gira 360 grados */
+}
 
 .inicio-bloque .texto {
   max-width: 700px;
@@ -73,64 +82,161 @@
   color: #444;
 }
 /* Sección de Promociones */
+/* Sección de Promociones */
 .promo-section {
   background-color: #fff;
   padding: 60px 30px;
   text-align: center;
-  border-top: 4px solid #e40e0e; /* Un borde superior rojo */
+  border-top: 4px solid #e40e0e; /* Un borde rojo */
+  position: relative;
 }
 
 .promo-section h2 {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   color: #e40e0e;
   margin-bottom: 40px;
+  animation: fadeInTitle 1s ease-out; /* Animación para el título */
+}
+
+@keyframes fadeInTitle {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .promo-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 30px; /* Espaciado entre las tarjetas */
+  gap: 30px;
+  opacity: 0;
+  animation: fadeInGrid 1s ease-in-out 0.5s forwards; /* Animación para la cuadrícula */
 }
 
+@keyframes fadeInGrid {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tarjetas de promociones */
 .promo-card {
   background-color: #ffe8e8; /* Fondo suave para las tarjetas */
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 25px 20px;
-  width: 280px; /* Ancho fijo para las tarjetas */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease; /* Efecto hover para agrandar */
+  width: 280px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: slideIn 0.6s ease-out forwards; /* Animación para cada tarjeta */
+  transition: transform 0.3s ease; /* Transición para efecto hover */
 }
 
+/* Animación para las tarjetas individuales */
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Efecto hover en las tarjetas (rebote controlado) */
 .promo-card:hover {
-  transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+  animation: bounce 0.4s ease-in-out infinite; /* Rebote controlado */
+  transform: translateY(-10px); /* El rebote va hacia arriba */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al hacer hover */
+}
+
+/* Animación de rebote para las tarjetas */
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-5px); /* Rebota hacia arriba */
+  }
+  50% {
+    transform: translateY(0); /* Vuelve a su posición original */
+  }
+  75% {
+    transform: translateY(-5px); /* Rebota hacia arriba otra vez */
+  }
+  100% {
+    transform: translateY(0); /* Y vuelve a su posición inicial */
+  }
 }
 
 .promo-card img {
-  width: 100%; /* Que la imagen ocupe todo el ancho de la tarjeta */
-  max-height: 160px; /* Limitar la altura de la imagen */
-  object-fit: cover; /* Para que la imagen cubra bien el espacio sin distorsionarse */
-  border-radius: 8px; /* Bordes redondeados para la imagen */
-  margin-bottom: 15px; /* Espaciado debajo de la imagen */
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease; /* Transición suave de la imagen */
+}
+
+/* Efecto hover en la imagen */
+.promo-card:hover img {
+  transform: scale(1.1); /* Zoom en la imagen al hacer hover */
 }
 
 .promo-card h3 {
   color: #b30000; /* Rojo fuerte para los títulos */
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   margin-bottom: 10px;
+  text-transform: uppercase; /* Mayúsculas para mayor impacto */
+  font-weight: bold;
+  letter-spacing: 1px;
+  animation: fadeInText 0.5s ease-out; /* Animación para el texto */
+}
+
+@keyframes fadeInText {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .promo-card p {
-  color: #333; /* Texto oscuro para mayor legibilidad */
+  color: #333;
   font-size: 1rem;
-  line-height: 1.4; /* Mejor espacio entre líneas */
+  line-height: 1.4;
 }
+
+/* Pequeño efecto en los textos para hacerlos más dinámicos */
+.promo-card:hover h3 {
+  color: #e40e0e; /* Cambiar el color del título al pasar el ratón */
+  transform: translateY(-5px);
+}
+
+
+/* Sección Cajita Feliz */
 /* Sección Cajita Feliz */
 .cajita-feliz-section {
   background-color: #fff8e1; /* Color suave similar al amarillo */
   padding: 60px 30px;
   text-align: center;
   border-top: 4px solid #e40e0e; /* Borde superior rojo */
+  position: relative;
 }
 
 .cajita-feliz-section h2 {
@@ -147,12 +253,15 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
   transition: transform 0.3s ease;
+  position: relative; /* Necesario para posicionar los juguetes flotantes */
+  overflow: hidden;
 }
 
 .cajita-feliz-card:hover {
   transform: scale(1.05);
 }
 
+/* El contenido de la cajita */
 .cajita-feliz-card img {
   width: 100%;
   max-height: 160px;
@@ -171,6 +280,100 @@
   color: #333;
   font-size: 1rem;
   line-height: 1.4;
+}
+
+/* Contenedor para los juguetes flotantes */
+.toys-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* No interfiere con el clic de la tarjeta */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0; /* Ocultar los juguetes por defecto */
+  transition: opacity 0.3s ease-in-out; /* Transición suave */
+}
+
+/* Hacer que los juguetes aparezcan cuando se pasa el ratón sobre la cajita */
+.cajita-feliz-card:hover .toys-container {
+  opacity: 1;
+}
+
+/* Juguetes flotantes */
+.toy {
+  position: absolute;
+  width: 100px; /* Tamaño de los círculos */
+  height: 100px;
+  border-radius: 80%; /* Círculo perfecto */
+  overflow: hidden; /* Para que las imágenes no se desborden */
+  background-size: cover;
+  background-position: center;
+  animation: floatToys 6s ease-in-out infinite;
+  pointer-events: none; /* No bloquea la interacción */
+  opacity: 0; /* Inicialmente invisibles */
+  transform-origin: center;
+}
+
+/* Juguetes con retrasos para la animación */
+.toy:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.toy:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.toy:nth-child(3) {
+  animation-delay: 2s;
+}
+
+.toy:nth-child(4) {
+  animation-delay: 3s;
+}
+
+/* Animación para los juguetes flotantes */
+@keyframes floatToys {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  25% {
+    transform: translate(-50px, -50px) rotate(45deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(50px, -100px) rotate(90deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(0, 50px) rotate(135deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50px, 0) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+/* Agregar las imágenes dentro de los juguetes */
+.toy:nth-child(1) {
+  background-image: url('https://mcd-landings-l-statics.appmcdonalds.com/uploads-live/MAU_b33aec49bf.png');
+}
+
+.toy:nth-child(2) {
+  background-image: url('https://mcd-landings-l-statics.appmcdonalds.com/uploads-live/hans_6d19878e0a.png');
+}
+
+.toy:nth-child(3) {
+  background-image: url('https://mcd-landings-l-statics.appmcdonalds.com/uploads-live/SUNNY_5fd14fdab4.png');
+}
+
+.toy:nth-child(4) {
+  background-image: url('https://mcd-landings-l-statics.appmcdonalds.com/uploads-live/FIFI_b8e896cd12.png');
 }
 
 
@@ -255,4 +458,25 @@
   background-size: cover;
   background-position: center;
   border-radius: 12px;
+}
+.hamburguesas-section {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.line {
+  width: 100%; /* La línea ocupará todo el ancho de la pantalla */
+  height: 3px;
+  background-color: #db0007; /* Rojo */
+  margin: 0 auto 20px auto; /* Centra la línea y agrega espacio abajo */
+}
+
+.hamburguesas-title {
+  font-size: 3rem; /* Ajusta el tamaño del título */
+  font-weight: 800;
+  color: #db0007; /* Color rojo */
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  letter-spacing: 3px; /* Mayor espaciado entre letras */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra suave para hacerlo más llamativo */
 }
