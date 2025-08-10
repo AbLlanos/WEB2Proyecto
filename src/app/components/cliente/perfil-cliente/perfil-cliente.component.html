@@ -11,8 +11,8 @@
         </div>
 
         <!-- Datos del usuario -->
-        <div class="text-center sm:text-left flex-1">
-            <h2 class="text-2xl font-bold text-red-600 mb-4">{{ usuario?.nombreCompleto }}</h2>
+               <div class="text-center sm:text-left flex-1">
+            <h2 class="text-2xl font-bold text-red-600 mb-4">{{ usuario?.nombreCompleto | nombre }}</h2>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-gray-700">
                 <div class="bg-yellow-100 rounded-xl shadow p-3">
@@ -31,13 +31,19 @@
                     <span class="font-semibold">Fecha de nacimiento:</span><br>{{ usuario?.fechaNacimiento }}
                 </div>
                 <div class="bg-yellow-100 rounded-xl shadow p-3">
+                    <span class="font-semibold">Edad:</span><br>{{ usuario?.fechaNacimiento | edad }}
+                </div>
+                <div class="bg-yellow-100 rounded-xl shadow p-3">
                     <span class="font-semibold">Género:</span><br>{{ usuario?.genero }}
                 </div>
                 <div class="bg-yellow-100 rounded-xl shadow p-3">
                     <span class="font-semibold">Rol:</span><br>Cliente
                 </div>
                 <div class="bg-yellow-100 rounded-xl shadow p-3">
-                    <span class="font-semibold">Suscripción:</span><br>Activada - Premium
+                    <span class="font-semibold">Suscripción:</span><br>{{ usuario?.suscripcion | suscripcionActiva }}
+                </div>
+                <div class="bg-yellow-100 rounded-xl shadow p-3">
+                    <span class="font-semibold">Tiempo restante:</span><br>{{ usuario?.suscripcion | tiempoRestante }}
                 </div>
             </div>
         </div>

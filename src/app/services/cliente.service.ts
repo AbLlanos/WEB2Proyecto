@@ -36,4 +36,8 @@ export class ClienteService {
     // Nota: orderBy y equalTo deben usarse así para consultas en Firebase Realtime Database REST API
     return this.http.get(`${this.API_CLIENTE}/clientes.json?orderBy="correoElectronico"&equalTo="${correo}"`);
   }
+
+
+
+  
 }
