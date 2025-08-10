@@ -68,40 +68,45 @@
 
 
             @if (logueado) {
-            <a routerLink="/perfilCliente" routerLinkActive="active" (click)="closeMenu()" class="nav-link">
+
+            <a routerLink="/perfilCliente" (click)="closeMenu()" class="nav-link">
                 Perfil
             </a>
 
-
-            }
-
-            @if (logueado) {
-
-            <a routerLink="/suscripcionCliente" routerLinkActive="active" (click)="closeMenu()" class="nav-link">
+            <a routerLink="/suscripcionCliente" (click)="closeMenu()" class="nav-link">
                 Suscripción
             </a>
+
+            <a routerLink="/editarCliente" (click)="closeMenu()" class="nav-link">
+                Credenciales
+            </a>
+
+            <a routerLink="/historialCliente" (click)="closeMenu()" class="nav-link">
+                Historial
+            </a>
+
 
             }
 
             @if (!logueado) {
             <a routerLink="/nosotros" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Nosotros</a>
-            }
 
+            <a routerLink="/contacto" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Contacto</a>
 
-
-
-            <a routerLink="/listaProducto" routerLinkActive="active" (click)="closeMenu()"
+            <a routerLink="/productosDisponibles" routerLinkActive="active" (click)="closeMenu()"
                 class="nav-link">Productos</a>
 
-            @if (!logueado) {
-            <a routerLink="/contacto" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Contacto</a>
             }
+
+
+
+
+
 
             <!-- Solo mostrar si está logueado -->
             @if (logueado) {
-            <a routerLink="/formularioProducto" routerLinkActive="active" (click)="closeMenu()"
-                class="nav-link create-btn">
-                Crear Producto
+            <a routerLink="/listaProducto" routerLinkActive="active" (click)="closeMenu()" class="nav-link create-btn">
+                Generar Pedido
             </a>
 
             <!-- Botón Cerrar sesión -->

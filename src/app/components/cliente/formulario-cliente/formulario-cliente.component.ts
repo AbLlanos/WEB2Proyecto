@@ -33,7 +33,8 @@ export class FormularioClienteComponent {
     fechaNacimiento: ['', Validators.required],
     genero: ['', Validators.required],
     password: ["", [Validators.required, Validators.minLength(6)]],
-    fechaRegistro: [{ value: new Date().toISOString().split('T')[0], disabled: true }]
+    fechaRegistro: [{ value: new Date().toISOString().split('T')[0], disabled: true }],
+    rol: ['CLIENTE']
   });
 
   constructor(

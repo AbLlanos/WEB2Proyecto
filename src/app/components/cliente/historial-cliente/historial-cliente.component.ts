@@ -3,11 +3,12 @@ import { PedidosService } from '../../../services/pedidos.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from "../../general/nav-bar/nav-bar.component";
+import { FooterComponent } from "../../general/footer/footer.component";
 
 @Component({
   selector: 'app-historial-cliente',
   standalone: true,
-  imports: [FormsModule, CommonModule, NavBarComponent],
+  imports: [FormsModule, CommonModule, NavBarComponent, FooterComponent],
   templateUrl: './historial-cliente.component.html',
   styleUrl: './historial-cliente.component.css'
 })

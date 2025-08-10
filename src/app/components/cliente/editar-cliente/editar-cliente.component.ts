@@ -26,10 +26,14 @@ export class EditarClienteComponent implements OnInit {
     fechaNacimiento: ['', Validators.required],
     genero: ['', Validators.required],
     password: ["", [Validators.required, Validators.minLength(6)]],
-    fechaRegistro: [{ value: new Date().toISOString().split('T')[0], disabled: true }]
+    fechaRegistro: [{ value: new Date().toISOString().split('T')[0], disabled: true }],
+    rol: ['CLIENTE'] 
   });
 
   clienteKey: string | null = null;
+  
+  // Aquí guardamos el objeto completo del cliente original
+  clienteExtra: any = {};
 
   constructor(
     private servicioCliente: ClienteService,
@@ -55,12 +59,15 @@ export class EditarClienteComponent implements OnInit {
 
     this.servicioCliente.buscarClientePorCorreo(emailUsuario).subscribe({
       next: (resp) => {
-        // resp es objeto con keys de Firebase
         const keys = Object.keys(resp || {});
         if (keys.length > 0) {
           this.clienteKey = keys[0];
           const cliente = resp[this.clienteKey];
 
+          // Guardamos todo el objeto para conservar campos extra no editables
+          this.clienteExtra = { ...cliente };
+
+          // Parcheamos solo los campos del formulario
           this.clienteForm.patchValue({
             nombreCompleto: cliente.nombreCompleto,
             cedula: cliente.cedula,
@@ -94,7 +101,13 @@ export class EditarClienteComponent implements OnInit {
     if (this.clienteForm.valid && this.clienteKey) {
       const clienteData = this.clienteForm.getRawValue();
 
-      this.servicioCliente.editarCliente(this.clienteKey, clienteData).subscribe({
+      // Fusionamos los datos del formulario con los datos extras para no perder campos
+      const clienteCompleto = {
+        ...this.clienteExtra,  // datos originales
+        ...clienteData        // datos modificados en formulario sobrescriben
+      };
+
+      this.servicioCliente.editarCliente(this.clienteKey, clienteCompleto).subscribe({
         next: () => {
           alert("Cliente actualizado correctamente");
           this.router.navigate(['/perfilCliente']);

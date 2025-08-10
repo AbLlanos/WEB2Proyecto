@@ -3,11 +3,13 @@ import { ProductoService } from '../../../services/producto.service';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NavBarComponent } from "../../general/nav-bar/nav-bar.component";
+import { FooterComponent } from "../../general/footer/footer.component";
 
 @Component({
   selector: 'app-generar-pedido',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, NavBarComponent, FooterComponent],
   templateUrl: './generar-pedido.component.html',
   styleUrl: './generar-pedido.component.css'
 })

@@ -1,21 +1,29 @@
 <app-nav-bar></app-nav-bar>
 
 <div class="max-w-6xl mx-auto my-10 p-6 bg-white rounded-lg shadow-lg">
-    <h2 class="text-3xl font-semibold mb-6 text-center text-gray-800">Historial de pedidos</h2>
 
-    <div class="overflow-x-auto max-h-[400px] mx-auto">
+    <!-- Título y logo centrados juntos -->
+    <div class="flex items-center justify-center mb-6 gap-x-4">
+        <h2 class="text-3xl font-semibold text-gray-800">Historial de pedidos</h2>
+        <img src="https://mcd-landings-q-static.appmcdonalds.com/uploads-quality/48px_86952f326f.svg"
+            alt="Logo McDonald's" class="w-12 h-12" />
+    </div>
+
+    <!-- Tabla con scroll horizontal y vertical -->
+    <div class="overflow-x-auto" style="max-height: 400px; overflow-y: auto;">
         <table class="min-w-full border-collapse border border-gray-300 rounded-lg overflow-hidden text-center">
-
             <thead>
-                <tr class="bg-yellow-600 text-white text-center">
+                <tr class="bg-yellow-600 text-white">
                     <th class="px-5 py-3 border border-yellow-700">ID Pedido</th>
                     <th class="px-5 py-3 border border-yellow-700">Fecha</th>
                     <th class="px-5 py-3 border border-yellow-700">Producto</th>
-                    <th class="px-5 py-3 border border-yellow-700 ">Cantidad</th>
-                    <th class="px-5 py-3 border border-yellow-700 ">Precio Unitario</th>
-                    <th class="px-5 py-3 border border-yellow-700 ">IVA</th>
-                    <th class="px-5 py-3 border border-yellow-700 ">Subtotal</th>
-                    <th class="px-5 py-3 border border-yellow-700 ">Total Pedido</th>
+                    <th class="px-5 py-3 border border-yellow-700">Cantidad</th>
+                    <th class="px-5 py-3 border border-yellow-700">Precio Unitario</th>
+                    <th class="px-5 py-3 border border-yellow-700">IVA</th>
+                    <th class="px-5 py-3 border border-yellow-700">Subtotal</th>
+                    <th class="px-5 py-3 border border-yellow-700">IVA Pagado</th>
+                    <th class="px-5 py-3 border border-yellow-700">Total Producto</th>
+                    <th class="px-5 py-3 border border-yellow-700">Total Pedido</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,43 +31,38 @@
                     <!-- Primera fila del pedido -->
                     <tr class="hover:bg-gray-100 transition-colors duration-200">
                         <td class="border border-gray-300 px-5 py-3">{{ pedido.id }}</td>
-                        <td class="border border-gray-300 px-5 py-3 align-top">
-                            {{ pedido.fecha | date:'short' }}
-                        </td>
+                        <td class="border border-gray-300 px-5 py-3 align-top">{{ pedido.fecha | date:'short' }}</td>
                         <td class="border border-gray-300 px-5 py-3">{{ pedido.productos[0]?.nombre }}</td>
-                        <td class="border border-gray-300 px-5 py-3 ">{{ pedido.productos[0]?.cantidad }}</td>
-                        <td class="border border-gray-300 px-5 py-3 ">
-                            ${{ pedido.productos[0]?.precioUnitario.toFixed(2) }}
+                        <td class="border border-gray-300 px-5 py-3">{{ pedido.productos[0]?.cantidad }}</td>
+                        <td class="border border-gray-300 px-5 py-3">${{ pedido.productos[0]?.precioUnitario.toFixed(2)
+                            }}</td>
+                        <td class="border border-gray-300 px-5 py-3">{{ (pedido.productos[0]?.iva * 100).toFixed(0) }}%
                         </td>
-                        <td class="border border-gray-300 px-5 py-3">
-                            {{ (pedido.productos[0]?.iva * 100).toFixed(0) }}%
+                        <td class="border border-gray-300 px-5 py-3">${{ pedido.productos[0]?.subtotal.toFixed(2) }}
                         </td>
-                        <td class="border border-gray-300 px-5 py-3 ">
-                            ${{ pedido.productos[0]?.subtotal.toFixed(2) }}
+                        <td class="border border-gray-300 px-5 py-3">${{ pedido.productos[0]?.ivaPagado?.toFixed(2) }}
                         </td>
-                        <td class="border border-gray-300 px-5 py-3">
-                            ${{ pedido.total.toFixed(2) }}
-                        </td>
+                        <td class="border border-gray-300 px-5 py-3">${{ pedido.productos[0]?.total?.toFixed(2) }}</td>
+                        <td class="border border-gray-300 px-5 py-3">${{ pedido.total.toFixed(2) }}</td>
                     </tr>
 
                     <!-- Filas adicionales del pedido -->
                     <tr *ngFor="let producto of pedido.productos.slice(1)">
                         <td class="border border-gray-300 px-5 py-3"></td>
+                        <td class="border border-gray-300 px-5 py-3" colspan="1"></td>
                         <td class="border border-gray-300 px-5 py-3">{{ producto.nombre }}</td>
-                        <td class="border border-gray-300 px-5 py-3 ">{{ producto.cantidad }}</td>
-                        <td class="border border-gray-300 px-5 py-3 ">
-                            ${{ producto.precioUnitario.toFixed(2) }}
-                        </td>
-                        <td class="border border-gray-300 px-5 py-3">
-                            {{ (producto.iva * 100).toFixed(0) }}%
-                        </td>
-                        <td class="border border-gray-300 px-5 py-3 ">
-                            ${{ producto.subtotal.toFixed(2) }}
-                        </td>
-                        <td class="border border-gray-300 px-5 py-3 "></td>
+                        <td class="border border-gray-300 px-5 py-3">{{ producto.cantidad }}</td>
+                        <td class="border border-gray-300 px-5 py-3">${{ producto.precioUnitario.toFixed(2) }}</td>
+                        <td class="border border-gray-300 px-5 py-3">{{ (producto.iva * 100).toFixed(0) }}%</td>
+                        <td class="border border-gray-300 px-5 py-3">${{ producto.subtotal.toFixed(2) }}</td>
+                        <td class="border border-gray-300 px-5 py-3">${{ producto.ivaPagado?.toFixed(2) }}</td>
+                        <td class="border border-gray-300 px-5 py-3">${{ producto.total?.toFixed(2) }}</td>
+                        <td class="border border-gray-300 px-5 py-3"></td>
                     </tr>
                 </ng-container>
             </tbody>
         </table>
     </div>
 </div>
+
+<app-footer></app-footer>
