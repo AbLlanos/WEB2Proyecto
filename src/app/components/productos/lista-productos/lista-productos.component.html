@@ -1,17 +1,34 @@
 <div class="max-w-7xl mx-auto p-4 mt-10">
 
-    <div class="flex justify-end mb-4">
-        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" (click)="mostrarCarrito = true">
+    <!-- Contenedor flex para botón carrito a la izquierda y título centrado -->
+    <div
+        class="bg-red-200 p-3 flex flex-col sm:flex-row items-center justify-between mb-4 px-2 sm:px-0 gap-3 sm:gap-0 rounded-lg">
+
+
+        <!-- Espacio para balancear a la izquierda en pantallas grandes -->
+        <div class="w-24"></div>
+
+        <!-- Título centrado -->
+        <h1 class="text-5xl font-bold text-gray-900 mx-auto flex-grow text-center">
+            Generar pedido
+        </h1>
+
+        <!-- Botón carrito con ícono -->
+        <button (click)="mostrarCarrito = true"
+            class="flex items-center gap-3 bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition w-full sm:w-auto justify-center">
+
+            <span class="bg-yellow-400 rounded-full p-1 flex items-center justify-center">
+                <img src="https://cdn-icons-png.flaticon.com/512/4202/4202388.png" alt="Carrito" class="w-6 h-6" />
+            </span>
+
             Ver Pedido ({{ carrito.length }})
         </button>
+
     </div>
 
-    <h1 class="text-5xl font-bold text-center text-gray-900 mb-5">Lista de productos</h1>
-
-    <!-- Hamburguesas -->
     <h2
-        class="text-2xl font-bold text-gray-800 mt-8 mb-4 text-center bg-yellow-200 rounded-xl py-2 px-4 w-full mx-auto">
-        Hamburguesas
+        class="text-1xl font-bold text-gray-800 mt-8 mb-4 text-center bg-yellow-200 rounded-xl py-2 px-4 w-full mx-auto">
+        Recuerde revisar los productos seleccionados antes de generar el pedido
     </h2>
 
 
@@ -20,7 +37,8 @@
 
         @for (producto of productos; track producto.id) {
         <div
-            class="card-producto w-full max-w-xs mx-auto shadow-xl p-5 transition-transform duration-300 hover:scale-105 h-[580px] flex flex-col justify-between mt-4">
+            class="card-producto w-full max-w-xs mx-auto shadow-xl p-5 transition-transform duration-300 hover:scale-105 h-[580px] flex flex-col justify-between mt-4 pb-8">
+
             <div class="overflow-hidden flex flex-col h-full justify-center card-hover ">
                 <!-- Nombre y categoría -->
                 <div class="seccion1">
@@ -38,36 +56,59 @@
                 <div class="seccion3 text-sm text-gray-700 space-y-1 px-1">
                     <p><strong>Ingredientes:</strong> {{ producto.ingredientes }}</p>
                     <p><strong>Precio:</strong> ${{ producto.precio }}</p>
-                    <p><strong>Total:</strong> ${{ producto.precioTotal }}</p>
                     <p><strong>Cantidad:</strong> {{ producto.cantidad }}</p>
-                    <p><strong>Disponible:</strong> {{ producto.disponible }}</p>
+                    <p><strong>Disponible:</strong> {{ producto.disponibleTexto }}</p>
                 </div>
 
-                <!-- Botones -->
+                <!-- Cantidad disponible -->
+                <div class="text-center mt-3">
+                    @if (producto.disponible <= 0) { <p class="text-red-500 font-bold">Sin suministros</p>
+                        } @else {
+
+                        <div class="flex items-center justify-center">
+                            <div class="flex items-center border rounded-full overflow-hidden">
+                                <!-- botón - -->
+                                <button type="button"
+                                    class="bg-gray-400 px-4 py-2 font-bold hover:bg-gray-500 disabled:opacity-50"
+                                    (click)="decrementar(producto)" [disabled]="producto.cantidadSeleccionada <= 1">
+                                    -
+                                </button>
+
+                                <!-- cantidad seleccionada -->
+                                <div class="px-4 font-semibold text-center min-w-[40px] flex justify-center items-center"
+                                    style="width: 40px;">
+                                    {{ producto.cantidadSeleccionada }}
+                                </div>
+
+                                <!-- botón + -->
+                                <button type="button"
+                                    class="bg-gray-400 px-4 py-2 font-bold hover:bg-gray-500 disabled:opacity-50"
+                                    (click)="incrementar(producto)"
+                                    [disabled]="producto.cantidadSeleccionada >= producto.disponible">
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Botón Comprar -->
+                        <button
+                            class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl text-sm px-5 py-2.5 mt-4 disabled:opacity-60 disabled:cursor-not-allowed"
+                            [disabled]="producto.cantidadSeleccionada <= 0 || producto.cantidadSeleccionada > producto.disponible"
+                            (click)="agregarAlCarrito(producto, producto.cantidadSeleccionada)">
+                            Agregar al carrito
+                        </button>
+                        }
+                </div>
+
+
+
                 <button
-                    class="w-full font-semibold rounded-xl text-sm px-5 py-2.5 flex items-center justify-center gap-2"
-                    [ngClass]="{
-    'bg-red-600 hover:bg-red-700 text-white': producto.cantidad > 0,
-    'bg-gray-400 text-white cursor-not-allowed': producto.cantidad === 0
-  }" [disabled]="producto.cantidad === 0" (click)="agregarAlCarrito(producto)">
-                    <span>{{ producto.cantidad === 0 ? 'Agotado' : 'Agregar al Carrito' }}</span>
+                    class="w-full mt-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5"
+                    [routerLink]="['/editarFormulario', producto.id]">
+                    Editar
                 </button>
 
 
-                <!--
-                    <button
-                        class="w-full mt-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5"
-                        [routerLink]="['/editarFormulario', producto.id]">
-                        Editar
-                    </button>
-
-
-                    <button
-                        class="w-full mt-2 bg-yellow-600 hover:bg-yellow-500 text-black font-semibold rounded-xl text-sm px-5 py-2.5"
-                        (click)="eliminarProducto(producto.id)">
-                        Eliminar
-                    </button>
-                    -->
             </div>
 
         </div>
@@ -78,52 +119,99 @@
 
 <!-- Modal -->
 <!-- Modal Carrito -->
-<div *ngIf="mostrarCarrito" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-        <h2 class="text-2xl font-bold mb-4">Resumen del Pedido</h2>
+@if (mostrarCarrito) {
+<div class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 px-3 sm:px-6">
+    <div class="bg-gray-200 p-4 sm:p-6 rounded-xl shadow-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto text-black">
 
-        <table class="w-full border mb-4">
-            <thead>
-                <tr class="bg-gray-100 text-left">
-                    <th class="p-2">Producto</th>
-                    <th class="p-2">Cantidad</th>
-                    <th class="p-2">Precio</th>
-                    <th class="p-2">Subtotal</th>
-                    <th class="p-2">Total (IVA)</th>
-                    <th class="p-2">Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (item of carrito; track item.id) {
-                <tr>
-                    <td class="p-2">{{ item.nombre }}</td>
-                    <td class="p-2">
-                        <input type="number" [(ngModel)]="item.cantidad" min="1"
-                            (ngModelChange)="item.subtotal = item.precio * item.cantidad; item.total = item.subtotal * (1 + item.iva)">
-                    </td>
-                    <td class="p-2">${{ item.precio }}</td>
-                    <td class="p-2">${{ item.subtotal.toFixed(2) }}</td>
-                    <td class="p-2">${{ item.total.toFixed(2) }}</td>
-                    <td class="p-2">
-                        <button class="text-red-600 hover:underline"
-                            (click)="eliminarDelCarrito(item.id)">Eliminar</button>
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
+        <!-- Header con logo y botón cerrar -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+            <div class="flex items-center gap-3">
+                <img src="https://mcd-landings-q-static.appmcdonalds.com/uploads-quality/48px_86952f326f.svg"
+                    alt="Logo McDonald's" class="w-12 h-12" />
+                <h2 class="text-2xl sm:text-3xl font-bold">Resumen del Pedido</h2>
+            </div>
 
-        <div class="text-right font-semibold mb-4">
+            <!-- botón cerrar (funcional) -->
+            <button (click)="mostrarCarrito = false"
+                class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-2 rounded-full shadow w-full sm:w-auto">
+                Cerrar
+            </button>
+        </div>
+
+        <hr class="pb-6">
+
+        <!-- Tabla: contenedor con scroll horizontal en móvil -->
+        <div class="overflow-x-auto -mx-3 sm:-mx-6 px-3 sm:px-6">
+            <table class="w-full table-fixed min-w-full border border-gray-300 text-sm sm:text-base">
+                <thead class="text-center">
+                    <tr class="bg-yellow-300 text-black ">
+                        <th class="p-2">Producto</th>
+                        <th class="p-2">Cantidad</th>
+                        <th class="p-2">Precio</th>
+                        <th class="p-2">Subtotal</th>
+                        <th class="p-2">IVA</th> <!-- Nueva columna -->
+                        <th class="p-2">Total (IVA)</th>
+                        <th class="p-2">Acción</th>
+                    </tr>
+                </thead>
+
+                <tbody class="bg-white">
+                    @if (carrito.length === 0) {
+                    <tr>
+                        <td colspan="7" class="p-6 text-center text-gray-600">
+                            No hay productos en el carrito
+                        </td>
+                    </tr>
+                    } @else {
+                    @for (item of carrito; track item.id) {
+                    <tr class="border-t border-gray-300">
+                        <td class="p-2 align-middle">{{ item.nombre }}</td>
+
+                        <td class="p-2 text-center">
+                            <input type="number" [value]="item.cantidad" min="1" [max]="item.disponible"
+                                class="w-20 text-black rounded px-2 py-1"
+                                (input)="actualizarCantidadCarrito(item, $any($event.target).valueAsNumber)">
+                        </td>
+
+                        <td class="p-2 text-right">${{ item.precio }}</td>
+                        <td class="p-2 text-right">${{ item.subtotal.toFixed(2) }}</td>
+
+                        <!-- Monto IVA por producto -->
+                        <td class="p-2 text-right">${{ (item.subtotal * item.iva).toFixed(2) }}</td>
+
+                        <td class="p-2 text-right">${{ item.total.toFixed(2) }}</td>
+
+                        <td class="p-2 text-center">
+                            <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-full"
+                                (click)="eliminarDelCarrito(item.id)">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+        <!-- Totales -->
+        <div class="text-right font-semibold mb-4 mt-4">
             @let totales = calcularTotalesCarrito();
             Subtotal: ${{ totales.subtotal.toFixed(2) }} <br />
             Total con IVA: ${{ totales.total.toFixed(2) }}
         </div>
 
-        <div class="flex justify-end gap-2">
-            <button class="bg-gray-500 text-white px-4 py-2 rounded" (click)="mostrarCarrito = false">Cerrar</button>
-            <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" (click)="confirmarPedido()">
+        <!-- Botones de acción (responsive) -->
+        <div class="flex flex-col sm:flex-row justify-center items-center sm:justify-end gap-3">
+            <!-- Confirmar: bloqueado si no hay items -->
+            <button (click)="confirmarPedido()" [disabled]="carrito.length === 0"
+                [ngClass]="carrito.length === 0 ? 'bg-gray-400 cursor-not-allowed text-white' : 'bg-red-600 hover:bg-red-700 text-white'"
+                class="font-bold px-5 py-2 rounded-full shadow w-full sm:w-auto disabled:opacity-70">
                 Confirmar Pedido
             </button>
         </div>
+
     </div>
 </div>
+}
