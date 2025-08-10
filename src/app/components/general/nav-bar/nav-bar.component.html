@@ -81,21 +81,35 @@
                 Suscripción
             </a>
 
+            <a routerLink="/editarCliente" routerLinkActive="active" (click)="closeMenu()" class="nav-link">
+                Credenciales
+            </a>
+
+            <a routerLink="/historialCliente" routerLinkActive="active" (click)="closeMenu()" class="nav-link">
+                Historial
+            </a>
+
+
             }
 
             @if (!logueado) {
             <a routerLink="/nosotros" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Nosotros</a>
-            }
 
-
-            @if (!logueado) {
             <a routerLink="/contacto" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Contacto</a>
+
+            <a routerLink="/productosDisponibles" routerLinkActive="active" (click)="closeMenu()"
+                class="nav-link">Productos</a>
+
             }
+
+
+
+
+
 
             <!-- Solo mostrar si está logueado -->
             @if (logueado) {
-            <a routerLink="/listaProducto" routerLinkActive="active" (click)="closeMenu()"
-                class="nav-link create-btn">
+            <a routerLink="/listaProducto" routerLinkActive="active" (click)="closeMenu()" class="nav-link create-btn">
                 Generar Pedido
             </a>
 

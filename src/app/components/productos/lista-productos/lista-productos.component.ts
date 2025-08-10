@@ -117,15 +117,16 @@ export class ListaProductosComponent {
   }
 
   calcularTotalesCarrito() {
-    return this.carrito.reduce(
+    const totales = this.carrito.reduce(
       (acc, p) => {
         acc.subtotal += p.subtotal;
-        acc.total += p.total;
-        acc.iva += p.subtotal * (p.iva ?? 0);
+        acc.iva += p.ivaPagado ?? (p.subtotal * (p.iva ?? 0));
         return acc;
       },
-      { subtotal: 0, total: 0, iva: 0 }
+      { subtotal: 0, iva: 0 }
     );
+    totales.total = totales.subtotal + totales.iva;
+    return totales;
   }
 
   confirmarPedido() {
@@ -145,10 +146,10 @@ export class ListaProductosComponent {
         precioUnitario: p.precio,
         iva: p.iva,
         subtotal: +p.subtotal.toFixed(2),
-        ivaPagado: +(p.subtotal * (p.iva ?? 0)).toFixed(2)
+        ivaPagado: +(p.subtotal * (p.iva ?? 0)).toFixed(2),
+        total: +p.total.toFixed(2)  // <-- Aquí agregas el total por producto
       }))
     };
-
 
     this.pedidosService.guardarPedidoUsuario(user.id, pedido).subscribe({
       next: () => {

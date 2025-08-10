@@ -18,6 +18,7 @@ import { PerfilClienteComponent } from './components/cliente/perfil-cliente/perf
 import { EditarClienteComponent } from './components/cliente/editar-cliente/editar-cliente.component';
 import { HistorialClienteComponent } from './components/cliente/historial-cliente/historial-cliente.component';
 import { SuscripcionClienteComponent } from './components/suscripcion-cliente/suscripcion-cliente.component';  // Importamos el componente
+import { GenerarPedidoComponent } from './components/cliente/generar-pedido/generar-pedido.component';
 
 export const routes: Routes = [
     // Rutas generales
@@ -25,6 +26,7 @@ export const routes: Routes = [
     { path: "", redirectTo: "home", pathMatch: "full" },
     { path: "contacto", component: ContactoComponent },
     { path: "nosotros", component: NosotrosComponent },
+    { path: "productosDisponibles", component: GenerarPedidoComponent },
 
     // Iniciar sesión
     { path: "login", component: FormularioLoginComponent, canMatch: [loginCanMatchGuard] },

@@ -117,7 +117,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+
 <!-- Modal Carrito -->
 @if (mostrarCarrito) {
 <div class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 px-3 sm:px-6">
@@ -140,9 +140,10 @@
 
         <hr class="pb-6">
 
-        <!-- Tabla: contenedor con scroll horizontal en móvil -->
-        <div class="overflow-x-auto -mx-3 sm:-mx-6 px-3 sm:px-6">
-            <table class="w-full table-fixed min-w-full border border-gray-300 text-sm sm:text-base">
+        <!-- Contenedor tabla con scroll horizontal y altura limitada con scroll vertical -->
+        <div class="overflow-x-auto max-w-full mx-auto px-3 sm:px-6"
+             style="max-height: 200px; overflow-y: auto;">
+            <table class="w-full table-fixed min-w-[700px] border border-gray-300 text-sm sm:text-base">
                 <thead class="text-center">
                     <tr class="bg-yellow-300 text-black ">
                         <th class="p-2">Producto</th>
@@ -165,7 +166,7 @@
                     } @else {
                     @for (item of carrito; track item.id) {
                     <tr class="border-t border-gray-300">
-                        <td class="p-2 align-middle">{{ item.nombre }}</td>
+                        <td class="p-2 text-center">{{ item.nombre }}</td>
 
                         <td class="p-2 text-center">
                             <input type="number" [value]="item.cantidad" min="1" [max]="item.disponible"
@@ -173,13 +174,13 @@
                                 (input)="actualizarCantidadCarrito(item, $any($event.target).valueAsNumber)">
                         </td>
 
-                        <td class="p-2 text-right">${{ item.precio }}</td>
-                        <td class="p-2 text-right">${{ item.subtotal.toFixed(2) }}</td>
+                        <td class="p-2 text-center">${{ item.precio }}</td>
+                        <td class="p-2 text-center">${{ item.subtotal.toFixed(2) }}</td>
 
                         <!-- Monto IVA por producto -->
-                        <td class="p-2 text-right">${{ (item.subtotal * item.iva).toFixed(2) }}</td>
+                        <td class="p-2 text-center">${{ (item.subtotal * item.iva).toFixed(2) }}</td>
 
-                        <td class="p-2 text-right">${{ item.total.toFixed(2) }}</td>
+                        <td class="p-2 text-center">${{ item.total.toFixed(2) }}</td>
 
                         <td class="p-2 text-center">
                             <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-full"
@@ -196,7 +197,7 @@
         </div>
 
         <!-- Totales -->
-        <div class="text-right font-semibold mb-4 mt-4">
+        <div class="text-center font-semibold mb-4 mt-4">
             @let totales = calcularTotalesCarrito();
             Subtotal: ${{ totales.subtotal.toFixed(2) }} <br />
             Total con IVA: ${{ totales.total.toFixed(2) }}

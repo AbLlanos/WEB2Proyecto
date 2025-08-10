@@ -1,0 +1,93 @@
+.container1 {
+    background-color: #F5B027;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease, box-shadow 0.2s ease;
+}
+
+
+.input-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* === INPUT CON BORDE ANIMADO ESTILO CARD === */
+.input-card {
+    position: relative;
+    border-radius: 12px;
+    padding: 4px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    z-index: 0;
+    background: transparent;
+    background-color: rgb(255, 102, 0);
+}
+
+.input-card::before {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    top: -100%;
+    left: -100%;
+    background-image: linear-gradient(180deg, #facc15, #d97706);
+    animation: rotateInputBorder 4s linear infinite;
+    z-index: 0;
+    transition: all 0.1s ease;
+}
+
+.input-card::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: #ffffff;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+/* Contenido (input) siempre sobre el efecto */
+.input-card>* {
+    position: relative;
+    z-index: 2;
+}
+
+/* Estilo del input interno */
+.input-inner {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background: transparent;
+    color: #78350f;
+    font-weight: 500;
+}
+
+/* Animación */
+@keyframes rotateInputBorder {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Opcional: efecto hover */
+.input-card:hover::before {
+    filter: brightness(1.1);
+}
+
+button {
+    transition: ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: scale(1.1) rotate(2deg);
+}

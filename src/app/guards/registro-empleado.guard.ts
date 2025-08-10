@@ -8,7 +8,7 @@ export const registroEmpleadoGuard: CanDeactivateFn<FormularioClienteComponent> 
   nextState
 ) => {
   if (component.camposSinLlenar()) {
-    return confirm("tienes datos sin llenar. ¿Seguro quieres abanadonar le registro?")
+    return confirm("Tienes datos sin llenar. ¿Seguro quieres abandonar el registro?")
   } 
   
   return true;
