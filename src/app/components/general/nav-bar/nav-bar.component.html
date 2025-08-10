@@ -68,24 +68,20 @@
 
 
             @if (logueado) {
-            <a routerLink="/perfilCliente" routerLinkActive="active" (click)="closeMenu()" class="nav-link">
+
+            <a routerLink="/perfilCliente" (click)="closeMenu()" class="nav-link">
                 Perfil
             </a>
 
-
-            }
-
-            @if (logueado) {
-
-            <a routerLink="/suscripcionCliente" routerLinkActive="active" (click)="closeMenu()" class="nav-link">
-                Suscripción
+            <a routerLink="/suscripcionCliente" (click)="closeMenu()" class="nav-link">
+                Suscripciónn
             </a>
 
-            <a routerLink="/editarCliente" routerLinkActive="active" (click)="closeMenu()" class="nav-link">
+            <a routerLink="/editarCliente" (click)="closeMenu()" class="nav-link">
                 Credenciales
             </a>
 
-            <a routerLink="/historialCliente" routerLinkActive="active" (click)="closeMenu()" class="nav-link">
+            <a routerLink="/historialCliente" (click)="closeMenu()" class="nav-link">
                 Historial
             </a>
 

@@ -1,19 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { NavBarComponent } from "../general/nav-bar/nav-bar.component";
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ClienteService } from '../../services/cliente.service';
+import { Router } from '@angular/router';  // <-- Importa Router
 
 @Component({
   selector: 'app-suscripcion-cliente',
   standalone: true,
-  imports: [NavBarComponent, FormsModule, CommonModule],
+  imports: [NavBarComponent, FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './suscripcion-cliente.component.html',
   styleUrls: ['./suscripcion-cliente.component.css']
 })
-export class SuscripcionClienteComponent implements OnInit {  // Cambié el nombre de la clase a SuscripcionClienteComponent
+export class SuscripcionClienteComponent implements OnInit {
   tarjetaForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  suscripciones = [
+    { nombre: 'NORMAL', descuento: 0.05 },
+    { nombre: 'MEDIA', descuento: 0.05 },
+    { nombre: 'PREMIUM', descuento: 0.05 }
+  ];
+
+  userId: string | null = null;
+
+  constructor(private fb: FormBuilder, private clienteService: ClienteService, private router: Router) { } // <-- Inyecta Router
 
   ngOnInit() {
     this.tarjetaForm = this.fb.group({
@@ -21,29 +31,57 @@ export class SuscripcionClienteComponent implements OnInit {  // Cambié el nomb
       numeroTarjeta: ['', [Validators.required, Validators.pattern(/^\d{4} \d{4} \d{4} \d{4}$/)]],
       fechaExpiracion: ['', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/)]],
       cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]],
+      suscripcion: ['', Validators.required]
     });
-  }
 
-  formatCardNumber() {
-    let val = this.tarjetaForm.get('numeroTarjeta')?.value || '';
-    val = val.replace(/\D/g, '');
-    val = val.match(/.{1,4}/g)?.join(' ') || val;
-    this.tarjetaForm.get('numeroTarjeta')?.setValue(val, { emitEvent: false });
-  }
-
-  formatExpiryDate() {
-    let val = this.tarjetaForm.get('fechaExpiracion')?.value || '';
-    val = val.replace(/\D/g, '');
-    if (val.length > 2) {
-      val = val.substring(0, 2) + '/' + val.substring(2, 4);
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      this.userId = user.id; 
+    } else {
+      this.userId = null;
     }
-    this.tarjetaForm.get('fechaExpiracion')?.setValue(val, { emitEvent: false });
   }
 
   submitTarjeta() {
     if (this.tarjetaForm.valid) {
-      console.log('Datos tarjeta:', this.tarjetaForm.value);
-      alert('Tarjeta guardada con éxito');
+      if (!this.userId) {
+        alert('Usuario no identificado, por favor inicia sesión');
+        return;
+      }
+
+      const datos = this.tarjetaForm.value;
+
+      const suscripcionActiva = {
+        activa: true,
+        fechaActivacion: new Date().toISOString(),
+        tipoSuscripcion: datos.suscripcion
+      };
+
+      localStorage.setItem('suscripcionActiva', JSON.stringify(suscripcionActiva));
+      localStorage.setItem('tarjeta', JSON.stringify(datos));
+
+      this.clienteService.buscarClientebyId(this.userId).subscribe({
+        next: (clienteActual) => {
+          const clienteActualizado = {
+            ...clienteActual,
+            suscripcion: suscripcionActiva
+          };
+
+          this.clienteService.editarCliente(this.userId!, clienteActualizado).subscribe({
+            next: () => {
+              alert('Suscripción activada y guardada en la base de datos!');
+              this.router.navigate(['/perfilCliente']);  // <-- Redirige aquí
+            },
+            error: (err) => {
+              alert('Error al guardar la suscripción: ' + err);
+            }
+          });
+        },
+        error: (err) => {
+          alert('Error al obtener datos del usuario: ' + err);
+        }
+      });
     } else {
       this.tarjetaForm.markAllAsTouched();
     }

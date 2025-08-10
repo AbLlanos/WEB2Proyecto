@@ -32,7 +32,7 @@ export const routes: Routes = [
     { path: "login", component: FormularioLoginComponent, canMatch: [loginCanMatchGuard] },
 
     // Productos
-    { path: "suscripcionCliente", component: SuscripcionClienteComponent, canActivate: [autenticaGuard] },  // Ruta a SuscripcionClienteComponent
+    { path: "suscripcionCliente", component: SuscripcionClienteComponent, canActivate: [autenticaGuard] },
     { path: "historialCliente", component: HistorialClienteComponent, canActivate: [autenticaGuard] },
     { path: "listaProducto", component: ListaProductosPageComponent, canActivate: [autenticaGuard] },
     { path: "formularioProducto", component: FormularioProductoPageComponent, canActivate: [autenticaGuard] },
