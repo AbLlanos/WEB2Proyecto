@@ -1,89 +1,131 @@
 /* Estilos generales */
 body {
-    background: linear-gradient(to right, #ffd86f, #ff5a36);
-    font-family: 'Segoe UI', sans-serif;
-    color: #333;
+  background-color: #333;
+  background: linear-gradient(to right, #ffd86f, #ff5a36);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Animaciones clave */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  
-  /* Animaciones clave */
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  @keyframes bounceLogo {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+}
+
+@keyframes bounceLogo {
+
+  0%,
+  100% {
+    transform: translateY(0);
   }
-  .animate-slide-down   { animation: slideDown 0.7s ease-out; }
-  .logo-bounce          { animation: bounceLogo 2s infinite; }
-  
-  /* Header */
-  .historial-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    justify-content: center;
-    margin-bottom: 1rem;
+
+  50% {
+    transform: translateY(-15px);
   }
-  .historial-title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #ffffff;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-  }
-  
-  /* Tabla y contenedor */
-  .historial-container {
-    background: rgba(255,255,255,0.9);
-    max-width: 90%;
-    margin: 2rem auto;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-  }
-  .historial-table-wrapper {
-    overflow-x: auto;
-  }
-  .historial-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 800px;
-  }
-  .historial-table th, .historial-table td {
-    padding: 0.8rem 1rem;
-    border: 1px solid #ff8f00;
-  }
-  .historial-table thead {
-    background-color: #ff8f00;
-    color: #fff;
-    position: sticky;
-    top: 0;
-  }
-  .historial-table tbody tr:nth-child(even) {
-    background-color: #fff6e5;
-  }
-  
-  /* Filas dinámicas */
-  .pedido-row {
-    transition: background 0.3s;
-  }
-  .pedido-row:hover {
-    background-color: #ffe082;
-  }
-  
-  /* Estilo destacado en total */
-  .pedido-total {
-    font-weight: bold;
-    color: #b71c1c;
-    background-color: rgba(255, 92, 92, 0.2);
-  }
-  
-  /* Filas de productos */
-  .producto-row {
-    background-color: #fff3e0;
-    transition: background 0.3s;
-  }
-  .producto-row:hover {
-    background-color: #ffd54f;
-  }
-  
+}
+
+.animate-slide-down {
+  animation: slideDown 0.7s ease-out;
+}
+
+.logo-bounce {
+  animation: bounceLogo 2s infinite;
+}
+
+/* Header */
+.historial-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.historial-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #000000;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedor general */
+.historial-container {
+  background: rgba(255, 255, 255, 0.9);
+  max-width: 90%;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  /* No overflow ni max-height aquí */
+}
+
+/* Contenedor de la tabla con scroll vertical y horizontal */
+.historial-table-wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: auto;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabla */
+.historial-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+  /* para activar scroll horizontal si es necesario */
+}
+
+.historial-table th,
+.historial-table td {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ff8f00;
+}
+
+.historial-table thead {
+  background-color: #ff8f00;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.historial-table tbody tr:nth-child(even) {
+  background-color: #fff6e5;
+}
+
+/* Filas dinámicas */
+.pedido-row {
+  transition: background 0.3s;
+}
+
+.pedido-row:hover {
+  background-color: #ffe082;
+}
+
+/* Estilo destacado en total */
+.pedido-total {
+  font-weight: bold;
+  color: #b71c1c;
+  background-color: rgba(255, 92, 92, 0.2);
+}
+
+/* Filas de productos */
+.producto-row {
+  background-color: #fff3e0;
+  transition: background 0.3s;
+}
+
+.producto-row:hover {
+  background-color: #ffd54f;
+}

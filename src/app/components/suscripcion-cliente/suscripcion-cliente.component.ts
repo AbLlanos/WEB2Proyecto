@@ -3,12 +3,13 @@ import { NavBarComponent } from "../general/nav-bar/nav-bar.component";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ClienteService } from '../../services/cliente.service';
-import { Router } from '@angular/router';  // <-- Importa Router
+import { Router } from '@angular/router';
+import { FooterComponent } from "../general/footer/footer.component";  // <-- Importa Router
 
 @Component({
   selector: 'app-suscripcion-cliente',
   standalone: true,
-  imports: [NavBarComponent, FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [NavBarComponent, FormsModule, CommonModule, ReactiveFormsModule, FooterComponent],
   templateUrl: './suscripcion-cliente.component.html',
   styleUrls: ['./suscripcion-cliente.component.css']
 })
