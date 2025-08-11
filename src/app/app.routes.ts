@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { HomeComponent } from './pages/home/home.component';
 import { ContactoComponent } from './pages/contacto/contacto.component';
 import { NosotrosComponent } from './pages/nosotros/nosotros.component';
@@ -17,46 +18,40 @@ import { FormularioLoginComponent } from './components/credenciales/formulario-l
 import { PerfilClienteComponent } from './components/cliente/perfil-cliente/perfil-cliente.component';
 import { EditarClienteComponent } from './components/cliente/editar-cliente/editar-cliente.component';
 import { HistorialClienteComponent } from './components/cliente/historial-cliente/historial-cliente.component';
-import { SuscripcionClienteComponent } from './components/suscripcion-cliente/suscripcion-cliente.component';  // Importamos el componente
+import { SuscripcionClienteComponent } from './components/suscripcion-cliente/suscripcion-cliente.component';
 import { GenerarPedidoComponent } from './components/cliente/generar-pedido/generar-pedido.component';
 
+import { InicioEmpleadoComponent } from './pages/inicio-empleado/inicio-empleado.component';
+import { RegistroEmpleadoComponent } from './pages/registro-empleado/registro-empleado.component';
+
 export const routes: Routes = [
-    // Rutas generales
-    { path: "home", component: HomeComponent },
-    { path: "", redirectTo: "home", pathMatch: "full" },
-    { path: "contacto", component: ContactoComponent },
-    { path: "nosotros", component: NosotrosComponent },
-    { path: "productosDisponibles", component: GenerarPedidoComponent },
+  // Rutas generales
+  { path: "", redirectTo: "home", pathMatch: "full" },
+  { path: "home", component: HomeComponent },
+  { path: "contacto", component: ContactoComponent },
+  { path: "nosotros", component: NosotrosComponent },
 
-    // Iniciar sesión
-    { path: "login", component: FormularioLoginComponent, canMatch: [loginCanMatchGuard] },
+  // Sesión
+  { path: "login", component: FormularioLoginComponent, canMatch: [loginCanMatchGuard] },
 
-    // Productos
-    { path: "suscripcionCliente", component: SuscripcionClienteComponent, canActivate: [autenticaGuard] },
-    { path: "historialCliente", component: HistorialClienteComponent, canActivate: [autenticaGuard] },
-    { path: "listaProducto", component: ListaProductosPageComponent, canActivate: [autenticaGuard] },
-    { path: "formularioProducto", component: FormularioProductoPageComponent, canActivate: [autenticaGuard] },
-    { path: "editarFormulario/:id", component: EditarProductosVistaComponent, canActivate: [autenticaGuard] },
+  // Empleados
+  { path: "inicioEmpleado", component: InicioEmpleadoComponent },
+  { path: "registroEmpleado", component: RegistroEmpleadoComponent },
 
-    // Clientes
-    {
-        path: "registroCliente",
-        component: RegistroClienteComponent,
-        canDeactivate: [registroEmpleadoGuard]
-    },
-    {
-        path: "registroCliente1",
-        component: FormularioClienteComponent,
-        canDeactivate: [registroEmpleadoGuard]
-    },
+  // Productos
+  { path: "productosDisponibles", component: GenerarPedidoComponent },
+  { path: "listaProducto", component: ListaProductosPageComponent, canActivate: [autenticaGuard] },
+  { path: "formularioProducto", component: FormularioProductoPageComponent, canActivate: [autenticaGuard] },
+  { path: "editarFormulario/:id", component: EditarProductosVistaComponent, canActivate: [autenticaGuard] },
 
-    { path: "perfilCliente", component: PerfilClienteComponent, canActivate: [autenticaGuard] },
-    { path: "editarCliente", component: EditarClienteComponent, canActivate: [autenticaGuard] },
+  // Clientes
+  { path: "registroCliente", component: RegistroClienteComponent, canDeactivate: [registroEmpleadoGuard] },
+  { path: "registroCliente1", component: FormularioClienteComponent, canDeactivate: [registroEmpleadoGuard] },
+  { path: "perfilCliente", component: PerfilClienteComponent, canActivate: [autenticaGuard] },
+  { path: "editarCliente", component: EditarClienteComponent, canActivate: [autenticaGuard] },
+  { path: "historialCliente", component: HistorialClienteComponent, canActivate: [autenticaGuard] },
+  { path: "suscripcionCliente", component: SuscripcionClienteComponent, canActivate: [autenticaGuard] },
 
-    // Empleados
-    { path: "", component: HomeComponent },
-    { path: "", redirectTo: "home", pathMatch: "full" },
-
-    // Página No encontrada
-    { path: "**", component: PaginaNoEncontradaComponent }
+  // Página no encontrada
+  { path: "**", component: PaginaNoEncontradaComponent }
 ];

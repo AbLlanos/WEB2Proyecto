@@ -1,0 +1,79 @@
+<div class="container1 w-full min-h-screen flex items-center justify-center bg-gray-100 px-4 py-24">
+  <div class="w-full max-w-3xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+
+    <!-- IMAGEN IZQUIERDA -->
+    <div class="w-full md:w-1/2 h-64 md:h-auto">
+      <img
+        src="https://tse4.mm.bing.net/th/id/OIP.UBl1C8kDVm-Ii1IZEDB1HAHaET?rs=1&pid=ImgDetMain&o=7&rm=3"
+        alt="Empleado McDonald's"
+        class="w-full h-full object-cover object-center">
+    </div>
+
+    <!-- FORMULARIO DERECHO -->
+    <div class="w-full md:w-1/2 p-8 flex flex-col justify-center space-y-6">
+
+      <div class="bg-yellow-100 p-6 rounded-xl shadow-lg">
+        <div class="text-center">
+          <h1 class="text-4xl font-bold text-red-600">Ingreso Empleados</h1>
+          <p class="text-gray-600 mt-2">Solo personal autorizado</p>
+
+          <div class="mt-6 flex justify-center">
+            <img
+              src="https://1000marcas.net/wp-content/uploads/2019/11/McDonalds-logo.png"
+              alt="Logo McDonald's"
+              class="w-60 h-20">
+          </div>
+        </div>
+
+        <form class="space-y-4 mt-6" (ngSubmit)="loginEmpleado()">
+          <!-- Usuario -->
+          <div>
+            <label for="usuario" class="block text-sm font-medium">Usuario</label>
+            <div class="input-card">
+              <input [(ngModel)]="usuario" name="usuario" id="usuario" type="text" required
+                     placeholder="ej: empleado123"
+                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
+            </div>
+          </div>
+
+          <!-- Contraseña -->
+          <div>
+            <label for="password" class="block text-sm font-medium">Contraseña</label>
+            <div class="input-card">
+              <input [(ngModel)]="password" name="password" id="password" type="password" required
+                     placeholder="Ingrese su contraseña"
+                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-400">
+            </div>
+          </div>
+
+          <!-- Error -->
+          <div *ngIf="error" class="text-red-600 text-sm text-center font-semibold">
+            {{ error }}
+          </div>
+
+          <!-- Botón -->
+          <button type="submit"
+                  class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105">
+            Ingresar
+          </button>
+        </form>
+
+        <!-- Volver al login cliente y registro de empleado -->
+        <div class="text-center mt-4">
+          <button class="text-red-600 hover:underline font-semibold" routerLink="/login">
+            Volver a inicio de sesión cliente
+          </button>
+
+          <!-- Botón para registrarse como empleado -->
+          <div class="mt-2">
+            <button
+              class="text-yellow-700 hover:underline font-semibold"
+              routerLink="/registroEmpleado">
+              Registrarse como empleado
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

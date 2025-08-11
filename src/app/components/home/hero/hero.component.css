@@ -1,32 +1,38 @@
 .inicio-section {
-  padding: 60px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 60px;
   background-color: #fff8e1;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   animation: fadeIn 1s ease-in;
+  max-width: 1100px;
+  margin: 40px auto;
+  flex-direction: row; /* Horizontal */
+  gap: 30px;
 }
 
 .inicio-bloque {
   display: flex;
   align-items: center;
   gap: 30px;
-  margin-bottom: 50px;
   flex-wrap: wrap;
 }
+
 .inicio-bloque img {
   width: 180px;
   height: auto;
-}
-.inicio-bloque img {
-  width: 180px;
-  height: auto;
-  transition: transform 0.5s ease; /* Transición suave de la rotación */
+  transition: transform 0.5s ease;
 }
 
 .inicio-bloque img:hover {
-  transform: rotate(360deg); /* Gira 360 grados */
+  transform: rotate(360deg);
 }
 
 .inicio-bloque .texto {
-  max-width: 700px;
+  max-width: 600px;
+  text-align: left;
 }
 
 .inicio-bloque .texto h2 {
@@ -40,6 +46,18 @@
   line-height: 1.6;
   color: #333;
 }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 .inicio-grid {
   display: flex;
@@ -80,13 +98,13 @@
   font-size: 1rem;
   color: #444;
 }
-/* Sección de Promociones */
+
 /* Sección de Promociones */
 .promo-section {
   background-color: #fff;
   padding: 60px 30px;
   text-align: center;
-  border-top: 4px solid #e40e0e; /* Un borde rojo */
+  border-top: 4px solid #e40e0e;
   position: relative;
 }
 
@@ -94,7 +112,7 @@
   font-size: 2.5rem;
   color: #e40e0e;
   margin-bottom: 40px;
-  animation: fadeInTitle 1s ease-out; /* Animación para el título */
+  animation: fadeInTitle 1s ease-out;
 }
 
 @keyframes fadeInTitle {
@@ -114,7 +132,7 @@
   justify-content: center;
   gap: 30px;
   opacity: 0;
-  animation: fadeInGrid 1s ease-in-out 0.5s forwards; /* Animación para la cuadrícula */
+  animation: fadeInGrid 1s ease-in-out 0.5s forwards;
 }
 
 @keyframes fadeInGrid {
@@ -128,9 +146,8 @@
   }
 }
 
-/* Tarjetas de promociones */
 .promo-card {
-  background-color: #ffe8e8; /* Fondo suave para las tarjetas */
+  background-color: #ffe8e8;
   border-radius: 12px;
   padding: 25px 20px;
   width: 280px;
@@ -138,11 +155,10 @@
   position: relative;
   overflow: hidden;
   opacity: 0;
-  animation: slideIn 0.6s ease-out forwards; /* Animación para cada tarjeta */
-  transition: transform 0.3s ease; /* Transición para efecto hover */
+  animation: slideIn 0.6s ease-out forwards;
+  transition: transform 0.3s ease;
 }
 
-/* Animación para las tarjetas individuales */
 @keyframes slideIn {
   0% {
     opacity: 0;
@@ -154,30 +170,18 @@
   }
 }
 
-/* Efecto hover en las tarjetas (rebote controlado) */
 .promo-card:hover {
-  animation: bounce 0.4s ease-in-out infinite; /* Rebote controlado */
-  transform: translateY(-10px); /* El rebote va hacia arriba */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al hacer hover */
+  animation: bounce 0.4s ease-in-out infinite;
+  transform: translateY(-10px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Animación de rebote para las tarjetas */
 @keyframes bounce {
-  0% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-5px); /* Rebota hacia arriba */
-  }
-  50% {
-    transform: translateY(0); /* Vuelve a su posición original */
-  }
-  75% {
-    transform: translateY(-5px); /* Rebota hacia arriba otra vez */
-  }
-  100% {
-    transform: translateY(0); /* Y vuelve a su posición inicial */
-  }
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-5px); }
+  50% { transform: translateY(0); }
+  75% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
 }
 
 .promo-card img {
@@ -186,33 +190,26 @@
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 15px;
-  transition: transform 0.3s ease; /* Transición suave de la imagen */
+  transition: transform 0.3s ease;
 }
 
-/* Efecto hover en la imagen */
 .promo-card:hover img {
-  transform: scale(1.1); /* Zoom en la imagen al hacer hover */
+  transform: scale(1.1);
 }
 
 .promo-card h3 {
-  color: #b30000; /* Rojo fuerte para los títulos */
+  color: #b30000;
   font-size: 1.5rem;
   margin-bottom: 10px;
-  text-transform: uppercase; /* Mayúsculas para mayor impacto */
+  text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 1px;
-  animation: fadeInText 0.5s ease-out; /* Animación para el texto */
+  animation: fadeInText 0.5s ease-out;
 }
 
 @keyframes fadeInText {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 .promo-card p {
@@ -221,20 +218,17 @@
   line-height: 1.4;
 }
 
-/* Pequeño efecto en los textos para hacerlos más dinámicos */
 .promo-card:hover h3 {
-  color: #e40e0e; /* Cambiar el color del título al pasar el ratón */
+  color: #e40e0e;
   transform: translateY(-5px);
 }
 
-
-/* Sección Cajita Feliz */
 /* Sección Cajita Feliz */
 .cajita-feliz-section {
-  background-color: #fff8e1; /* Color suave similar al amarillo */
+  background-color: #fff8e1;
   padding: 60px 30px;
   text-align: center;
-  border-top: 4px solid #e40e0e; /* Borde superior rojo */
+  border-top: 4px solid #e40e0e;
   position: relative;
 }
 
@@ -245,14 +239,14 @@
 }
 
 .cajita-feliz-card {
-  background-color: #ffe8e8; /* Fondo suave */
+  background-color: #ffe8e8;
   border-radius: 10px;
   padding: 25px 20px;
   width: 280px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
   transition: transform 0.3s ease;
-  position: relative; /* Necesario para posicionar los juguetes flotantes */
+  position: relative;
   overflow: hidden;
 }
 
@@ -260,7 +254,6 @@
   transform: scale(1.05);
 }
 
-/* El contenido de la cajita */
 .cajita-feliz-card img {
   width: 100%;
   max-height: 160px;
@@ -281,7 +274,6 @@
   line-height: 1.4;
 }
 
-/* Contenedor para los juguetes flotantes */
 .toys-container {
   position: absolute;
   top: 50%;
@@ -289,115 +281,80 @@
   transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
-  pointer-events: none; /* No interfiere con el clic de la tarjeta */
+  pointer-events: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0; /* Ocultar los juguetes por defecto */
-  transition: opacity 0.3s ease-in-out; /* Transición suave */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 }
 
-/* Hacer que los juguetes aparezcan cuando se pasa el ratón sobre la cajita */
 .cajita-feliz-card:hover .toys-container {
   opacity: 1;
 }
 
-/* Juguetes flotantes */
 .toy {
   position: absolute;
-  width: 100px; /* Tamaño de los círculos */
+  width: 100px;
   height: 100px;
-  border-radius: 80%; /* Círculo perfecto */
-  overflow: hidden; /* Para que las imágenes no se desborden */
+  border-radius: 80%;
+  overflow: hidden;
   background-size: cover;
   background-position: center;
   animation: floatToys 6s ease-in-out infinite;
-  pointer-events: none; /* No bloquea la interacción */
-  opacity: 0; /* Inicialmente invisibles */
+  pointer-events: none;
+  opacity: 0;
   transform-origin: center;
 }
 
-/* Juguetes con retrasos para la animación */
-.toy:nth-child(1) {
-  animation-delay: 0s;
-}
+.toy:nth-child(1) { animation-delay: 0s; }
+.toy:nth-child(2) { animation-delay: 1s; }
+.toy:nth-child(3) { animation-delay: 2s; }
+.toy:nth-child(4) { animation-delay: 3s; }
 
-.toy:nth-child(2) {
-  animation-delay: 1s;
-}
-
-.toy:nth-child(3) {
-  animation-delay: 2s;
-}
-
-.toy:nth-child(4) {
-  animation-delay: 3s;
-}
-
-/* Animación para los juguetes flotantes */
 @keyframes floatToys {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-    opacity: 0;
-  }
-  25% {
-    transform: translate(-50px, -50px) rotate(45deg);
-    opacity: 1;
-  }
-  50% {
-    transform: translate(50px, -100px) rotate(90deg);
-    opacity: 1;
-  }
-  75% {
-    transform: translate(0, 50px) rotate(135deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50px, 0) rotate(180deg);
-    opacity: 0;
-  }
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  25% { transform: translate(-50px, -50px) rotate(45deg); opacity: 1; }
+  50% { transform: translate(50px, -100px) rotate(90deg); opacity: 1; }
+  75% { transform: translate(0, 50px) rotate(135deg); opacity: 1; }
+  100% { transform: translate(-50px, 0) rotate(180deg); opacity: 0; }
 }
 
-/* Agregar las imágenes dentro de los juguetes */
 .toy:nth-child(1) {
   background-image: url('https://mcd-landings-l-statics.appmcdonalds.com/uploads-live/MAU_b33aec49bf.png');
 }
-
 .toy:nth-child(2) {
   background-image: url('https://mcd-landings-l-statics.appmcdonalds.com/uploads-live/hans_6d19878e0a.png');
 }
-
 .toy:nth-child(3) {
   background-image: url('https://mcd-landings-l-statics.appmcdonalds.com/uploads-live/SUNNY_5fd14fdab4.png');
 }
-
 .toy:nth-child(4) {
   background-image: url('https://mcd-landings-l-statics.appmcdonalds.com/uploads-live/FIFI_b8e896cd12.png');
 }
 
-
-
-
-/* Tarjetas del carrusel */
-/* Carrusel 3D */
-/* Carrusel 3D */
+/* Carrusel 3D MODERNO */
 .carousel-wrapper {
   width: 100%;
-  height: 500px; /* Ajusta la altura según lo que necesites */
+  max-width: 1200px;
+  aspect-ratio: 3/1;
+  margin: 0 auto;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background-color:#fff8e1; /* Fondo general con color amarillo McDonald's */
+  background-color: #fff8e1;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .carousel-inner {
-  --w: 250px; /* Ancho de cada tarjeta */
-  --h: 200px; /* Alto de cada tarjeta */
-  --quantity: 6; /* Número de tarjetas */
-  --translateZ: 350px; /* Aumentamos la profundidad de las tarjetas */
-  --perspective: 1000px;
+  --w: 250px;
+  --h: 160px;
+  --quantity: 6;
+  --translateZ: 400px;
+  --perspective: 1200px;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -423,32 +380,32 @@
   position: absolute;
   width: var(--w);
   height: var(--h);
-  transform: rotateY(calc(360deg / var(--quantity) * var(--index)))
-    translateZ(var(--translateZ));
+  transform: rotateY(calc(360deg / var(--quantity) * var(--index))) translateZ(var(--translateZ));
   display: flex;
   justify-content: center;
   align-items: center;
   transition: transform 0.5s ease-in-out;
-  opacity: 0.9;
-  border-radius: 12px; /* Redondeamos las esquinas un poco más */
-  background-color: #FFC72C; /* Color amarillo McDonald's */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Añadimos sombra para mayor profundidad */
+  opacity: 0.95;
+  border-radius: 14px;
+  background-color: #FFC72C;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 }
 
 .carousel-card:hover {
-  transform: scale(1.1); /* Efecto de zoom al pasar el ratón */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Sombra más fuerte al hacer hover */
+  transform: scale(1.1);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
 }
 
 .carousel-card .carousel-name {
   position: absolute;
-  bottom: 20px; /* Bajamos un poco el nombre para que no se superponga con la imagen */
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 16px;
-  color: #fdfdfd;
+  font-size: 15px;
+  color: #fff;
   font-weight: bold;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Sombra para mejor visibilidad */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 .carousel-img {
@@ -458,24 +415,26 @@
   background-position: center;
   border-radius: 12px;
 }
+
+/* Título sección hamburguesas */
 .hamburguesas-section {
   text-align: center;
   margin-top: 50px;
 }
 
 .line {
-  width: 100%; /* La línea ocupará todo el ancho de la pantalla */
+  width: 100%;
   height: 3px;
-  background-color: #db0007; /* Rojo */
-  margin: 0 auto 20px auto; /* Centra la línea y agrega espacio abajo */
+  background-color: #db0007;
+  margin: 0 auto 20px auto;
 }
 
 .hamburguesas-title {
-  font-size: 3rem; /* Ajusta el tamaño del título */
+  font-size: 3rem;
   font-weight: 800;
-  color: #db0007; /* Color rojo */
+  color: #db0007;
   text-transform: uppercase;
   margin-bottom: 30px;
-  letter-spacing: 3px; /* Mayor espaciado entre letras */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra suave para hacerlo más llamativo */
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
