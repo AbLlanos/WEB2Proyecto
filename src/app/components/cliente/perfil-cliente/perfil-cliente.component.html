@@ -1,91 +1,71 @@
 <app-nav-bar></app-nav-bar>
 
 <div class="max-w-6xl mx-auto p-6">
-    <!-- Recuadro superior con imagen y datos -->
-    <div
-        class="bg-gray-200 rounded-2xl shadow-lg p-6 flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
-        <!-- Imagen de usuario centrada -->
-        <div class="flex-shrink-0 flex items-center justify-center w-full sm:w-auto bg-red-100 rounded-xl shadow p-3">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-z31-byNeE307ReTDio0-9Y6_k0DnTTAhA&s"
-                alt="Usuario" class="w-48 h-48 rounded-full object-cover border-4 border-yellow-400 shadow-md">
-        </div>
+  <!-- Contenedor perfil -->
+  <div class="profile-container bg-gradient rounded-xl shadow-lg p-8 flex flex-col items-center">
 
-        <!-- Datos del usuario -->
-               <div class="text-center sm:text-left flex-1">
-            <h2 class="text-2xl font-bold text-red-600 mb-4">{{ usuario?.nombreCompleto | nombre }}</h2>
-
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-gray-700">
-                <div class="bg-yellow-100 rounded-xl shadow p-3">
-                    <span class="font-semibold">Cédula:</span><br>{{ usuario?.cedula }}
-                </div>
-                <div class="bg-yellow-100 rounded-xl shadow p-3">
-                    <span class="font-semibold">Correo:</span><br>{{ usuario?.correoElectronico }}
-                </div>
-                <div class="bg-yellow-100 rounded-xl shadow p-3">
-                    <span class="font-semibold">Teléfono:</span><br>{{ usuario?.telefono }}
-                </div>
-                <div class="bg-yellow-100 rounded-xl shadow p-3">
-                    <span class="font-semibold">Dirección:</span><br>{{ usuario?.direccion }}
-                </div>
-                <div class="bg-yellow-100 rounded-xl shadow p-3">
-                    <span class="font-semibold">Fecha de nacimiento:</span><br>{{ usuario?.fechaNacimiento }}
-                </div>
-                <div class="bg-yellow-100 rounded-xl shadow p-3">
-                    <span class="font-semibold">Edad:</span><br>{{ usuario?.fechaNacimiento | edad }}
-                </div>
-                <div class="bg-yellow-100 rounded-xl shadow p-3">
-                    <span class="font-semibold">Género:</span><br>{{ usuario?.genero }}
-                </div>
-                <div class="bg-yellow-100 rounded-xl shadow p-3">
-                    <span class="font-semibold">Rol:</span><br>Cliente
-                </div>
-                <div class="bg-yellow-100 rounded-xl shadow p-3">
-                    <span class="font-semibold">Suscripción:</span><br>{{ usuario?.suscripcion | suscripcionActiva }}
-                </div>
-                <div class="bg-yellow-100 rounded-xl shadow p-3">
-                    <span class="font-semibold">Tiempo restante:</span><br>{{ usuario?.suscripcion | tiempoRestante }}
-                </div>
-            </div>
-        </div>
+    <!-- Foto perfil centrada arriba -->
+    <div class="profile-image-wrapper">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-z31-byNeE307ReTDio0-9Y6_k0DnTTAhA&s"
+        alt="Usuario" class="profile-image" />
     </div>
 
-    <!-- Cuadro con 4 botones como tarjetas -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 container1">
-        <!-- Botón 1 -->
-        <a routerLink="/listaProducto">
-            <button
-                class="bg-white rounded-2xl shadow-2xl p-6 min-h-[280px] hover:shadow-yellow-500/50 transition-transform hover:scale-105 flex flex-col items-center justify-between text-center focus:outline-none">
-                <img src="https://api-middleware-mcd.mcdonaldscupones.com/media/image/product$kaXTZPtb/200/200/original?country=ec"
-                    alt="Generar Pedido" class="w-28 h-28 mb-4 object-contain">
-                <h3 class="text-lg font-semibold text-yellow-600">Generar Pedido</h3>
-            </button>
-        </a>
-        <!-- Botón 2 -->
-        <a routerLink="/historialCliente">
-            <button
-                class="bg-white rounded-2xl shadow-2xl p-6 min-h-[280px] hover:shadow-yellow-500/50 transition-transform hover:scale-105 flex flex-col items-center justify-between text-center focus:outline-none">
-                <img src="https://cdn-icons-png.flaticon.com/128/18883/18883963.png" alt="Historial"
-                    class="w-28 h-28 mb-4 object-contain">
-                <h3 class="text-lg font-semibold text-yellow-600 text-center">Revisar Historial de Pedidos</h3>
-            </button>
-        </a>
-        <!-- Botón 3 -->
-        <a routerLink="/editarCliente">
-            <button
-                class="bg-white rounded-2xl shadow-2xl p-6 min-h-[280px] hover:shadow-yellow-500/50 transition-transform hover:scale-105 flex flex-col items-center justify-between text-center focus:outline-none">
-                <img src="https://cdn-icons-png.flaticon.com/128/18091/18091018.png" alt="Cambiar Credenciales"
-                    class="w-28 h-28 mb-4 object-contain">
-                <h3 class="text-lg font-semibold text-yellow-600 text-center">Cambiar Credenciales</h3>
-            </button>
-        </a>
-        <!-- Botón 4 -->
-        <a routerLink="/suscripcionCliente">
-            <button
-                class="bg-white rounded-2xl shadow-2xl p-6 min-h-[280px] hover:shadow-yellow-500/50 transition-transform hover:scale-105 flex flex-col items-center justify-between text-center focus:outline-none">
-                <img src="https://cdn-icons-png.flaticon.com/128/1260/1260241.png" alt="Suscripción"
-                    class="w-28 h-28 mb-4 object-contain">
-                <h3 class="text-lg font-semibold text-yellow-600 text-center">Comprar Suscripción</h3>
-            </button>
-        </a>
+    <!-- Info usuario debajo -->
+    <div class="profile-info mt-8 w-full max-w-4xl">
+      <h2 class="profile-name">{{ usuario?.nombreCompleto | nombre }}</h2>
+
+      <div class="profile-data-grid">
+        <div class="profile-data-item"><span>Cédula:</span> {{ usuario?.cedula }}</div>
+        <div class="profile-data-item"><span>Correo:</span> {{ usuario?.correoElectronico }}</div>
+        <div class="profile-data-item"><span>Teléfono:</span> {{ usuario?.telefono }}</div>
+        <div class="profile-data-item"><span>Dirección:</span> {{ usuario?.direccion }}</div>
+        <div class="profile-data-item"><span>Fecha de nacimiento:</span> {{ usuario?.fechaNacimiento }}</div>
+        <div class="profile-data-item"><span>Edad:</span> {{ usuario?.fechaNacimiento | edad }}</div>
+        <div class="profile-data-item"><span>Género:</span> {{ usuario?.genero }}</div>
+        <div class="profile-data-item"><span>Rol:</span> Cliente</div>
+        <div class="profile-data-item"><span>Suscripción:</span> {{ usuario?.suscripcion | suscripcionActiva }}</div>
+        <div class="profile-data-item"><span>Tiempo restante:</span> {{ usuario?.suscripcion | tiempoRestante }}</div>
+      </div>
     </div>
+  </div>
+
+  <!-- Botones abajo -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 container1">
+    <!-- Botón 1 -->
+    <a routerLink="/listaProducto">
+      <button
+        class="bg-white rounded-2xl shadow-2xl p-6 min-h-[280px] hover:shadow-yellow-500/50 transition-transform hover:scale-105 flex flex-col items-center justify-between text-center focus:outline-none">
+        <img src="https://api-middleware-mcd.mcdonaldscupones.com/media/image/product$kaXTZPtb/200/200/original?country=ec"
+          alt="Generar Pedido" class="w-28 h-28 mb-4 object-contain">
+        <h3 class="text-lg font-semibold text-yellow-600">Generar Pedido</h3>
+      </button>
+    </a>
+    <!-- Botón 2 -->
+    <a routerLink="/historialCliente">
+      <button
+        class="bg-white rounded-2xl shadow-2xl p-6 min-h-[280px] hover:shadow-yellow-500/50 transition-transform hover:scale-105 flex flex-col items-center justify-between text-center focus:outline-none">
+        <img src="https://cdn-icons-png.flaticon.com/128/18883/18883963.png" alt="Historial"
+          class="w-28 h-28 mb-4 object-contain">
+        <h3 class="text-lg font-semibold text-yellow-600 text-center">Revisar Historial de Pedidos</h3>
+      </button>
+    </a>
+    <!-- Botón 3 -->
+    <a routerLink="/editarCliente">
+      <button
+        class="bg-white rounded-2xl shadow-2xl p-6 min-h-[280px] hover:shadow-yellow-500/50 transition-transform hover:scale-105 flex flex-col items-center justify-between text-center focus:outline-none">
+        <img src="https://cdn-icons-png.flaticon.com/128/18091/18091018.png" alt="Cambiar Credenciales"
+          class="w-28 h-28 mb-4 object-contain">
+        <h3 class="text-lg font-semibold text-yellow-600 text-center">Cambiar Credenciales</h3>
+      </button>
+    </a>
+    <!-- Botón 4 -->
+    <a routerLink="/suscripcionCliente">
+      <button
+        class="bg-white rounded-2xl shadow-2xl p-6 min-h-[280px] hover:shadow-yellow-500/50 transition-transform hover:scale-105 flex flex-col items-center justify-between text-center focus:outline-none">
+        <img src="https://cdn-icons-png.flaticon.com/128/1260/1260241.png" alt="Suscripción"
+          class="w-28 h-28 mb-4 object-contain">
+        <h3 class="text-lg font-semibold text-yellow-600 text-center">Comprar Suscripción</h3>
+      </button>
+    </a>
+  </div>
 </div>

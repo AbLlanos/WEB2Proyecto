@@ -1,0 +1,161 @@
+/* Contenedor principal */
+div.max-w-md {
+    background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(248, 181, 0, 0.5);
+    padding: 2rem 2.5rem;
+    transition: box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Luz animada en el contenedor */
+  div.max-w-md::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -25%;
+    width: 150%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.15);
+    transform: rotate(45deg);
+    animation: shine 3s linear infinite;
+    pointer-events: none;
+    border-radius: 20px;
+  }
+  
+  @keyframes shine {
+    0% {
+      transform: rotate(45deg) translateX(-150%);
+    }
+    100% {
+      transform: rotate(45deg) translateX(150%);
+    }
+  }
+  
+  /* Título */
+  h2 {
+    font-family: 'Arial Black', Arial, sans-serif;
+    color: #bf0000;
+    text-shadow: 1px 1px 2px #fcd12a;
+    letter-spacing: 1.2px;
+  }
+  
+  /* Inputs y select */
+  input[type="text"],
+  input[type="password"],
+  select {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: 2px solid #bf0000;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #4a4a4a;
+    box-shadow: inset 0 0 5px #fcd12a;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff8dc;
+    outline: none;
+  }
+  
+  /* Focus inputs y select */
+  input[type="text"]:focus,
+  input[type="password"]:focus,
+  select:focus {
+    border-color: #fcd12a;
+    box-shadow: 0 0 8px #fcd12a;
+    background-color: #fffefa;
+  }
+  
+  /* Labels */
+  label {
+    font-weight: 700;
+    color: #bf0000;
+    display: block;
+    margin-bottom: 0.3rem;
+    user-select: none;
+  }
+  
+  /* Mensajes de error */
+  .text-red-500 {
+    color: #d60000 !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Botón */
+  button[type="submit"] {
+    background: #bf0000;
+    color: #ffdd00;
+    font-weight: 800;
+    font-size: 1.1rem;
+    padding: 0.8rem 0;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(191, 0, 0, 0.6);
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    letter-spacing: 1px;
+    user-select: none;
+  }
+  
+  /* Botón hover */
+  button[type="submit"]:hover:not(:disabled) {
+    background: #ffcc00;
+    color: #bf0000;
+    box-shadow: 0 8px 25px rgba(252, 209, 10, 0.85);
+    transform: scale(1.05);
+  }
+  
+  /* Botón disabled */
+  button[type="submit"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+    background: #bf0000;
+    color: #ffdd00;
+  }
+  
+  /* Espaciado interno de los grupos */
+  form > div {
+    position: relative;
+  }
+  
+  /* Flex para fecha y CVV */
+  .flex {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .flex-1 {
+    flex: 1;
+  }
+  
+  /* Transición suave para el formulario */
+  form {
+    transition: all 0.4s ease;
+  }
+  
+  /* Placeholder color */
+  input::placeholder,
+  select:invalid {
+    color: #b8860b;
+    font-style: italic;
+  }
+  
+  /* Agregamos una sombra sutil al form cuando está enfocado */
+  form:focus-within {
+    box-shadow: 0 0 15px #fcd12a;
+    border-radius: 20px;
+  }
+  
+  /* Para inputs invalidos con borde rojo */
+  input.ng-invalid.ng-touched,
+  select.ng-invalid.ng-touched {
+    border-color: #d60000;
+    box-shadow: 0 0 8px #d60000;
+    background-color: #ffe6e6;
+  }
+  
