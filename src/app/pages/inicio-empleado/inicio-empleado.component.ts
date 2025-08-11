@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';  // Importa FormsModule
+import { FormsModule } from '@angular/forms';
+import { NavBarComponent } from "../../components/general/nav-bar/nav-bar.component";
+import { FooterComponent } from "../../components/general/footer/footer.component";  // Importa FormsModule
 
 @Component({
   selector: 'app-inicio-empleado',
   standalone: true,
-  imports: [FormsModule], // Aquí sí puedes poner FormsModule para Angular 16+
+  imports: [FormsModule, NavBarComponent, FooterComponent],
   templateUrl: './inicio-empleado.component.html',
   styleUrls: ['./inicio-empleado.component.css'],
 })

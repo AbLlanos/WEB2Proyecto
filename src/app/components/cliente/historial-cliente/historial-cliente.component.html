@@ -1,52 +1,66 @@
 <app-nav-bar></app-nav-bar>
 
-<div class="historial-container animate-slide-down">
-  <!-- Título con animación -->
-  <div class="historial-header">
-    <img src="https://mcd-landings-q-static.appmcdonalds.com/uploads-quality/48px_86952f326f.svg"
-         alt="Logo McDonald's" class="logo-bounce" />
-    <h2 class="historial-title">Historial de Pedidos Solicitados</h2>
-  </div>
+<div class="bg-gray-200 min-h-screen flex flex-col items-center justify-start">
+  <div class="historial-container animate-slide-down bg-gray-200 flex flex-col items-center max-w-6xl w-full">
+    <!-- Título con animación -->
+    <div class="historial-header flex items-center gap-4 mb-2">
+      <img src="https://mcd-landings-q-static.appmcdonalds.com/uploads-quality/48px_86952f326f.svg"
+        alt="Logo McDonald's" class="logo-bounce" />
+      <h2 class="historial-title text-black font-bold text-2xl">
+        Historial de Pedidos Solicitados
+      </h2>
+    </div>
 
-  <!-- Tabla con scroll y estilo vibrante -->
-  <div class="historial-table-wrapper">
-    <table class="historial-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Fecha</th>
-          <th>Producto</th>
-          <th>Cant.</th>
-          <th>Precio</th>
-          <th>IVA</th>
-          <th>Subtotal</th>
-          <th>Total Pedido</th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container *ngFor="let pedido of pedidosUsuario; trackBy: trackById">
-          <tr class="pedido-row">
-            <td>{{ pedido.id }}</td>
-            <td>{{ pedido.fecha | date:'short' }}</td>
-            <td>{{ pedido.productos[0]?.nombre }}</td>
-            <td>{{ pedido.productos[0]?.cantidad }}</td>
-            <td>{{ pedido.productos[0]?.precioUnitario.toFixed(2) }}</td>
-            <td>{{ (pedido.productos[0]?.iva * 100).toFixed(0) }}%</td>
-            <td>{{ pedido.productos[0]?.subtotal.toFixed(2) }}</td>
-            <td class="pedido-total">${{ pedido.total.toFixed(2) }}</td>
+    <!-- Tabla con scroll y estilo vibrante -->
+    <div
+      class="historial-table-wrapper max-h-[400px] overflow-y-auto border border-gray-300 rounded-lg shadow-md w-full">
+      <table class="historial-table w-full border-collapse text-center">
+        <thead class="bg-yellow-300 sticky top-0 z-10">
+          <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Producto</th>
+            <th>Cant.</th>
+            <th>Precio</th>
+            <th>IVA (%)</th>
+            <th>Precio x Cantidad</th>
+            <th>IVA Pagado ($)</th>
+            <th>Subtotal</th>
+            <th>Total Pedido</th>
           </tr>
-          <tr *ngFor="let prod of pedido.productos.slice(1)" class="producto-row">
-            <td></td><td></td>
-            <td>{{ prod.nombre }}</td>
-            <td>{{ prod.cantidad }}</td>
-            <td>{{ prod.precioUnitario.toFixed(2) }}</td>
-            <td>{{ (prod.iva * 100).toFixed(0) }}%</td>
-            <td>{{ prod.subtotal.toFixed(2) }}</td>
-            <td></td>
-          </tr>
-        </ng-container>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let pedido of pedidosUsuario; trackBy: trackById">
+            <!-- Primer producto -->
+            <tr class="pedido-row">
+              <td>{{ pedido.id }}</td>
+              <td>{{ pedido.fecha | date:'short' }}</td>
+              <td>{{ pedido.productos[0]?.nombre }}</td>
+              <td>{{ pedido.productos[0]?.cantidad }}</td>
+              <td>{{ pedido.productos[0]?.precioUnitario.toFixed(2) }}</td>
+              <td>{{ (pedido.productos[0]?.iva * 100).toFixed(0) }}%</td>
+              <td>{{ pedido.productos[0]?.precioPorCantidad.toFixed(2) }}</td>
+              <td>{{ pedido.productos[0]?.ivaPagadoProducto.toFixed(2) }}</td>
+              <td>{{ pedido.productos[0]?.subtotal.toFixed(2) }}</td>
+              <td class="pedido-total">${{ pedido.total.toFixed(2) }}</td>
+            </tr>
+            <!-- Resto de productos -->
+            <tr *ngFor="let prod of pedido.productos.slice(1)" class="producto-row">
+              <td></td>
+              <td></td>
+              <td>{{ prod.nombre }}</td>
+              <td>{{ prod.cantidad }}</td>
+              <td>{{ prod.precioUnitario.toFixed(2) }}</td>
+              <td>{{ (prod.iva * 100).toFixed(0) }}%</td>
+              <td>{{ prod.precioPorCantidad.toFixed(2) }}</td>
+              <td>{{ prod.ivaPagadoProducto.toFixed(2) }}</td>
+              <td>{{ prod.subtotal.toFixed(2) }}</td>
+              <td></td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 

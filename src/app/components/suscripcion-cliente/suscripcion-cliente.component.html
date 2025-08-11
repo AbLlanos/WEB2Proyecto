@@ -1,82 +1,87 @@
 <app-nav-bar></app-nav-bar>
 
 <!-- formulario-tarjeta.component.html -->
-<div class="max-w-md mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
-    <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">Datos de la tarjeta</h2>
+<div class="min-h-screen bg-gray-200 flex justify-center items-start py-10 px-4">
+    <div class="max-w-md mx-auto p-10 bg-gray-200 rounded-xl shadow-md space-y-6 mt-10 mb-10">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">Datos de la tarjeta</h2>
 
-    <form [formGroup]="tarjetaForm" (ngSubmit)="submitTarjeta()" class="space-y-4">
+        <form [formGroup]="tarjetaForm" (ngSubmit)="submitTarjeta()" class="space-y-4">
 
-        <!-- Nombre en la tarjeta -->
-        <div>
-            <label for="nombreTitular" class="block text-sm font-medium text-gray-700">Nombre en la tarjeta</label>
-            <input id="nombreTitular" type="text" formControlName="nombreTitular" placeholder="Nombre completo"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                required />
-            <div *ngIf="tarjetaForm.get('nombreTitular')?.invalid && tarjetaForm.get('nombreTitular')?.touched"
-                class="text-red-500 text-sm mt-1">
-                El nombre es obligatorio.
-            </div>
-        </div>
-
-        <!-- Número de tarjeta -->
-        <div>
-            <label for="numeroTarjeta" class="block text-sm font-medium text-gray-700">Número de tarjeta</label>
-            <input id="numeroTarjeta" type="text" formControlName="numeroTarjeta" placeholder="0000 0000 0000 0000"
-                maxlength="19"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                required />
-            <div *ngIf="tarjetaForm.get('numeroTarjeta')?.invalid && tarjetaForm.get('numeroTarjeta')?.touched"
-                class="text-red-500 text-sm mt-1">
-                Ingresa un número válido.
-            </div>
-        </div>
-
-        <!-- Fecha expiración -->
-        <div class="flex gap-4">
-            <div class="flex-1">
-                <label for="fechaExpiracion" class="block text-sm font-medium text-gray-700">Fecha expiración</label>
-                <input id="fechaExpiracion" type="text" formControlName="fechaExpiracion" placeholder="MM/AA"
-                    maxlength="5"
+            <!-- Nombre en la tarjeta -->
+            <div>
+                <label for="nombreTitular" class="block text-sm font-medium text-gray-700">Nombre en la tarjeta</label>
+                <input id="nombreTitular" type="text" formControlName="nombreTitular" placeholder="Nombre completo"
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
                     required />
-                <div *ngIf="tarjetaForm.get('fechaExpiracion')?.invalid && tarjetaForm.get('fechaExpiracion')?.touched"
+                <div *ngIf="tarjetaForm.get('nombreTitular')?.invalid && tarjetaForm.get('nombreTitular')?.touched"
                     class="text-red-500 text-sm mt-1">
-                    Fecha inválida.
+                    El nombre es obligatorio.
                 </div>
             </div>
 
-            <!-- CVV -->
-            <div class="flex-1">
-                <label for="cvv" class="block text-sm font-medium text-gray-700">CVV</label>
-                <input id="cvv" type="password" formControlName="cvv" placeholder="123" maxlength="4"
+            <!-- Número de tarjeta -->
+            <div>
+                <label for="numeroTarjeta" class="block text-sm font-medium text-gray-700">Número de tarjeta</label>
+                <input id="numeroTarjeta" type="text" formControlName="numeroTarjeta" placeholder="0000 0000 0000 0000"
+                    maxlength="19"
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
                     required />
-                <div *ngIf="tarjetaForm.get('cvv')?.invalid && tarjetaForm.get('cvv')?.touched"
+                <div *ngIf="tarjetaForm.get('numeroTarjeta')?.invalid && tarjetaForm.get('numeroTarjeta')?.touched"
                     class="text-red-500 text-sm mt-1">
-                    Código CVV inválido.
+                    Ingresa un número válido.
                 </div>
             </div>
-        </div>
 
-        <!-- Selector de suscripción -->
-        <div>
-            <label for="suscripcion" class="block text-sm font-medium text-gray-700">Tipo de Suscripción</label>
-            <select id="suscripcion" formControlName="suscripcion"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                required>
-                <option value="" disabled selected>Selecciona una suscripción</option>
-                <option *ngFor="let s of suscripciones" [value]="s.nombre">{{ s.nombre }}</option>
-            </select>
-            <div *ngIf="tarjetaForm.get('suscripcion')?.invalid && tarjetaForm.get('suscripcion')?.touched"
-                class="text-red-500 text-sm mt-1">
-                Selecciona una suscripción.
+            <!-- Fecha expiración -->
+            <div class="flex gap-4">
+                <div class="flex-1">
+                    <label for="fechaExpiracion" class="block text-sm font-medium text-gray-700">Fecha
+                        expiración</label>
+                    <input id="fechaExpiracion" type="text" formControlName="fechaExpiracion" placeholder="MM/AA"
+                        maxlength="5"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        required />
+                    <div *ngIf="tarjetaForm.get('fechaExpiracion')?.invalid && tarjetaForm.get('fechaExpiracion')?.touched"
+                        class="text-red-500 text-sm mt-1">
+                        Fecha inválida.
+                    </div>
+                </div>
+
+                <!-- CVV -->
+                <div class="flex-1">
+                    <label for="cvv" class="block text-sm font-medium text-gray-700">CVV</label>
+                    <input id="cvv" type="password" formControlName="cvv" placeholder="123" maxlength="4"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        required />
+                    <div *ngIf="tarjetaForm.get('cvv')?.invalid && tarjetaForm.get('cvv')?.touched"
+                        class="text-red-500 text-sm mt-1">
+                        Código CVV inválido.
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <!-- Botón -->
-        <button type="submit" [disabled]="tarjetaForm.invalid"
-            class="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold py-3 rounded-md transition-colors disabled:opacity-50">
-            Guardar tarjeta
-        </button>
-    </form>
+            <!-- Selector de suscripción -->
+            <div>
+                <label for="suscripcion" class="block text-sm font-medium text-gray-700">Tipo de Suscripción</label>
+                <select id="suscripcion" formControlName="suscripcion"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    required>
+                    <option value="" disabled selected>Selecciona una suscripción</option>
+                    <option *ngFor="let s of suscripciones" [value]="s.nombre">{{ s.nombre }}</option>
+                </select>
+                <div *ngIf="tarjetaForm.get('suscripcion')?.invalid && tarjetaForm.get('suscripcion')?.touched"
+                    class="text-red-500 text-sm mt-1">
+                    Selecciona una suscripción.
+                </div>
+            </div>
+
+            <!-- Botón -->
+            <button type="submit" [disabled]="tarjetaForm.invalid"
+                class="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold py-3 rounded-md transition-colors disabled:opacity-50">
+                Guardar tarjeta
+            </button>
+        </form>
+    </div>
 </div>
+
+<app-footer></app-footer>
