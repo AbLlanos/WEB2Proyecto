@@ -69,6 +69,21 @@
 
             @if (logueado) {
 
+
+
+            }
+
+            @if (!logueado) {
+            <a routerLink="/nosotros" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Nosotros</a>
+
+            <a routerLink="/contacto" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Contacto</a>
+
+            <a routerLink="/productosDisponibles" routerLinkActive="active" (click)="closeMenu()"
+                class="nav-link">Productos</a>
+
+            }
+
+            @if (logueado && esCliente) {
             <a routerLink="/perfilCliente" (click)="closeMenu()" class="nav-link">
                 Perfil
             </a>
@@ -85,16 +100,27 @@
                 Historial
             </a>
 
+            <a routerLink="/listaProducto" routerLinkActive="active" (click)="closeMenu()" class="nav-link create-btn">
+                Generar Pedido
+            </a>
 
             }
 
-            @if (!logueado) {
-            <a routerLink="/nosotros" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Nosotros</a>
+            @if (logueado && esEmpleado) {
+            <a routerLink="/perfilEmpleado" (click)="closeMenu()" class="nav-link">
+                Perfil
+            </a>
+            <a routerLink="/editarEmpleado" (click)="closeMenu()" class="nav-link">
+                Credenciales empleado
+            </a>
+            <a routerLink="/productosEmpleado" (click)="closeMenu()" class="nav-link">
+                Revisar Productos
+            </a>
 
-            <a routerLink="/contacto" routerLinkActive="active" (click)="closeMenu()" class="nav-link">Contacto</a>
-
-            <a routerLink="/productosDisponibles" routerLinkActive="active" (click)="closeMenu()"
-                class="nav-link">Productos</a>
+            <a routerLink="/formularioProducto" routerLinkActive="active" (click)="closeMenu()"
+                class="nav-link create-btn">
+                Crear Productos
+            </a>
 
             }
 
@@ -105,9 +131,8 @@
 
             <!-- Solo mostrar si está logueado -->
             @if (logueado) {
-            <a routerLink="/listaProducto" routerLinkActive="active" (click)="closeMenu()" class="nav-link create-btn">
-                Generar Pedido
-            </a>
+
+
 
             <!-- Botón Cerrar sesión -->
             <button (click)="logOut()"

@@ -1,0 +1,132 @@
+/* Contenedor principal del perfil */
+.profile-container {
+    background: linear-gradient(135deg, #FFEDD5, #FFD8A9);
+    border-radius: 1rem;
+    /* 16px */
+    box-shadow: 0 10px 20px rgba(255, 181, 39, 0.3);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Wrapper para la imagen perfil */
+.profile-image-wrapper {
+    background-color: #FFF3E0;
+    padding: 0.5rem;
+    border-radius: 9999px;
+    /* círculo */
+    box-shadow: 0 5px 15px rgba(255, 181, 39, 0.4);
+}
+
+/* Imagen de perfil */
+.profile-image {
+    width: 160px;
+    height: 160px;
+    border-radius: 9999px;
+    object-fit: cover;
+    border: 4px solid #FFC107;
+    transition: transform 0.3s ease;
+}
+
+.profile-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 15px rgba(255, 193, 7, 0.6);
+}
+
+/* Nombre */
+.profile-name {
+    color: #B45309;
+    /* marrón oscuro */
+    font-weight: 700;
+    font-size: 1.75rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Grid info */
+.profile-data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+}
+
+/* Cada dato */
+.profile-data-item {
+    background: #FFF8E1;
+    border-radius: 1rem;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 4px 8px rgba(255, 193, 7, 0.15);
+    color: #92400E;
+    font-weight: 600;
+    font-size: 1rem;
+    word-break: break-word;
+    transition: background-color 0.3s ease;
+}
+
+.profile-data-item span {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.profile-data-item:hover {
+    background-color: #FFECB3;
+    box-shadow: 0 8px 16px rgba(255, 193, 7, 0.3);
+}
+
+/* Grid botones */
+.container1 {
+    background-color: #F5B027;
+    padding: 3rem 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 20px rgba(245, 178, 39, 0.4);
+    margin-top: 3rem;
+}
+
+/* Botones ya tienen sus estilos, pero agrego hover más suave */
+.container1 button {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container1 button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 24px rgba(245, 178, 39, 0.6);
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .profile-data-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-image {
+        width: 130px;
+        height: 130px;
+    }
+
+    .container1 {
+        padding: 2rem 1rem;
+    }
+}
+
+/* Fondo tipo McDonald's */
+body,
+html {
+    background-color: #DA291C;
+    /* rojo McDonald's clásico */
+    background-image: linear-gradient(135deg, #DA291C 0%, #E42C25 100%);
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    /* texto claro para contraste */
+}
+
+
+a:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}

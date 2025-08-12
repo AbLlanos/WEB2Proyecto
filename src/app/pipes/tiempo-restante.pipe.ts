@@ -9,7 +9,7 @@ export class TiempoRestantePipe implements PipeTransform {
     if (!suscripcion || !suscripcion.fechaActivacion) return 'No disponible';
     const fechaActivacion = new Date(suscripcion.fechaActivacion);
     const hoy = new Date();
-    const duracionDias = 30; // ejemplo: suscripción válida 30 días
+    const duracionDias = 30; 
     const diferenciaMs = fechaActivacion.getTime() + duracionDias * 24 * 60 * 60 * 1000 - hoy.getTime();
     const diasRestantes = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
     if (diasRestantes <= 0) return 'Suscripción expirada';

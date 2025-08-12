@@ -48,7 +48,7 @@ export class EditarProductosComponent {
     const productoActualizado = { ...formulario.value, id: this.id };
 
     this.servicioProducto.editarProducto(this.id, productoActualizado).subscribe(() => {
-      this.router.navigate(["/editarFormulario"]);
+      this.router.navigate(["/productosEmpleado"]);
     });
   }
 

@@ -31,13 +31,22 @@ export class NavBarComponent {
   //Fuuncionalidad
   constructor(public authServicio: AutenticacionService, private router: Router) { }
 
-  get logueado(): boolean {
-    return this.authServicio.sessionIniciada();
-  }
 
   logOut(): void {
     this.authServicio.logOut();
     this.router.navigate(['/login']);
+  }
+
+  get logueado(): boolean {
+    return this.authServicio.sessionIniciada();
+  }
+
+  get esCliente(): boolean {
+    return this.authServicio.getUsuarioRol() === 'cliente';
+  }
+
+  get esEmpleado(): boolean {
+    return this.authServicio.getUsuarioRol() === 'empleado';
   }
 
 
