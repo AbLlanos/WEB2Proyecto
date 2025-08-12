@@ -23,6 +23,10 @@ import { GenerarPedidoComponent } from './components/cliente/generar-pedido/gene
 
 import { InicioEmpleadoComponent } from './pages/inicio-empleado/inicio-empleado.component';
 import { RegistroEmpleadoComponent } from './pages/registro-empleado/registro-empleado.component';
+import { FormularioEmpleadoComponent } from './components/empleado/formulario-empleado/formulario-empleado.component';
+import { PerfilEmpleadoComponent } from './components/empleado/perfil-empleado/perfil-empleado.component';
+import { EditarEmpleadoComponent } from './components/empleado/editar-empleado/editar-empleado.component';
+import { ProductosEmpleadoComponent } from './components/empleado/productos-empleado/productos-empleado.component';
 
 export const routes: Routes = [
   // Rutas generales
@@ -35,8 +39,11 @@ export const routes: Routes = [
   { path: "login", component: FormularioLoginComponent, canMatch: [loginCanMatchGuard] },
 
   // Empleados
+  { path: "perfilEmpleado", component: PerfilEmpleadoComponent, canActivate: [autenticaGuard] },
   { path: "inicioEmpleado", component: InicioEmpleadoComponent },
-  { path: "registroEmpleado", component: RegistroEmpleadoComponent },
+  { path: "registroEmpleado", component: FormularioEmpleadoComponent },
+  { path: "editarEmpleado", component: EditarEmpleadoComponent, canActivate: [autenticaGuard] },
+  { path: "productosEmpleado", component: ProductosEmpleadoComponent, canActivate: [autenticaGuard] },
 
   // Productos
   { path: "productosDisponibles", component: GenerarPedidoComponent },

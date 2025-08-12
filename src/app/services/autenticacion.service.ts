@@ -12,24 +12,36 @@ export class AutenticacionService {
 
   constructor(private http: HttpClient) { }
 
-  LoginAuthenticacion(email: string, password: string): Observable<boolean> {
-    const url = `${this.API_BASEDATOS}/clientes.json?orderBy="correoElectronico"&equalTo="${email}"`;
+  LoginAuthenticacion(email: string, password: string) {
+    return new Observable<any>((observer) => {
+      this.http.get('https://web2proyecto-eb88f-default-rtdb.firebaseio.com/clientes.json').subscribe((clientes: any) => {
+        const cliente = Object.keys(clientes || {}).map(key => ({ id: key, ...clientes[key] }))
+          .find(u => u.correoElectronico === email && u.password === password);
 
-    return this.http.get<{ [key: string]: any }>(url).pipe(
-      map(users => {
-        const keys = Object.keys(users || {});
-        if (keys.length > 0) {
-          const key = keys[0];
-          const user = { id: key, ...users[key] };
-          if (user.password === password) {
-            localStorage.setItem('user', JSON.stringify(user));
-            return true;
-          }
+        if (cliente) {
+          cliente.rol = 'cliente';
+          observer.next(cliente);
+          observer.complete();
+          return;
         }
-        return false;
-      })
-    );
+
+        this.http.get('https://web2proyecto-eb88f-default-rtdb.firebaseio.com/empleados.json'
+        ).subscribe((empleados: any) => {
+          const empleado = Object.keys(empleados || {}).map(key => ({ id: key, ...empleados[key] }))
+            .find(u => u.correoElectronico === email && u.password === password);
+
+          if (empleado) {
+            empleado.rol = 'empleado';
+            observer.next(empleado);
+          } else {
+            observer.next(null);
+          }
+          observer.complete();
+        });
+      });
+    });
   }
+
 
   RegistrarUsuario(nuevoUsuario: any): Observable<any> {
     return this.http.post(this.API_BASEDATOS, nuevoUsuario);
@@ -67,6 +79,19 @@ export class AutenticacionService {
 
 
 
+  }
+
+
+  getUsuarioRol(): string | null {
+    const userStr = localStorage.getItem('user');
+    if (!userStr) return null;
+
+    try {
+      const user = JSON.parse(userStr);
+      return user.rol || null;
+    } catch {
+      return null;
+    }
   }
 
 

@@ -1,0 +1,155 @@
+/* Ocultar scrollbar globalmente */
+body {
+    overflow: hidden;
+}
+
+/* Estilos globales para input y select con hover */
+input:hover,
+select:hover {
+    border-color: #facc15;
+    outline: none;
+}
+
+input:hover,
+select:hover,
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease, box-shadow 0.2s ease;
+}
+
+/* Altura fija y estructura clara */
+.seccion1 {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.seccion2 {
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.seccion2 img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.seccion3 {
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    overflow: auto;
+    padding: 2px;
+}
+
+.seccion4 {
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    margin-bottom: 50px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.container1 {
+    background-color: #F5B027;
+}
+
+input:hover,
+select:hover,
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.card-hover {
+    transform: scale(1.01);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-hover:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+
+.card-producto {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #fff;
+    z-index: 0;
+}
+
+.card-producto::before {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    top: -100%;
+    left: -100%;
+    background-image: linear-gradient(180deg, #ffe695, #ff0000);
+    animation: rotCardBorder 3s linear infinite;
+    z-index: 0;
+}
+
+.card-producto::after {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    background: #fff;
+    border-radius: 15px;
+    z-index: 1;
+}
+
+@keyframes rotCardBorder {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Asegura que el contenido esté encima del fondo blanco del ::after */
+.card-producto>* {
+    position: relative;
+    z-index: 2;
+}
+
+
+
+
+
+button {
+    transition: ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: scale(1.1) rotate(1deg);
+}

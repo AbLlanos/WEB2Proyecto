@@ -1,0 +1,69 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="max-w-6xl mx-auto p-6">
+    <!-- Contenedor perfil -->
+    <div class="profile-container bg-gradient rounded-xl shadow-lg p-8 flex flex-col items-center">
+
+        <!-- Foto perfil centrada arriba -->
+        <div class="profile-image-wrapper">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS-z31-byNeE307ReTDio0-9Y6_k0DnTTAhA&s"
+                alt="Usuario" class="profile-image" />
+        </div>
+
+        <!-- Info usuario debajo -->
+        <div class="profile-info mt-8 w-full max-w-4xl">
+            <h2 class="profile-name">{{ usuario?.nombreCompleto | nombre }}</h2>
+
+            <div class="profile-data-grid">
+                <div class="profile-data-item"><span>Cédula:</span> {{ usuario?.cedula }}</div>
+                <div class="profile-data-item"><span>Correo:</span> {{ usuario?.correoElectronico }}</div>
+                <div class="profile-data-item"><span>Teléfono:</span> {{ usuario?.telefono }}</div>
+                <div class="profile-data-item"><span>Dirección:</span> {{ usuario?.direccion }}</div>
+                <div class="profile-data-item"><span>Fecha de nacimiento:</span> {{ usuario?.fechaNacimiento }}</div>
+                <div class="profile-data-item"><span>Edad:</span> {{ usuario?.fechaNacimiento | edad }}</div>
+                <div class="profile-data-item"><span>Género:</span> {{ usuario?.genero }}</div>
+                <div class="profile-data-item"><span>Rol:</span>EMPLEADO</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones abajo -->
+
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 bg-yellow-500 rounded-3xl p-6">
+        <!-- Botón 1 -->
+        <a routerLink="/formularioProducto" class="w-full h-full flex">
+            <button
+                class="w-full h-full bg-white rounded-3xl shadow-2xl p-6 hover:shadow-yellow-500/50
+            transition-transform hover:scale-105 flex flex-col justify-between items-center text-center focus:outline-none">
+                <img src="https://cdn-icons-png.flaticon.com/128/3362/3362759.png" alt="Historial"
+                    class="w-28 h-28 mb-4 object-contain">
+                <h3 class="text-lg font-semibold text-yellow-600">Crear Producto</h3>
+            </button>
+        </a>
+
+        <!-- Botón 2 -->
+        <a routerLink="/editarEmpleado" class="w-full h-full flex">
+            <button
+                class="w-full h-full bg-white rounded-3xl shadow-2xl p-6 hover:shadow-yellow-500/50
+            transition-transform hover:scale-105 flex flex-col justify-between items-center text-center focus:outline-none">
+                <img src="https://cdn-icons-png.flaticon.com/128/18090/18090825.png" alt="Cambiar Credenciales"
+                    class="w-28 h-28 mb-4 object-contain">
+                <h3 class="text-lg font-semibold text-yellow-600">Cambiar Credenciales de empleado</h3>
+            </button>
+        </a>
+
+        <!-- Botón 3 -->
+        <a routerLink="/productosEmpleado" class="w-full h-full flex">
+            <button
+                class="w-full h-full bg-white rounded-3xl shadow-2xl p-6 hover:shadow-yellow-500/50
+            transition-transform hover:scale-105 flex flex-col justify-between items-center text-center focus:outline-none">
+                <img src="https://cdn-icons-png.flaticon.com/128/4472/4472515.png" alt="Cambiar Credenciales"
+                    class="w-28 h-28 mb-4 object-contain">
+                <h3 class="text-lg font-semibold text-yellow-600">Revisar Productos</h3>
+            </button>
+        </a>
+    </div>
+
+</div>
+
+<app-footer></app-footer>

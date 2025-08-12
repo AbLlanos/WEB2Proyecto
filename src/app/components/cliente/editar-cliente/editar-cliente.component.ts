@@ -101,10 +101,9 @@ export class EditarClienteComponent implements OnInit {
     if (this.clienteForm.valid && this.clienteKey) {
       const clienteData = this.clienteForm.getRawValue();
 
-      // Fusionamos los datos del formulario con los datos extras para no perder campos
       const clienteCompleto = {
-        ...this.clienteExtra,  // datos originales
-        ...clienteData        // datos modificados en formulario sobrescriben
+        ...this.clienteExtra, 
+        ...clienteData       
       };
 
       this.servicioCliente.editarCliente(this.clienteKey, clienteCompleto).subscribe({

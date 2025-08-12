@@ -27,11 +27,17 @@ export class FormularioLoginComponent {
     }
 
     this.authServicio.LoginAuthenticacion(this.email, this.password).subscribe({
-      next: (sesionExitosa) => {
-        if (sesionExitosa) {
-          const redireccion = localStorage.getItem("redirectUrl") || "/perfilCliente";
+      next: (usuario) => {
+        if (usuario) {
+          // usuario debería incluir datos como { id, nombre, correo, rol }
+          localStorage.setItem('user', JSON.stringify(usuario));
+
+          const redireccion = localStorage.getItem("redirectUrl") ||
+            (usuario.rol === 'cliente' ? "/perfilCliente" : "/perfilEmpleado");
+
           localStorage.removeItem("redirectUrl");
           this.router.navigateByUrl(redireccion);
+
         } else {
           this.error = "Credenciales incorrectas";
         }
@@ -41,6 +47,6 @@ export class FormularioLoginComponent {
         this.error = "Error al intentar iniciar sesión.";
       }
     });
-  }
 
+  }
 }
