@@ -61,9 +61,8 @@ export class ListaProductosComponent {
     premium: ['hamburguesas', 'postres', 'bebidas']
   };
 
-  this.productoService.leerProductos().subscribe(data => {
-    this.productos = Object.keys(data).map(key => {
-      const p = { id: key, ...data[key] };
+this.productoService.leerProductos().subscribe(data => {
+  this.productos = data.map(p => {
 
       // Normalizar stock
       if (typeof p.disponible === 'string') {

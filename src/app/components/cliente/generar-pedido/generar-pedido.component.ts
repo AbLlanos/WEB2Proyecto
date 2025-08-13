@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from "../../general/nav-bar/nav-bar.component";
 import { FooterComponent } from "../../general/footer/footer.component";
+import { Producto } from '../../productos/lista-productos/productos';
 
 @Component({
   selector: 'app-generar-pedido',
@@ -22,10 +23,9 @@ export class GenerarPedidoComponent {
   //Canviar oir keys
 
   ngOnInit(): void {
-    this.servicioProducto.leerProductos().subscribe(data => {
-      this.productos = Object.keys(data).map(key => ({
-        id: key, ...data[key]
-      }));
+    this.servicioProducto.leerProductos().subscribe((data: Producto[]) => {
+      // Con Spring Boot, data ya es un array de productos
+      this.productos = data;
     });
   }
 

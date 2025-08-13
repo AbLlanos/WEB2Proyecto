@@ -5,6 +5,7 @@ import { EmpleadoService } from '../../../services/empleado.service';
 import { Router } from '@angular/router';
 import { AutenticacionService } from '../../../services/autenticacion.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Empleado } from '../formulario-empleado/empleado';
 
 @Component({
   selector: 'app-editar-empleado',
@@ -27,11 +28,10 @@ export class EditarEmpleadoComponent {
     genero: ['', Validators.required],
     password: ["", [Validators.required, Validators.minLength(6)]],
     fechaRegistro: [{ value: new Date().toISOString().split('T')[0], disabled: true }],
-    rol: ['EMPLEADO'] 
+    rol: ['EMPLEADO']
   });
 
-  empleadoKey: string | null = null;
-
+  empleadoId: number | null = null; // <-- id numérico
   empleadoExtra: any = {};
 
   constructor(
@@ -45,46 +45,37 @@ export class EditarEmpleadoComponent {
   }
 
   cargarDatosEmpleado() {
-    let emailUsuario: string | null = null;
-
-    if (this.authServicio.getUsuarioEmail) {
-      emailUsuario = this.authServicio.getUsuarioEmail();
-    }
-
+    const emailUsuario = this.authServicio.getUsuarioEmail?.();
     if (!emailUsuario) {
       this.router.navigate(['/login']);
       return;
     }
 
-    this.servicioEmpleado.buscarEmpleadoPorCorreo(emailUsuario).subscribe({
-      next: (resp) => {
-        const keys = Object.keys(resp || {});
-        if (keys.length > 0) {
-          this.empleadoKey = keys[0];
-          const empleado = resp[this.empleadoKey];
+this.servicioEmpleado.buscarEmpleadoPorCorreo(emailUsuario).subscribe({
+  next: (resp: Empleado[]) => { 
+    if (resp.length > 0) {
+      const empleado = resp[0];
+      this.empleadoId = empleado.id;
+      this.empleadoExtra = { ...empleado };
 
-          this.empleadoExtra = { ...empleado };
-
-          this.empleadoForm.patchValue({
-            nombreCompleto: empleado.nombreCompleto,
-            cedula: empleado.cedula,
-            direccion: empleado.direccion,
-            telefono: empleado.telefono,
-            correoElectronico: empleado.correoElectronico,
-            fechaNacimiento: empleado.fechaNacimiento,
-            genero: empleado.genero,
-            password: empleado.password,
-            fechaRegistro: empleado.fechaRegistro
-          });
-        } else {
-          alert('Empleado no encontrado');
-          this.router.navigate(['/login']);
-        }
-      },
-      error: (err) => {
-        console.error('Error al cargar empleado', err);
-      }
-    });
+      this.empleadoForm.patchValue({
+        nombreCompleto: empleado.nombreCompleto,
+        cedula: empleado.cedula,
+        direccion: empleado.direccion,
+        telefono: empleado.telefono,
+        correoElectronico: empleado.correoElectronico,
+        fechaNacimiento: empleado.fechaNacimiento?.split('T')[0],
+        genero: empleado.genero,
+        password: empleado.password,
+        fechaRegistro: empleado.fechaRegistro?.split('T')[0]
+      });
+    } else {
+      alert('Empleado no encontrado');
+      this.router.navigate(['/login']);
+    }
+  },
+  error: (err) => console.error('Error al cargar empleado', err)
+});
   }
 
   camposSinLlenar = (): boolean => {
@@ -95,7 +86,7 @@ export class EditarEmpleadoComponent {
   };
 
   actualizarEmpleado() {
-    if (this.empleadoForm.valid && this.empleadoKey) {
+    if (this.empleadoForm.valid && this.empleadoId !== null) {
       const empleadoData = this.empleadoForm.getRawValue();
 
       const empleadoCompleto = {
@@ -103,7 +94,7 @@ export class EditarEmpleadoComponent {
         ...empleadoData
       };
 
-      this.servicioEmpleado.editarEmpleado(this.empleadoKey, empleadoCompleto).subscribe({
+      this.servicioEmpleado.editarEmpleado(this.empleadoId, empleadoCompleto).subscribe({
         next: () => {
           alert("Empleado actualizado correctamente");
           this.router.navigate(['/perfilEmpleado']); 

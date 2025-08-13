@@ -6,6 +6,7 @@ import { AutenticacionService } from '../../../services/autenticacion.service';
 import { EdadPipe } from '../../../pipes/edad.pipe';
 import { NombrePipe } from '../../../pipes/nombre.pipe';
 import { FooterComponent } from "../../general/footer/footer.component";
+import { Empleado } from '../formulario-empleado/empleado';
 
 @Component({
   selector: 'app-perfil-empleado',
@@ -15,9 +16,8 @@ import { FooterComponent } from "../../general/footer/footer.component";
   styleUrl: './perfil-empleado.component.css'
 })
 export class PerfilEmpleadoComponent {
-  usuario: any = null;
+   usuario: Empleado | null = null;
 
-  // Inyectamos servicios para obtener usuario real
   private empleadoService = inject(EmpleadoService);
   private authServicio = inject(AutenticacionService);
   private router = inject(Router);
@@ -27,7 +27,7 @@ export class PerfilEmpleadoComponent {
   }
 
   cargarDatosUsuario() {
-    const emailUsuario = this.authServicio.getUsuarioEmail?.();
+    const emailUsuario = this.authServicio.getUsuarioEmail(); // llamar método normalmente
     if (!emailUsuario) {
       this.router.navigate(['/login']);
       return;
@@ -35,18 +35,14 @@ export class PerfilEmpleadoComponent {
 
     this.empleadoService.buscarEmpleadoPorCorreo(emailUsuario).subscribe({
       next: (resp) => {
-        const keys = Object.keys(resp || {});
-        if (keys.length > 0) {
-          this.usuario = resp[keys[0]];
+        if (resp && resp.length > 0) {
+          this.usuario = resp[0];
 
-
+          // Formateo de fechas
           if (this.usuario.fechaNacimiento) {
             this.usuario.fechaNacimiento = this.usuario.fechaNacimiento.split('T')[0];
           }
 
-          if (this.usuario.suscripcion?.fechaActivacion) {
-            this.usuario.suscripcion.fechaActivacion = this.usuario.suscripcion.fechaActivacion.split('T')[0];
-          }
         } else {
           alert('Usuario no encontrado');
           this.router.navigate(['/login']);
@@ -54,6 +50,7 @@ export class PerfilEmpleadoComponent {
       },
       error: (err) => {
         console.error('Error al cargar usuario', err);
+        this.router.navigate(['/login']);
       }
     });
   }

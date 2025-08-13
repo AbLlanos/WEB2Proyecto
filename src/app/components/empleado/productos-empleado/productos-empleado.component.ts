@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-productos-empleado',
   standalone: true,
-  imports: [FooterComponent, NavBarComponent,RouterLink,FormsModule],
+  imports: [FooterComponent, NavBarComponent, RouterLink, FormsModule],
   templateUrl: './productos-empleado.component.html',
   styleUrl: './productos-empleado.component.css'
 })
@@ -22,9 +22,8 @@ export class ProductosEmpleadoComponent {
 
   ngOnInit(): void {
     this.servicioProducto.leerProductos().subscribe(data => {
-      this.productos = Object.keys(data).map(key => ({
-        id: key, ...data[key]
-      }));
+      
+      this.productos = data;
     });
   }
 

@@ -9,32 +9,38 @@ import { Empleado } from '../components/empleado/formulario-empleado/empleado';
 export class EmpleadoService {
 
 
-  private API_EMPLEADO = "https://web2proyecto-eb88f-default-rtdb.firebaseio.com";
+    private API_EMPLEADO = "http://localhost:8080/empleados";
 
   constructor(private http: HttpClient) { }
 
-  leerEmpleado(): Observable<any> {
-    return this.http.get<{ [key: string]: Empleado }>(`${this.API_EMPLEADO}/empleados.json`);
+  // Obtener todos los empleados
+  leerEmpleado(): Observable<Empleado[]> {
+    return this.http.get<Empleado[]>(this.API_EMPLEADO, { withCredentials: true });
   }
 
-  guardarEmpleado(cliente: any): Observable<any> {
-    return this.http.post(`${this.API_EMPLEADO}/empleados.json`, cliente);
+  // Guardar empleado
+  guardarEmpleado(empleado: Empleado): Observable<Empleado> {
+    return this.http.post<Empleado>(`${this.API_EMPLEADO}/guardarEmpleado`, empleado, { withCredentials: true });
   }
 
-  buscarEmpleadobyId(id: string): Observable<any> {
-    return this.http.get(`${this.API_EMPLEADO}/empleados/${id}.json`);
+  // Buscar empleado por ID
+  buscarEmpleadobyId(id: number): Observable<Empleado> {
+    return this.http.get<Empleado>(`${this.API_EMPLEADO}/${id}`, { withCredentials: true });
   }
 
-  eliminarEmpleado(id: string): Observable<any> {
-    return this.http.delete(`${this.API_EMPLEADO}/empleados/${id}.json`);
+  // Editar empleado
+  editarEmpleado(id: number, empleado: Empleado): Observable<Empleado> {
+    return this.http.put<Empleado>(`${this.API_EMPLEADO}/actualizar/${id}`, empleado, { withCredentials: true });
   }
 
-  editarEmpleado(id: string, cliente: any): Observable<any> {
-    return this.http.put(`${this.API_EMPLEADO}/empleados/${id}.json`, cliente);
+  // Eliminar empleado
+  eliminarEmpleado(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.API_EMPLEADO}/eliminar/${id}`, { withCredentials: true });
   }
 
-  buscarEmpleadoPorCorreo(correo: string): Observable<any> {
-    return this.http.get(`${this.API_EMPLEADO}/empleados.json?orderBy="correoElectronico"&equalTo="${correo}"`);
+  // Buscar empleado por correo
+  buscarEmpleadoPorCorreo(correo: string): Observable<Empleado[]> {
+    return this.http.get<Empleado[]>(`${this.API_EMPLEADO}/buscarPorCorreo?correo=${correo}`, { withCredentials: true });
   }
 
 

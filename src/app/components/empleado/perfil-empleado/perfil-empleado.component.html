@@ -12,7 +12,8 @@
 
         <!-- Info usuario debajo -->
         <div class="profile-info mt-8 w-full max-w-4xl">
-            <h2 class="profile-name">{{ usuario?.nombreCompleto | nombre }}</h2>
+            <h2 class="profile-name">{{ usuario?.nombreCompleto ?? '' | nombre }}</h2>
+
 
             <div class="profile-data-grid">
                 <div class="profile-data-item"><span>Cédula:</span> {{ usuario?.cedula }}</div>
@@ -20,7 +21,8 @@
                 <div class="profile-data-item"><span>Teléfono:</span> {{ usuario?.telefono }}</div>
                 <div class="profile-data-item"><span>Dirección:</span> {{ usuario?.direccion }}</div>
                 <div class="profile-data-item"><span>Fecha de nacimiento:</span> {{ usuario?.fechaNacimiento }}</div>
-                <div class="profile-data-item"><span>Edad:</span> {{ usuario?.fechaNacimiento | edad }}</div>
+                
+                <div class="profile-data-item"><span>Edad:</span> {{ usuario?.fechaNacimiento ?? '' | edad }}</div>
                 <div class="profile-data-item"><span>Género:</span> {{ usuario?.genero }}</div>
                 <div class="profile-data-item"><span>Rol:</span>EMPLEADO</div>
             </div>

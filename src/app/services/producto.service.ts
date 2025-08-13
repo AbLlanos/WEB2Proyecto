@@ -8,38 +8,33 @@ import { Producto } from '../components/productos/lista-productos/productos';
 })
 export class ProductoService {
 
-  constructor(private http: HttpClient) {
+  private API_PRODUCTOS = "http://localhost:8080/productos";
 
+  constructor(private http: HttpClient) { }
+
+  // Mostrar todos los productos
+  leerProductos(): Observable<Producto[]> {
+    return this.http.get<Producto[]>(this.API_PRODUCTOS, { withCredentials: true });
   }
 
-  private API_PRODUCTOS = "https://web2proyecto-eb88f-default-rtdb.firebaseio.com";
-
-
-  //Mostrar
-
-  leerProductos(): Observable<any> {
-    return this.http.get<{ [key: string]: Producto }>(`${this.API_PRODUCTOS}/productos.json`)
+  // Guardar producto
+  guardarProducto(producto: Producto): Observable<Producto> {
+    return this.http.post<Producto>(`${this.API_PRODUCTOS}/guardarProducto`, producto, { withCredentials: true });
   }
 
-  //Guardar
-  guardarProducto(producto: any): Observable<any> {
-    return this.http.post(`${this.API_PRODUCTOS}/productos.json`, producto);
+  // Buscar por ID
+  buscarProductobyId(id: string): Observable<Producto> {
+    return this.http.get<Producto>(`${this.API_PRODUCTOS}/${id}`, { withCredentials: true });
   }
 
-  //BuscarPorId
-  buscarProductobyId(id: string): Observable<any> {
-    return this.http.get(`${this.API_PRODUCTOS}/productos/${id}.json`)
+  // Eliminar producto
+  eliminarProducto(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.API_PRODUCTOS}/eliminar/${id}`, { withCredentials: true });
   }
 
-  //EliminarProducto
-  eliminarProducto(id: string): Observable<any> {
-    return this.http.delete(`${this.API_PRODUCTOS}/productos/${id}.json`)
+  // Editar producto
+  editarProducto(id: string, producto: Producto): Observable<Producto> {
+    return this.http.put<Producto>(`${this.API_PRODUCTOS}/actualizar/${id}`, producto, { withCredentials: true });
   }
-
-  //EditarProducto
-  editarProducto(id: string, producto: any): Observable<any> {
-    return this.http.put(`${this.API_PRODUCTOS}/productos/${id}.json`, producto)
-  }
-
 
 }
