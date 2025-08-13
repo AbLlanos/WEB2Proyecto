@@ -333,6 +333,143 @@
   background-image: url('https://mcd-landings-l-statics.appmcdonalds.com/uploads-live/FIFI_b8e896cd12.png');
 }
 
+/* Fondo decorativo con elementos sutiles */
+.cajita-feliz-section {
+  background-color: #fff8e1;
+  background-image: radial-gradient(circle at 20% 30%, #ffe8e8 20%, transparent 20%),
+                    radial-gradient(circle at 80% 70%, #ffe8e8 15%, transparent 20%);
+  background-size: 300px 300px;
+  background-repeat: no-repeat;
+  background-position: left top, right bottom;
+  padding: 60px 30px;
+  text-align: center;
+  border-top: 4px solid #e40e0e;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Cinta flotante "¡Incluye juguete!" */
+.juguete-label {
+  background-color: #e40e0e;
+  color: white;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-weight: bold;
+  animation: bounceLabel 2s infinite;
+}
+
+@keyframes bounceLabel {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* CTA - botón "¡Ordena ahora!" */
+.cta-button {
+  display: inline-block;
+  margin-top: 20px;
+  background-color: #e40e0e;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-button:hover {
+  background-color: #b30000;
+  transform: scale(1.05);
+}
+
+/* Efecto glow detrás de la cajita */
+.cajita-feliz-card::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 199, 44, 0.3) 0%, transparent 70%);
+  top: -50%;
+  left: -50%;
+  z-index: 0;
+  pointer-events: none;
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.cajita-feliz-card {
+  position: relative;
+  z-index: 1;
+}
+/* Contenedor de globos decorativos */
+.balloon-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* Globos generales */
+.balloon {
+  width: 45px;
+  height: 65px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: absolute;
+  opacity: 0.7;
+  animation: floatBalloon 6s ease-in-out infinite;
+}
+
+.balloon::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  width: 2px;
+  height: 30px;
+  background: #555;
+  transform: translateX(-50%);
+}
+
+/* Colores personalizados */
+.balloon.red {
+  background: radial-gradient(circle at 30% 30%, #ff4d4d, #e40e0e);
+}
+
+.balloon.yellow {
+  background: radial-gradient(circle at 30% 30%, #ffd966, #f9c000);
+}
+
+/* Animación */
+@keyframes floatBalloon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* Ajuste para asegurar la sección esté posicionada relativamente */
+.cajita-feliz-section {
+  position: relative;
+  overflow: hidden;
+}
+
+
+
 /* Carrusel 3D MODERNO */
 .carousel-wrapper {
   width: 100%;
