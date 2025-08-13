@@ -226,9 +226,9 @@
 /* Sección Cajita Feliz */
 .cajita-feliz-section {
   background-color: #fff8e1;
-  padding: 60px 30px;
+  padding: 1px 1px;
   text-align: center;
-  border-top: 4px solid #e40e0e;
+  border-top: 2px solid #e40e0e;
   position: relative;
 }
 
@@ -242,7 +242,7 @@
   background-color: #ffe8e8;
   border-radius: 10px;
   padding: 25px 20px;
-  width: 280px;
+  width: 380px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
   transition: transform 0.3s ease;
