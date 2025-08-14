@@ -27,6 +27,8 @@ import { FormularioEmpleadoComponent } from './components/empleado/formulario-em
 import { PerfilEmpleadoComponent } from './components/empleado/perfil-empleado/perfil-empleado.component';
 import { EditarEmpleadoComponent } from './components/empleado/editar-empleado/editar-empleado.component';
 import { ProductosEmpleadoComponent } from './components/empleado/productos-empleado/productos-empleado.component';
+import { clienteGuard } from './guards/cliente.guard';
+import { empleadoGuard } from './guards/empleado.guard';
 
 export const routes: Routes = [
   // Rutas generales
@@ -39,25 +41,26 @@ export const routes: Routes = [
   { path: "login", component: FormularioLoginComponent, canMatch: [loginCanMatchGuard] },
 
   // Empleados
-  { path: "perfilEmpleado", component: PerfilEmpleadoComponent, canActivate: [autenticaGuard] },
+  { path: "perfilEmpleado", component: PerfilEmpleadoComponent, canActivate: [empleadoGuard] },
   { path: "inicioEmpleado", component: InicioEmpleadoComponent },
   { path: "registroEmpleado", component: FormularioEmpleadoComponent },
-  { path: "editarEmpleado", component: EditarEmpleadoComponent, canActivate: [autenticaGuard] },
-  { path: "productosEmpleado", component: ProductosEmpleadoComponent, canActivate: [autenticaGuard] },
+  { path: "editarEmpleado", component: EditarEmpleadoComponent, canActivate: [empleadoGuard] },
+  { path: "productosEmpleado", component: ProductosEmpleadoComponent, canActivate: [empleadoGuard] },
 
   // Productos
   { path: "productosDisponibles", component: GenerarPedidoComponent },
-  { path: "listaProducto", component: ListaProductosPageComponent, canActivate: [autenticaGuard] },
-  { path: "formularioProducto", component: FormularioProductoPageComponent, canActivate: [autenticaGuard] },
-  { path: "editarFormulario/:id", component: EditarProductosVistaComponent, canActivate: [autenticaGuard] },
+  { path: "listaProducto", component: ListaProductosPageComponent, canActivate: [clienteGuard] },
+
+  { path: "formularioProducto", component: FormularioProductoPageComponent, canActivate: [empleadoGuard] },
+  { path: "editarFormulario/:id", component: EditarProductosVistaComponent, canActivate: [empleadoGuard] },
 
   // Clientes
   { path: "registroCliente", component: RegistroClienteComponent, canDeactivate: [registroEmpleadoGuard] },
-  { path: "registroCliente1", component: FormularioClienteComponent, canDeactivate: [registroEmpleadoGuard] },
-  { path: "perfilCliente", component: PerfilClienteComponent, canActivate: [autenticaGuard] },
-  { path: "editarCliente", component: EditarClienteComponent, canActivate: [autenticaGuard] },
-  { path: "historialCliente", component: HistorialClienteComponent, canActivate: [autenticaGuard] },
-  { path: "suscripcionCliente", component: SuscripcionClienteComponent, canActivate: [autenticaGuard] },
+  { path: "registroCliente1", component: FormularioClienteComponent},
+  { path: "perfilCliente", component: PerfilClienteComponent, canActivate: [clienteGuard] },
+  { path: "editarCliente", component: EditarClienteComponent, canActivate: [clienteGuard] },
+  { path: "historialCliente", component: HistorialClienteComponent, canActivate: [clienteGuard] },
+  { path: "suscripcionCliente", component: SuscripcionClienteComponent, canActivate: [clienteGuard] },
 
   // Página no encontrada
   { path: "**", component: PaginaNoEncontradaComponent }

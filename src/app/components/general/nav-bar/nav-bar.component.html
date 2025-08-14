@@ -83,7 +83,7 @@
 
             }
 
-            @if (logueado && esCliente) {
+            @if (esCliente) {
             <a routerLink="/perfilCliente" (click)="closeMenu()" class="nav-link">
                 Perfil
             </a>
@@ -106,7 +106,7 @@
 
             }
 
-            @if (logueado && esEmpleado) {
+            @if (esEmpleado) {
             <a routerLink="/perfilEmpleado" (click)="closeMenu()" class="nav-link">
                 Perfil
             </a>

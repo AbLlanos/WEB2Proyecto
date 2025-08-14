@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavBarComponent } from "../../components/general/nav-bar/nav-bar.component";
-import { FooterComponent } from "../../components/general/footer/footer.component";  // Importa FormsModule
+import { FooterComponent } from "../../components/general/footer/footer.component";
 import { Router, RouterLink } from '@angular/router';
 import { AutenticacionService } from '../../services/autenticacion.service';
 
@@ -13,7 +13,6 @@ import { AutenticacionService } from '../../services/autenticacion.service';
   styleUrls: ['./inicio-empleado.component.css'],
 })
 export class InicioEmpleadoComponent {
-
 
   email: string = "";
   password: string = "";
@@ -27,15 +26,18 @@ export class InicioEmpleadoComponent {
       return;
     }
 
-    this.authServicio.LoginAuthenticacion(this.email, this.password).subscribe({
-      next: (usuario) => {
-        if (usuario) {
-          // usuario debería incluir datos como { id, nombre, correo, rol }
-          localStorage.setItem('user', JSON.stringify(usuario));
+    this.authServicio.loginAutenticacion(this.email, this.password).subscribe({
+      next: (response: any) => {
+        // Spring Security normalmente devuelve 200 OK y cookies de sesión
+        if (response.status === 200) {
+          // Guardar información del usuario manualmente (opcional)
+          const usuario = {
+            correoElectronico: this.email,
+            rol: "EMPLEADO" // o ajusta según tu lógica en Spring
+          };
+          this.authServicio.guardarUsuarioSesion(usuario);
 
-          const redireccion = localStorage.getItem("redirectUrl") ||
-            (usuario.rol === 'cliente' ? "/perfilCliente" : "/perfilEmpleado");
-
+          const redireccion = localStorage.getItem("redirectUrl") || "/perfilEmpleado";
           localStorage.removeItem("redirectUrl");
           this.router.navigateByUrl(redireccion);
 
@@ -48,6 +50,5 @@ export class InicioEmpleadoComponent {
         this.error = "Error al intentar iniciar sesión.";
       }
     });
-
   }
 }

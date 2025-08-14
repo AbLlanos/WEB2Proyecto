@@ -1,98 +1,68 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AutenticacionService {
 
+  private API_BASEDATOS = 'http://localhost:8080';
 
-  private API_BASEDATOS = 'https://web2proyecto-eb88f-default-rtdb.firebaseio.com';
+  // BehaviorSubject para reactividad
+  private _usuario$ = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('user') || 'null'));
+  usuario$ = this._usuario$.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
-  LoginAuthenticacion(email: string, password: string) {
-    return new Observable<any>((observer) => {
-      this.http.get('https://web2proyecto-eb88f-default-rtdb.firebaseio.com/clientes.json').subscribe((clientes: any) => {
-        const cliente = Object.keys(clientes || {}).map(key => ({ id: key, ...clientes[key] }))
-          .find(u => u.correoElectronico === email && u.password === password);
-
-        if (cliente) {
-          cliente.rol = 'cliente';
-          observer.next(cliente);
-          observer.complete();
-          return;
-        }
-
-        this.http.get('https://web2proyecto-eb88f-default-rtdb.firebaseio.com/empleados.json'
-        ).subscribe((empleados: any) => {
-          const empleado = Object.keys(empleados || {}).map(key => ({ id: key, ...empleados[key] }))
-            .find(u => u.correoElectronico === email && u.password === password);
-
-          if (empleado) {
-            empleado.rol = 'empleado';
-            observer.next(empleado);
-          } else {
-            observer.next(null);
-          }
-          observer.complete();
-        });
-      });
-    });
+  // Login usando JSON
+  loginAutenticacion(email: string, password: string): Observable<any> {
+    return this.http.post(`${this.API_BASEDATOS}/api/login`, { correoElectronico: email, password });
   }
 
-
-  RegistrarUsuario(nuevoUsuario: any): Observable<any> {
-    return this.http.post(this.API_BASEDATOS, nuevoUsuario);
+  loginFormData(form: FormData): Observable<any> {
+    return this.http.post(`${this.API_BASEDATOS}/api/login`, form, { withCredentials: true });
   }
 
-
-  obtenerUsuarios(): Observable<any[]> {
-    return this.http.get<any[]>(this.API_BASEDATOS);
+  // Guardar usuario y notificar cambios
+  guardarUsuarioSesion(usuario: any) {
+    localStorage.setItem('user', JSON.stringify(usuario));
+    this._usuario$.next(usuario);
   }
 
-
+  // Verifica si hay sesión iniciada
   sessionIniciada(): boolean {
-    return localStorage.getItem("user") !== null;
+    return !!this._usuario$.value;
   }
 
+  // Cierra sesión
   logOut(): void {
-    localStorage.removeItem("user");
+    this.http.post(`${this.API_BASEDATOS}/api/logout`, {}, { withCredentials: true, responseType: 'text' })
+      .subscribe({
+        next: () => {
+          localStorage.removeItem('user');
+          this._usuario$.next(null);
+          this.router.navigate(['/login']);
+        },
+        error: err => console.error("Error en logout:", err)
+      });
   }
 
+  // Obtener email del usuario desde BehaviorSubject
   getUsuarioEmail(): string | null {
-    const userStr = localStorage.getItem('user');
-    if (!userStr) return null;
-
-    try {
-      const user = JSON.parse(userStr);
-      return user.correoElectronico || null;
-    } catch {
-      return null;
-    }
-
-
-
-
-
-
-
-
+    const user = this._usuario$.value;
+    if (!user) return null;
+    return user.email || user.correoElectronico || null;
   }
 
-
+  // Obtener rol del usuario desde BehaviorSubject
   getUsuarioRol(): string | null {
-    const userStr = localStorage.getItem('user');
-    if (!userStr) return null;
-
-    try {
-      const user = JSON.parse(userStr);
-      return user.rol || null;
-    } catch {
-      return null;
-    }
+    const user = this._usuario$.value;
+    if (!user) return null;
+    if (user.rol) return user.rol;
+    if (user.roles && Array.isArray(user.roles) && user.roles.length > 0)
+      return user.roles[0];
+    return null;
   }
-
-
 }

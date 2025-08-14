@@ -3,41 +3,29 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cliente } from '../components/cliente/formulario-cliente/cliente';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ClienteService {
+  private API_CLIENTE = 'http://localhost:8080/clientes';
 
-  private API_CLIENTE = "https://web2proyecto-eb88f-default-rtdb.firebaseio.com";
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  leerCliente(): Observable<any> {
-    return this.http.get<{ [key: string]: Cliente }>(`${this.API_CLIENTE}/clientes.json`);
+  leerClientes(): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(this.API_CLIENTE, { withCredentials: true });
   }
 
-  guardarCliente(cliente: any): Observable<any> {
-    return this.http.post(`${this.API_CLIENTE}/clientes.json`, cliente);
+  guardarCliente(cliente: any): Observable<Cliente> {
+    return this.http.post<Cliente>(`${this.API_CLIENTE}/guardar`, cliente, { withCredentials: true });
   }
 
-  buscarClientebyId(id: string): Observable<any> {
-    return this.http.get(`${this.API_CLIENTE}/clientes/${id}.json`);
+  actualizarCliente(id: string, cliente: any): Observable<Cliente> { // <-- CAMBIO: id: string
+    return this.http.put<Cliente>(`${this.API_CLIENTE}/actualizar/${id}`, cliente, { withCredentials: true });
   }
 
-  eliminarCliente(id: string): Observable<any> {
-    return this.http.delete(`${this.API_CLIENTE}/clientes/${id}.json`);
+  eliminarCliente(id: string): Observable<void> { // <-- CAMBIO: id: string
+    return this.http.delete<void>(`${this.API_CLIENTE}/eliminar/${id}`, { withCredentials: true });
   }
 
-  editarCliente(id: string, cliente: any): Observable<any> {
-    return this.http.put(`${this.API_CLIENTE}/clientes/${id}.json`, cliente);
+  buscarClientePorId(id: string): Observable<Cliente> { // <-- CAMBIO: id: string
+    return this.http.get<Cliente>(`${this.API_CLIENTE}/${id}`, { withCredentials: true });
   }
-
-  buscarClientePorCorreo(correo: string): Observable<any> {
-    // Nota: orderBy y equalTo deben usarse así para consultas en Firebase Realtime Database REST API
-    return this.http.get(`${this.API_CLIENTE}/clientes.json?orderBy="correoElectronico"&equalTo="${correo}"`);
-  }
-
-
-
-  
 }
