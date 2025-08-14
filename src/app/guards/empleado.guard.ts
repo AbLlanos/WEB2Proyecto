@@ -6,11 +6,15 @@ export const empleadoGuard: CanActivateFn = (route, state) => {
   const authServicio = inject(AutenticacionService);
   const router = inject(Router);
 
-  if (authServicio.sessionIniciada() && authServicio.getUsuarioRol()?.toUpperCase() === 'EMPLEADO') {
+  const rol = authServicio.getUsuarioRol()?.toUpperCase();
+  const sesion = authServicio.sessionIniciada();
+
+  console.log("Guard EMPLEADO -> Rol:", rol, "Sesion:", sesion);
+
+  if (sesion && rol === 'EMPLEADO') {
     return true;
   } else {
     localStorage.setItem("redirectUrl", state.url);
     return router.parseUrl("/login");
   }
 };
-

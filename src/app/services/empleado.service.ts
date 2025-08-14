@@ -13,14 +13,11 @@ export class EmpleadoService {
     return this.http.get<Empleado[]>(this.API_EMPLEADO);
   }
 
-registrarEmpleado(empleado: any): Observable<Empleado> {
-  return this.http.post<Empleado>(
-    `${this.API_EMPLEADO}/registroEmpleado`,
-    empleado,
-    { responseType: 'json' } // opcional, es default
-  );
-}
+  registrarEmpleado(empleado: any): Observable<Empleado> {
+    return this.http.post<Empleado>(`${this.API_EMPLEADO}/registroEmpleado`, empleado);
+  }
 
+ 
   actualizarEmpleado(id: string, empleado: any): Observable<Empleado> {
     return this.http.put<Empleado>(`${this.API_EMPLEADO}/actualizar/${id}`, empleado);
   }
