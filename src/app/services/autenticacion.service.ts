@@ -65,4 +65,11 @@ export class AutenticacionService {
       return user.roles[0];
     return null;
   }
+
+  getUsuarioId(): string | null {
+    const user = this._usuario$.value;
+    if (!user) return null;
+    return user.id?.toString() || null;
+  }
+
 }

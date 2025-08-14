@@ -35,7 +35,7 @@ export class HistorialClienteComponent {
           const subtotal = precioPorCantidad + ivaPagadoProducto;
 
           return {
-            nombre: p.nombre || '',
+            nombre: p.producto?.nombre || 'Nombre no disponible',
             cantidad,
             precioUnitario,
             iva,
@@ -51,7 +51,7 @@ export class HistorialClienteComponent {
 
         const ivaPagadoTotal = productosArray.reduce((acc, prod) => acc + prod.ivaPagadoProducto, 0);
         const subtotalTotal = productosArray.reduce((acc, prod) => acc + prod.precioPorCantidad, 0);
-
+        console.log('Productos crudos:', pedido.productos);
         return {
           id,
           fecha: pedido.fecha || new Date().toISOString(),

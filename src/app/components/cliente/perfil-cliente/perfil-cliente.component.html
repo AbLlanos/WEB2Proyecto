@@ -23,8 +23,11 @@
         <div class="profile-data-item"><span>Edad:</span> {{ usuario?.fechaNacimiento | edad }}</div>
         <div class="profile-data-item"><span>Género:</span> {{ usuario?.genero }}</div>
         <div class="profile-data-item"><span>Rol:</span> Cliente</div>
-        <div class="profile-data-item"><span>Suscripción:</span> {{ usuario?.suscripcion | suscripcionActiva }}</div>
-        <div class="profile-data-item"><span>Tiempo restante:</span> {{ usuario?.suscripcion | tiempoRestante }}</div>
+        <div class="profile-data-item"><span>Suscripción:</span> {{ usuario?.suscripcionActiva ? 'Activa' : 'Inactiva'
+          }}</div>
+        <div class="profile-data-item"><span>Tipo:</span> {{ usuario?.tipoSuscripcion }}</div>
+        <div class="profile-data-item"><span>Fecha activación:</span> {{ usuario?.fechaActivacion | date:'yyyy-MM-dd' }}
+        </div>
       </div>
     </div>
   </div>

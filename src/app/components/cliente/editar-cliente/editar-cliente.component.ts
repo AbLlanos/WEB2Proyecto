@@ -76,8 +76,6 @@ export class EditarClienteComponent implements OnInit {
           correoElectronico: cliente.correoElectronico,
           fechaNacimiento: cliente.fechaNacimiento?.split('T')[0] || '',
           genero: cliente.genero,
-          fechaRegistro: cliente.fechaRegistro?.split('T')[0] || ''
-          // password NO se llena para evitar re-encriptar
         });
       },
       error: (err) => {

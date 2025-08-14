@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-lista-productos',
@@ -34,65 +35,43 @@ export class ListaProductosComponent {
     private http: HttpClient
   ) { }
 
- ngOnInit(): void {
-  // Obtener usuario y suscripción activa
-  const userString = localStorage.getItem('user');
-  if (userString) this.usuario = JSON.parse(userString);
-
-  const suscripcionActivaStr = localStorage.getItem('suscripcionActiva');
-  let tipoSuscripcion = '';
-  if (suscripcionActivaStr) {
-    const suscripcionActiva = JSON.parse(suscripcionActivaStr);
-    if (suscripcionActiva.activa) {
-      tipoSuscripcion = suscripcionActiva.tipoSuscripcion.toLowerCase();
-
-      // Aquí defines el descuento aplicado según la suscripción
-      if (tipoSuscripcion === 'normal') this.descuentoAplicado = 0.05;  // 5%
-      else if (tipoSuscripcion === 'media') this.descuentoAplicado = 0.10; // 10%
-      else if (tipoSuscripcion === 'premium') this.descuentoAplicado = 0.15; // 15%
-      else this.descuentoAplicado = 0;
+  ngOnInit(): void {
+    // Obtener usuario y suscripción activa
+    const userString = localStorage.getItem('user');
+    let tipoSuscripcion = '';
+    if (userString) {
+      const usuario = JSON.parse(userString);
+      if (usuario.suscripcion_activa && usuario.tipo_suscripcion) {
+        tipoSuscripcion = usuario.tipo_suscripcion.toLowerCase();
+      }
     }
+
+    // Asignar descuento según suscripción
+    if (tipoSuscripcion === 'normal') this.descuentoAplicado = 0.05;
+    else if (tipoSuscripcion === 'media') this.descuentoAplicado = 0.10;
+    else if (tipoSuscripcion === 'premium') this.descuentoAplicado = 0.15;
+    else this.descuentoAplicado = 0;
+
+    // Leer productos desde backend
+    this.productoService.leerProductos().subscribe(data => {
+      this.productos = data.map(p => {
+        // Normalizar stock
+        p.disponible = Number(p.cantidad ?? 0);
+        p.disponibleTexto = p.disponible > 0 ? 'sí' : 'no';
+        p.cantidadSeleccionada = p.disponible > 0 ? 1 : 0;
+
+        // Precio con descuento según categoría y suscripción
+        p.precioConDescuento = p.precio;
+        const categoriasPermitidas = this.categoriaPorSuscripcion[tipoSuscripcion] || [];
+        if (this.descuentoAplicado > 0 && categoriasPermitidas.includes(p.categoria.toLowerCase())) {
+          p.precioConDescuento = +(p.precio * (1 - this.descuentoAplicado)).toFixed(2);
+        }
+
+        return p;
+      });
+    });
   }
 
-  // Mapa categorías por suscripción (todo en minúscula)
-  const categoriaPorSuscripcion: Record<string, string[]> = {
-    normal: ['postres'],
-    media: ['postres', 'bebidas'],
-    premium: ['hamburguesas', 'postres', 'bebidas']
-  };
-
-this.productoService.leerProductos().subscribe(data => {
-  this.productos = data.map(p => {
-
-      // Normalizar stock
-      if (typeof p.disponible === 'string') {
-        if (p.disponible.toLowerCase() === 'sí' || p.disponible.toLowerCase() === 'si') {
-          p.disponible = 999999;
-          p.disponibleTexto = 'sí';
-        } else {
-          p.disponible = 0;
-          p.disponibleTexto = 'no';
-        }
-      } else {
-        p.disponible = Number(p.disponible) || 0;
-        p.disponibleTexto = p.disponible > 0 ? 'sí' : 'no';
-      }
-
-      p.cantidadSeleccionada = p.disponible > 0 ? 1 : 0;
-
-      // Precio con descuento por defecto es el precio normal
-      p.precioConDescuento = p.precio;
-
-      // Aplica descuento solo si tipoSuscripcion tiene descuento para la categoría del producto
-      const categoriasPermitidas = categoriaPorSuscripcion[tipoSuscripcion] || [];
-      if (this.descuentoAplicado > 0 && categoriasPermitidas.includes(p.categoria.toLowerCase())) {
-        p.precioConDescuento = +(p.precio * (1 - this.descuentoAplicado)).toFixed(2);
-      }
-
-      return p;
-    });
-  });
-}
 
 
   incrementar(producto: any) {
@@ -178,35 +157,37 @@ this.productoService.leerProductos().subscribe(data => {
     const totales = this.calcularTotalesCarrito();
     const nuevoPedido = {
       fecha: new Date().toISOString(),
-      total: +totales.total.toFixed(2),
+      cliente: { id: user.id },
       productos: this.carrito.map(p => ({
-        nombre: p.nombre,
+        producto: { id: p.id },
         cantidad: p.cantidad,
         precioUnitario: p.precio,
         iva: p.iva,
-        subtotal: +p.subtotal.toFixed(2),
         ivaPagado: +(p.subtotal * (p.iva ?? 0)).toFixed(2),
+        subtotal: +p.subtotal.toFixed(2),
         total: +p.total.toFixed(2)
-      })),
-      idUsuario: user.id
+      }))
     };
 
-    this.pedidosService.guardarPedidoGlobal(nuevoPedido).subscribe({
-      next: () => {
+    // Cambiado a la función correcta para Spring Boot
+    this.pedidosService.guardarPedido(nuevoPedido).subscribe({
+      next: async () => {
+        // actualizar stock de todos los productos (no usamos try/catch porque no queremos alerta)
         const actualizaciones = this.carrito.map(p =>
-          this.pedidosService.actualizarStock(p.id, p.cantidad > p.disponible ? 0 : p.disponible - p.cantidad)
+          this.pedidosService.actualizarStock(p.id, Math.max(0, p.disponible - p.cantidad))
         );
 
-        Promise.all(actualizaciones.map(req => req.toPromise())).then(() => {
-          alert('Pedido realizado con éxito.');
-          this.carrito = [];
-          this.mostrarCarrito = false;
-        }).catch(() => {
-          alert('Error al actualizar stock');
-        });
+        // convertir Observables a Promises y esperar, pero ignorando errores
+        await Promise.all(actualizaciones.map(req =>
+          lastValueFrom(req).catch(() => null) // cualquier error se ignora
+        ));
+
+        alert('Pedido realizado exitosamente.');
+        this.carrito = [];
+        this.mostrarCarrito = false;
       },
       error: () => {
-        alert('Error al guardar pedido global');
+        alert('Error al guardar pedido');
       }
     });
   }

@@ -32,24 +32,19 @@ export class PerfilEmpleadoComponent implements OnInit {
   }
 
   cargarDatosUsuario() {
-    const emailUsuario = this.authServicio.getUsuarioEmail();
-    if (!emailUsuario) {
+    const idUsuario = this.authServicio.getUsuarioId();
+    if (!idUsuario) {
       this.router.navigate(['/login']);
       return;
     }
 
-    // ahora buscarEmpleadoPorCorreo devuelve un array
-    this.empleadoService.buscarEmpleadoPorCorreo(emailUsuario).subscribe({
-      next: (empleados) => {
-        if (empleados && empleados.length > 0) {
-          this.usuario = empleados[0];
-          // Formateo de fecha
-          if (this.usuario.fechaNacimiento) {
-            this.usuario.fechaNacimiento = this.usuario.fechaNacimiento.split('T')[0];
-          }
-        } else {
-          alert('Empleado no encontrado');
-          this.router.navigate(['/login']);
+    // Buscar empleado por ID
+    this.empleadoService.buscarEmpleadoPorId(idUsuario).subscribe({
+      next: (empleado) => {
+        this.usuario = empleado;
+        // Formateo de fecha
+        if (this.usuario.fechaNacimiento) {
+          this.usuario.fechaNacimiento = this.usuario.fechaNacimiento.split('T')[0];
         }
       },
       error: (err) => {

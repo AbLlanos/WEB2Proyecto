@@ -8,6 +8,7 @@ import { EdadPipe } from '../../../pipes/edad.pipe';
 import { ClienteService } from '../../../services/cliente.service';
 import { AutenticacionService } from '../../../services/autenticacion.service';
 import { FooterComponent } from "../../general/footer/footer.component";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-perfil-cliente',
@@ -19,6 +20,7 @@ import { FooterComponent } from "../../general/footer/footer.component";
     NombrePipe,
     SuscripcionActivaPipe,
     TiempoRestantePipe,
+    DatePipe,
     FooterComponent
   ],
   templateUrl: './perfil-cliente.component.html',
@@ -58,18 +60,26 @@ export class PerfilClienteComponent implements OnInit {
           return;
         }
 
-        // Mapear los campos planos de suscripción a un objeto para usar pipes
-        this.usuario = {
-          ...cliente,
-          fechaNacimiento: cliente.fechaNacimiento ? cliente.fechaNacimiento.split('T')[0] : null,
-          suscripcion: {
-            activa: cliente.suscripcion_activa === 1,
-            tipoSuscripcion: cliente.tipo_suscripcion || 'No disponible',
-            fechaActivacion: cliente.fecha_activacion
-              ? cliente.fecha_activacion.split('T')[0]
-              : null
+        // Aquí es donde pones el bloque
+        this.clienteService.buscarClientePorId(userId).subscribe({
+          next: (cliente) => {
+            if (!cliente) {
+              alert('Usuario no encontrado');
+              this.router.navigate(['/login']);
+              return;
+            }
+
+            // Directamente asignar
+            this.usuario = cliente;
+
+            console.log('Usuario cargado:', this.usuario);
+          },
+          error: (err) => {
+            console.error('Error al cargar usuario', err);
+            alert('Error al obtener datos del usuario.');
+            this.router.navigate(['/login']);
           }
-        };
+        });
 
         console.log('Usuario cargado:', this.usuario);
       },
