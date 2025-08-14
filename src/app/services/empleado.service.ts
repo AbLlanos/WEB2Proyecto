@@ -20,7 +20,7 @@ export class EmpleadoService {
 
 
   actualizarEmpleado(id: string, empleado: any): Observable<Empleado> {
-    return this.http.put<Empleado>(`${this.API_EMPLEADO}/actualizar/${id}`, empleado);
+    return this.http.put<Empleado>(`${this.API_EMPLEADO}/actualizar/${id}`, empleado, { withCredentials: true });
   }
 
   eliminarEmpleado(id: string): Observable<void> {
@@ -32,6 +32,6 @@ export class EmpleadoService {
   }
 
   buscarEmpleadoPorCorreo(correo: string): Observable<Empleado[]> {
-    return this.http.get<Empleado[]>(`${this.API_EMPLEADO}/buscarPorCorreo/${correo}`);
+    return this.http.get<Empleado[]>(`${this.API_EMPLEADO}/buscarPorCorreo/${correo}`, { withCredentials: true });
   }
 }

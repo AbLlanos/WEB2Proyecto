@@ -12,7 +12,7 @@ import { Empleado } from '../formulario-empleado/empleado';
   standalone: true,
   imports: [FooterComponent, NavBarComponent, ReactiveFormsModule],
   templateUrl: './editar-empleado.component.html',
-  styleUrl: './editar-empleado.component.css'
+  styleUrls: ['./editar-empleado.component.css'] // corregido
 })
 export class EditarEmpleadoComponent implements OnInit {
   enviado: boolean = false;
@@ -41,7 +41,9 @@ export class EditarEmpleadoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('ngOnInit: Verificando sesión...');
     if (!this.authServicio.sessionIniciada()) {
+      console.warn('Sesión no iniciada. Redirigiendo a login...');
       this.router.navigate(['/login']);
       return;
     }
@@ -49,18 +51,21 @@ export class EditarEmpleadoComponent implements OnInit {
   }
 
   cargarDatosEmpleado() {
-    const emailUsuario = this.authServicio.getUsuarioEmail();
-    if (!emailUsuario) {
+    const idUsuario = this.authServicio.getUsuarioId();
+    console.log('Cargando datos del usuario con ID:', idUsuario);
+
+    if (!idUsuario) {
+      console.error('No se encontró el ID del usuario en la sesión. Redirigiendo a login...');
       this.router.navigate(['/login']);
       return;
     }
 
-    this.servicioEmpleado.buscarEmpleadoPorCorreo(emailUsuario).subscribe({
-      next: (empleados) => {
-        if (empleados && empleados.length > 0) {
-          const empleado = empleados[0]; // <- toma el primer elemento del array
+    this.servicioEmpleado.buscarEmpleadoPorId(idUsuario).subscribe({
+      next: (empleado) => {
+        if (empleado) {
           this.empleadoId = empleado.id;
           this.empleadoExtra = { ...empleado };
+          console.log('Empleado encontrado:', empleado);
 
           this.empleadoForm.patchValue({
             nombreCompleto: empleado.nombreCompleto,
@@ -73,20 +78,27 @@ export class EditarEmpleadoComponent implements OnInit {
             password: empleado.password,
             fechaRegistro: empleado.fechaRegistro?.split('T')[0]
           });
+          console.log('Formulario parcheado con los datos del empleado.');
         } else {
+          console.warn('Empleado no encontrado. Redirigiendo a login...');
           alert('Empleado no encontrado');
           this.router.navigate(['/login']);
         }
       },
-      error: (err) => console.error('Error al cargar empleado', err)
+      error: (err) => {
+        console.error('Error al cargar empleado:', err);
+        alert('Error al cargar los datos del empleado. Revise la consola.');
+      }
     });
   }
 
   camposSinLlenar = (): boolean => {
-    return !this.enviado && Object.values(this.empleadoForm.controls).some(control => {
+    const incompletos = Object.values(this.empleadoForm.controls).some(control => {
       const value = control.value;
       return typeof value === 'string' ? value.trim() === '' : value === null || value === '';
     });
+    console.log('Campos sin llenar:', incompletos);
+    return !this.enviado && incompletos;
   };
 
   actualizarEmpleado() {
@@ -94,15 +106,23 @@ export class EditarEmpleadoComponent implements OnInit {
       const empleadoData = this.empleadoForm.getRawValue();
       const empleadoCompleto = { ...this.empleadoExtra, ...empleadoData };
 
+      console.log('Enviando actualización para empleado ID:', this.empleadoId);
+      console.log('Datos enviados:', empleadoCompleto);
+
       this.servicioEmpleado.actualizarEmpleado(this.empleadoId!.toString(), empleadoCompleto)
         .subscribe({
-          next: () => {
+          next: (res) => {
+            console.log('Respuesta del servidor al actualizar empleado:', res);
             alert("Empleado actualizado correctamente");
             this.router.navigate(['/perfilEmpleado']);
           },
-          error: (err) => console.error('Error al actualizar empleado', err)
+          error: (err) => {
+            console.error('Error al actualizar empleado:', err);
+            alert('Error al actualizar empleado. Revise la consola para más detalles.');
+          }
         });
     } else {
+      console.warn('Formulario inválido o empleadoId nulo. No se puede actualizar.');
       alert('Complete todos los campos correctamente antes de actualizar.');
     }
   }
