@@ -1,0 +1,109 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Estilo de título */
+h3 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #db0007;
+    opacity: 0;
+    transform: translateY(-30px);
+    animation: fadeInUp 1.5s forwards 0.5s;
+}
+
+/* Efecto de animación de las letras */
+p {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1.5s forwards;
+    animation-delay: 0.7s; /* Añade un pequeño retraso para que las animaciones sean secuenciales */
+}
+
+/* Animación de los textos */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilos para los enlaces */
+a {
+    color: #db0007;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/* Cambiar color del enlace al pasar el mouse */
+a:hover {
+    color: #ff6f61;
+}
+
+/* Contenedor de la imagen */
+.info-image {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    margin: 20px auto;
+    overflow: hidden; /* Asegura que la imagen no salga de su contenedor */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Imagen principal */
+.main-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover; /* Mantiene la proporción de la imagen */
+    transition: transform 0.4s ease, filter 0.4s ease; /* Transición suave */
+}
+
+/* Efecto al pasar el mouse sobre la imagen */
+.info-image:hover .main-image {
+    transform: scale(1.1); /* Hace que la imagen crezca */
+    filter: brightness(1.2); /* Agrega un brillo al pasar el mouse */
+}
+
+/* Estilo del texto y otras secciones */
+.contact-info p {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+}
+
+a {
+    color: #db0007;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    h3 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    .container {
+        padding: 10px;
+    }
+}
