@@ -8,19 +8,26 @@ import { EdadPipe } from '../../../pipes/edad.pipe';
 import { ClienteService } from '../../../services/cliente.service';
 import { AutenticacionService } from '../../../services/autenticacion.service';
 import { FooterComponent } from "../../general/footer/footer.component";
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-perfil-cliente',
   standalone: true,
-  imports: [NavBarComponent, RouterLink, EdadPipe, NombrePipe, SuscripcionActivaPipe, TiempoRestantePipe, FooterComponent],
+  imports: [
+    NavBarComponent,
+    RouterLink,
+    EdadPipe,
+    NombrePipe,
+    SuscripcionActivaPipe,
+    TiempoRestantePipe,
+    DatePipe,
+    FooterComponent
+  ],
   templateUrl: './perfil-cliente.component.html',
-  styleUrl: './perfil-cliente.component.css'
+  styleUrls: ['./perfil-cliente.component.css']
 })
 export class PerfilClienteComponent implements OnInit {
   usuario: any = null;
-
-  // Inyectamos servicios para obtener usuario real
   private clienteService = inject(ClienteService);
   private authServicio = inject(AutenticacionService);
   private router = inject(Router);
@@ -30,33 +37,56 @@ export class PerfilClienteComponent implements OnInit {
   }
 
   cargarDatosUsuario() {
-    const emailUsuario = this.authServicio.getUsuarioEmail?.();
-    if (!emailUsuario) {
+    const userStr = localStorage.getItem('user');
+    if (!userStr) {
       this.router.navigate(['/login']);
       return;
     }
 
-    this.clienteService.buscarClientePorCorreo(emailUsuario).subscribe({
-      next: (resp) => {
-        const keys = Object.keys(resp || {});
-        if (keys.length > 0) {
-          this.usuario = resp[keys[0]];
+    const user = JSON.parse(userStr);
+    const userId = user.id;
 
-          // Si la fechaNacimiento viene en otro formato, aquí puedes transformarla:
-          if (this.usuario.fechaNacimiento) {
-            this.usuario.fechaNacimiento = this.usuario.fechaNacimiento.split('T')[0]; // para input date o pipes
-          }
-          // Igual para fechaActivacion si usas suscripción
-          if (this.usuario.suscripcion?.fechaActivacion) {
-            this.usuario.suscripcion.fechaActivacion = this.usuario.suscripcion.fechaActivacion.split('T')[0];
-          }
-        } else {
+    if (!userId) {
+      alert('Usuario no identificado');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.clienteService.buscarClientePorId(userId).subscribe({
+      next: (cliente) => {
+        if (!cliente) {
           alert('Usuario no encontrado');
           this.router.navigate(['/login']);
+          return;
         }
+
+        // Aquí es donde pones el bloque
+        this.clienteService.buscarClientePorId(userId).subscribe({
+          next: (cliente) => {
+            if (!cliente) {
+              alert('Usuario no encontrado');
+              this.router.navigate(['/login']);
+              return;
+            }
+
+            // Directamente asignar
+            this.usuario = cliente;
+
+            console.log('Usuario cargado:', this.usuario);
+          },
+          error: (err) => {
+            console.error('Error al cargar usuario', err);
+            alert('Error al obtener datos del usuario.');
+            this.router.navigate(['/login']);
+          }
+        });
+
+        console.log('Usuario cargado:', this.usuario);
       },
       error: (err) => {
         console.error('Error al cargar usuario', err);
+        alert('Error al obtener datos del usuario.');
+        this.router.navigate(['/login']);
       }
     });
   }

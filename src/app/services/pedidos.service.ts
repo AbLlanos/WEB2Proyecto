@@ -6,25 +6,26 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PedidosService {
-  private API_BASEDATOS = 'https://web2proyecto-eb88f-default-rtdb.firebaseio.com';
+  private API_PEDIDOS = 'http://localhost:8080/pedidos';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  guardarPedidoUsuario(idUsuario: string, pedido: any) {
-    return this.http.post(`${this.API_BASEDATOS}/clientes/${idUsuario}/pedidos.json`, pedido);
+  // Guardar pedido en el backend
+  guardarPedido(pedido: any): Observable<any> {
+    return this.http.post(`${this.API_PEDIDOS}/guardar`, pedido, { withCredentials: true });
   }
 
-  guardarPedidoGlobal(pedido: any): Observable<any> {
-    return this.http.post(`${this.API_BASEDATOS}/pedidos.json`, pedido);
-  }
-
+  // Actualizar stock de producto (opcional: podrías moverlo a ProductoService)
   actualizarStock(idProducto: string, nuevaCantidad: number): Observable<any> {
-    return this.http.patch(`${this.API_BASEDATOS}/productos/${idProducto}.json`, { cantidad: nuevaCantidad });
+    return this.http.put<any>(
+      `http://localhost:8080/productos/actualizarStock/${idProducto}`,
+      { cantidad: nuevaCantidad },
+      { withCredentials: true }
+    );
   }
 
-obtenerHistorialUsuario(idUsuario: string) {
-  return this.http.get(`${this.API_BASEDATOS}/pedidos.json?orderBy="idUsuario"&equalTo="${idUsuario}"`);
-}
-
-  
+  // Obtener historial de pedidos de un cliente
+  obtenerHistorialUsuario(idCliente: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.API_PEDIDOS}/cliente/${idCliente}`, { withCredentials: true });
+  }
 }

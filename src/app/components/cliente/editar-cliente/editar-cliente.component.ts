@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FooterComponent } from "../../general/footer/footer.component";
 import { NavBarComponent } from "../../general/nav-bar/nav-bar.component";
 import { ClienteService } from '../../../services/cliente.service';
@@ -14,107 +14,122 @@ import { AutenticacionService } from '../../../services/autenticacion.service';
   styleUrls: ['./editar-cliente.component.css']
 })
 export class EditarClienteComponent implements OnInit {
-  enviado: boolean = false;
-  fb = inject(FormBuilder);
-
-  clienteForm: FormGroup = this.fb.group({
-    nombreCompleto: ['', Validators.required],
-    cedula: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-    direccion: ['', Validators.required],
-    telefono: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-    correoElectronico: ['', [Validators.required, Validators.email]],
-    fechaNacimiento: ['', Validators.required],
-    genero: ['', Validators.required],
-    password: ["", [Validators.required, Validators.minLength(6)]],
-    fechaRegistro: [{ value: new Date().toISOString().split('T')[0], disabled: true }],
-    rol: ['CLIENTE'] 
-  });
-
-  clienteKey: string | null = null;
-  
-  // Aquí guardamos el objeto completo del cliente original
+  clienteForm: FormGroup;
+  userId: string | null = null;
   clienteExtra: any = {};
 
   constructor(
-    private servicioCliente: ClienteService,
+    private fb: FormBuilder,
+    private clienteService: ClienteService,
     private router: Router,
     private authServicio: AutenticacionService
-  ) { }
+  ) {
+    this.clienteForm = this.fb.group({
+      nombreCompleto: [''],
+      cedula: [''],
+      direccion: [''],
+      telefono: [''],
+      correoElectronico: [''],
+      fechaNacimiento: [''],
+      genero: [''],
+      password: [''], // password opcional
+      fechaRegistro: [{ value: new Date().toISOString().split('T')[0], disabled: true }],
+      rol: ['CLIENTE']
+    });
+  }
 
   ngOnInit() {
     this.cargarDatosUsuario();
   }
 
   cargarDatosUsuario() {
-    let emailUsuario: string | null = null;
-
-    if (this.authServicio.getUsuarioEmail) {
-      emailUsuario = this.authServicio.getUsuarioEmail();
-    }
-
-    if (!emailUsuario) {
+    const userStr = localStorage.getItem('user');
+    if (!userStr) {
       this.router.navigate(['/login']);
       return;
     }
 
-    this.servicioCliente.buscarClientePorCorreo(emailUsuario).subscribe({
-      next: (resp) => {
-        const keys = Object.keys(resp || {});
-        if (keys.length > 0) {
-          this.clienteKey = keys[0];
-          const cliente = resp[this.clienteKey];
+    const user = JSON.parse(userStr);
+    this.userId = user.id;
 
-          // Guardamos todo el objeto para conservar campos extra no editables
-          this.clienteExtra = { ...cliente };
+    if (!this.userId) {
+      alert('Usuario no identificado');
+      this.router.navigate(['/login']);
+      return;
+    }
 
-          // Parcheamos solo los campos del formulario
-          this.clienteForm.patchValue({
-            nombreCompleto: cliente.nombreCompleto,
-            cedula: cliente.cedula,
-            direccion: cliente.direccion,
-            telefono: cliente.telefono,
-            correoElectronico: cliente.correoElectronico,
-            fechaNacimiento: cliente.fechaNacimiento,
-            genero: cliente.genero,
-            password: cliente.password,
-            fechaRegistro: cliente.fechaRegistro
-          });
-        } else {
+    this.clienteService.buscarClientePorId(this.userId).subscribe({
+      next: (cliente) => {
+        if (!cliente) {
           alert('Cliente no encontrado');
           this.router.navigate(['/login']);
+          return;
         }
+
+        this.clienteExtra = { ...cliente };
+
+        this.clienteForm.patchValue({
+          nombreCompleto: cliente.nombreCompleto,
+          cedula: cliente.cedula,
+          direccion: cliente.direccion,
+          telefono: cliente.telefono,
+          correoElectronico: cliente.correoElectronico,
+          fechaNacimiento: cliente.fechaNacimiento?.split('T')[0] || '',
+          genero: cliente.genero,
+        });
       },
       error: (err) => {
         console.error('Error al cargar cliente', err);
+        alert('Error al obtener datos del cliente.');
       }
     });
   }
 
-  camposSinLlenar = (): boolean => {
-    return !this.enviado && Object.values(this.clienteForm.controls).some(control => {
-      const value = control.value;
-      return typeof value === 'string' ? value.trim() !== '' : value !== null && value !== '';
-    });
-  };
-
   actualizarCliente() {
-    if (this.clienteForm.valid && this.clienteKey) {
-      const clienteData = this.clienteForm.getRawValue();
+    if (!this.userId) return;
 
-      const clienteCompleto = {
-        ...this.clienteExtra, 
-        ...clienteData       
-      };
+    const clienteData = this.clienteForm.getRawValue();
 
-      this.servicioCliente.editarCliente(this.clienteKey, clienteCompleto).subscribe({
-        next: () => {
-          alert("Cliente actualizado correctamente");
-          this.router.navigate(['/perfilCliente']);
-        },
-        error: (err) => console.error(err)
-      });
-    } else {
-      alert('Complete todos los campos correctamente antes de actualizar.');
+    // Crear copia de clienteExtra
+    const clienteCompleto: any = { ...this.clienteExtra };
+
+    // Actualizar campos que sí se editaron
+    for (const key in clienteData) {
+      if (key === 'password') {
+        if (clienteData.password) {
+          clienteCompleto.password = clienteData.password;
+        }
+      } else {
+        clienteCompleto[key] = clienteData[key];
+      }
     }
+
+    this.clienteService.actualizarCliente(this.userId, clienteCompleto).subscribe({
+      next: (clienteActualizado) => {
+        alert("Cliente actualizado correctamente");
+
+        // Imprimir en consola los datos actualizados
+        console.log('Datos actualizados del cliente:', clienteActualizado);
+
+        // Actualizar localStorage con los datos nuevos
+        localStorage.setItem('user', JSON.stringify(clienteActualizado));
+
+        // Actualizar el formulario con los datos devueltos
+        this.clienteExtra = { ...clienteActualizado };
+        this.clienteForm.patchValue({
+          nombreCompleto: clienteActualizado.nombreCompleto,
+          cedula: clienteActualizado.cedula,
+          direccion: clienteActualizado.direccion,
+          telefono: clienteActualizado.telefono,
+          correoElectronico: clienteActualizado.correoElectronico,
+          fechaNacimiento: clienteActualizado.fechaNacimiento?.split('T')[0] || '',
+          genero: clienteActualizado.genero,
+        });
+      },
+      error: (err) => {
+        console.error('Error al actualizar cliente', err);
+        alert('Error al actualizar el cliente.');
+      }
+    });
   }
 }

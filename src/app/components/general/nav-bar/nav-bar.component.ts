@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AutenticacionService } from '../../../services/autenticacion.service';
 
@@ -11,45 +11,34 @@ import { AutenticacionService } from '../../../services/autenticacion.service';
 })
 export class NavBarComponent {
 
+
   menuOpen = false;
 
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
+  constructor(public authServicio: AutenticacionService, private router: Router) {}
 
-  closeMenu() {
-    this.menuOpen = false;
-  }
-
-  onUserClick() {
-    // Aquí puedes agregar la lógica para el botón de usuario
-    console.log('Usuario clickeó el botón de perfil/roles');
-    // Por ejemplo, abrir un modal o navegar a una página de perfil
-  }
-
-
-  //Fuuncionalidad
-  constructor(public authServicio: AutenticacionService, private router: Router) { }
-
+  toggleMenu() { this.menuOpen = !this.menuOpen; }
+  closeMenu() { this.menuOpen = false; }
 
   logOut(): void {
     this.authServicio.logOut();
-    this.router.navigate(['/login']);
+    // detectChanges ya no es necesario si usamos async en el template
   }
 
-  get logueado(): boolean {
-    return this.authServicio.sessionIniciada();
+  get logueado(): boolean { 
+    return this.authServicio.sessionIniciada(); 
   }
 
-  get esCliente(): boolean {
-    return this.authServicio.getUsuarioRol() === 'cliente';
+  get rol(): string | null {
+    const r = this.authServicio.getUsuarioRol();
+    if (!r) return null;
+
+    if (r.toUpperCase() === 'CLIENTE') return 'cliente';
+    if (r.toUpperCase() === 'EMPLEADO') return 'empleado';
+    return null;
   }
 
-  get esEmpleado(): boolean {
-    return this.authServicio.getUsuarioRol() === 'empleado';
-  }
+  get esCliente(): boolean { return this.rol === 'cliente'; }
+  get esEmpleado(): boolean { return this.rol === 'empleado'; }
 
-
+  onUserClick() { console.log('Usuario clickeó el botón de perfil/roles'); }
 }
-
-

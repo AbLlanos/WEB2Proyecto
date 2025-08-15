@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavBarComponent } from "../../components/general/nav-bar/nav-bar.component";
-import { FooterComponent } from "../../components/general/footer/footer.component";  // Importa FormsModule
+import { FooterComponent } from "../../components/general/footer/footer.component";
 import { Router, RouterLink } from '@angular/router';
 import { AutenticacionService } from '../../services/autenticacion.service';
 
@@ -14,7 +14,6 @@ import { AutenticacionService } from '../../services/autenticacion.service';
 })
 export class InicioEmpleadoComponent {
 
-
   email: string = "";
   password: string = "";
   error: string = "";
@@ -22,32 +21,35 @@ export class InicioEmpleadoComponent {
   constructor(private authServicio: AutenticacionService, private router: Router) { }
 
   Login() {
-    if (!this.email || !this.password) {
-      this.error = "Debe ingresar correo y contraseña";
-      return;
-    }
+    if (!this.email || !this.password) return;
 
-    this.authServicio.LoginAuthenticacion(this.email, this.password).subscribe({
-      next: (usuario) => {
-        if (usuario) {
-          // usuario debería incluir datos como { id, nombre, correo, rol }
-          localStorage.setItem('user', JSON.stringify(usuario));
+    const form = new FormData();
+    form.append("correoElectronico", this.email);
+    form.append("password", this.password);
 
-          const redireccion = localStorage.getItem("redirectUrl") ||
-            (usuario.rol === 'cliente' ? "/perfilCliente" : "/perfilEmpleado");
+    this.authServicio.loginFormData(form).subscribe({
+      next: usuario => {
+        // Guardar usuario en localStorage
+        this.authServicio.guardarUsuarioSesion(usuario);
 
-          localStorage.removeItem("redirectUrl");
-          this.router.navigateByUrl(redireccion);
+        // Mostrar en consola los datos recibidos
+        console.log("Usuario recibido del backend:", usuario);
 
-        } else {
-          this.error = "Credenciales incorrectas";
-        }
+        // Mostrar lo que realmente se guarda en localStorage
+        const userStorage = localStorage.getItem('user');
+        console.log("Usuario guardado en localStorage:", userStorage);
+
+        // Redirección según rol
+        const redireccion = usuario.rol?.toUpperCase() === 'CLIENTE' ? "/perfilCliente" : "/perfilEmpleado";
+        this.router.navigateByUrl(redireccion);
       },
-      error: (err) => {
+      error: err => {
         console.error("Error en login:", err);
-        this.error = "Error al intentar iniciar sesión.";
+        this.error = "Credenciales incorrectas o error de servidor";
       }
     });
+
+
 
   }
 }

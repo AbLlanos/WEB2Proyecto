@@ -1,80 +1,89 @@
 <div class="w-full min-h-screen container1 flex flex-col items-center justify-start py-10 px-4">
 
-
-    <div class="flex justify-center items-center mt-10 mb-10 rounded-2xl ">
-        <form (ngSubmit)="editarProducto(formulario)" #formulario="ngForm"
-            class="w-full max-w-lg bg-white rounded-2xl shadow-xl p-8 space-y-5 transition-all duration-300">
+    <!-- formulario-producto.component.html -->
+    <div class="flex justify-center items-center mt-10 mb-10 rounded-2xl">
+        <form [formGroup]="productoForm" (ngSubmit)="editarProducto()"
+            class="border-gray-700 max-w-lg bg-white rounded-2xl shadow-xl p-8 space-y-5 transition-all duration-300">
 
             <h1 class="text-2xl font-bold text-center text-red-600 mb-4">Editar Producto</h1>
 
+
             <!-- Vista previa de la imagen -->
             <div class="flex justify-center mt-2 mb-2">
-                <div class="bg-white p-4 rounded-xl shadow-md">
-                    <img src="https://1000marcas.net/wp-content/uploads/2019/11/McDonalds-logo.png" alt="Vista previa"
-                        class="w-30 h-30 object-cover rounded-lg" />
+                <div class="input-card">
+                    <div class="bg-white p-4 rounded-xl shadow-md">
+                        <img [src]="productoForm.get('img')?.value || 'https://1000marcas.net/wp-content/uploads/2019/11/McDonalds-logo.png'"
+                            alt="Vista previa" class="object-cover rounded-lg" style="width: 400px; height: 400px;" />
+                    </div>
                 </div>
             </div>
-
             <!-- Nombre -->
             <div class="w-[90%]">
-                <label for="nombre" class="block mb-1 font-medium">Nombre del producto</label>
-
+                <label class="block mb-1 font-medium">Nombre del producto</label>
                 <div class="input-card">
-                    <input type="text" [(ngModel)]="producto.nombre" name="nombre" id="nombre" required
-                        placeholder="Ingrese el nombre del producto"
+                    <input type="text" formControlName="nombre" placeholder="Ingrese el nombre del producto"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400" />
                 </div>
+                @if (productoForm.get('nombre')?.invalid && productoForm.get('nombre')?.touched) {
+                <span class="text-red-500 text-sm mb-2">El nombre es obligatorio</span>
+                }
+
             </div>
-            
+
             <!-- Precio -->
             <div class="w-[90%]">
-                <label for="precio" class="block mb-1 font-medium">Precio del producto</label>
-
+                <label class="block mb-1 font-medium">Precio del producto</label>
                 <div class="input-card">
-                    <input type="number" [(ngModel)]="producto.precio" name="precio" id="precio" min="0" step="0.01"
-                        required placeholder="Ingrese el precio del producto"
+                    <input type="number" formControlName="precio" min="0" step="0.01"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400" />
                 </div>
+                @if (productoForm.get('precio')?.invalid && productoForm.get('precio')?.touched) {
+                <span class="text-red-500 text-sm mb-2">El precio es obligatorio y debe ser mayor a cero</span>
+                }
             </div>
 
             <!-- Cantidad -->
             <div class="w-[90%]">
-                <label for="cantidad" class="block mb-1 font-medium">Cantidad disponible</label>
-
+                <label class="block mb-1 font-medium">Cantidad disponible</label>
                 <div class="input-card">
-                    <input type="number" [(ngModel)]="producto.cantidad" name="cantidad" id="cantidad" min="0" required
+                    <input type="number" formControlName="cantidad" min="0"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400" />
                 </div>
+                @if (productoForm.get('cantidad')?.invalid && productoForm.get('cantidad')?.touched) {
+                <span class="text-red-500 text-sm mb-2">La cantidad es obligatoria y mayor o igual que 1</span>
+                }
             </div>
 
             <!-- IVA -->
             <div class="w-[90%]">
-                <label for="iva" class="block mb-1 font-medium">IVA (%)</label>
-
+                <label class="block mb-1 font-medium">IVA (%)</label>
                 <div class="input-card">
-                    <input type="number" [(ngModel)]="producto.iva" name="iva" id="iva" min="0" step="0.01" required
+                    <input type="number" formControlName="iva" min="0" max="1" step="0.01"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400" />
                 </div>
+                @if (productoForm.get('iva')?.invalid && productoForm.get('iva')?.touched) {
+                <span class="text-red-500 text-sm mb-2">El IVA es obligatorio y debe ser mayor a cero</span>
+                }
             </div>
 
             <!-- Ingredientes -->
             <div class="w-[90%]">
-                <label for="ingredientes" class="block mb-1 font-medium">Ingredientes o cosas del combo (separados por
-                    coma)</label>
-
+                <label class="block mb-1 font-medium">Ingredientes</label>
                 <div class="input-card">
-                    <input type="text" [(ngModel)]="producto.ingredientes" name="ingredientes" id="ingredientes"
-                        required placeholder="Ingrese los ingredientes del producto"
+                    <input type="text" formControlName="ingredientes"
+                        placeholder="Ingrese los ingredientes del producto"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400" />
                 </div>
+                @if (productoForm.get('ingredientes')?.invalid && productoForm.get('ingredientes')?.touched) {
+                <span class="text-red-500 text-sm mb-2">Los ingredientes son obligatorios</span>
+                }
             </div>
 
             <!-- Categoría -->
             <div class="w-[90%]">
-                <label for="categoria" class="block mb-1 font-medium">Categoría del producto</label>
-
+                <label class="block mb-1 font-medium">Categoría</label>
                 <div class="input-card">
-                    <select [(ngModel)]="producto.categoria" name="categoria" id="categoria" required
+                    <select formControlName="categoria"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400">
                         <option value="" disabled hidden>Seleccione una categoría</option>
                         <option value="Hamburguesas">Hamburguesa</option>
@@ -83,39 +92,46 @@
                         <option value="Postres">Postre</option>
                     </select>
                 </div>
+                @if (productoForm.get('categoria')?.invalid && productoForm.get('categoria')?.touched) {
+                <span class="text-red-500 text-sm mb-2">Debe seleccionar una categoría</span>
+                }
             </div>
 
             <!-- Imagen -->
             <div class="w-[90%]">
-                <label for="img" class="block mb-1 font-medium">URL de la imagen</label>
-
+                <label class="block mb-1 font-medium">URL de la imagen</label>
                 <div class="input-card">
-                    <input type="text" [(ngModel)]="producto.img" name="img" id="img" required
-                        placeholder="Ingrese el url de la imagen del producto"
+                    <input type="text" formControlName="img" placeholder="Ingrese la URL de la imagen"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400" />
                 </div>
+                @if (productoForm.get('img')?.invalid && productoForm.get('img')?.touched) {
+                <span class="text-red-500 text-sm mb-2">La URL es obligatoria</span>
+                }
             </div>
 
             <!-- Disponible -->
             <div class="w-[90%]">
-                <label for="disponible" class="block mb-1 font-medium">¿Está disponible?</label>
-
+                <label class="block mb-1 font-medium">¿Disponible?</label>
                 <div class="input-card">
-                    <select [(ngModel)]="producto.disponible" name="disponible" id="disponible" required
+                    <select formControlName="disponible"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400">
-                        <option value="" disabled selected>Seleccione una opción</option>
+                        <option value="" disabled hidden>Seleccione una opción</option>
                         <option value="sí">Sí</option>
                         <option value="no">No</option>
                         <option value="descontinuado">Descontinuado</option>
                     </select>
                 </div>
+                @if (productoForm.get('disponible')?.invalid && productoForm.get('disponible')?.touched) {
+                <span class="text-red-500 text-sm mb-2">Debe seleccionar la disponibilidad</span>
+                }
             </div>
 
             <!-- Botón -->
             <button type="submit"
                 class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-transform transform hover:scale-105">
-                Actualizar Producto
+                Guardar Producto
             </button>
+
         </form>
     </div>
 </div>

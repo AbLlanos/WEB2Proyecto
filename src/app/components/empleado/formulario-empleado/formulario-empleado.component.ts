@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FooterComponent } from "../../general/footer/footer.component";
 import { NavBarComponent } from "../../general/nav-bar/nav-bar.component";
-import { ClienteService } from '../../../services/cliente.service';
-import { FormBuilder, FormGroup, FormGroupDirective, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { EmpleadoService } from '../../../services/empleado.service';
 import { CommonModule } from '@angular/common';
@@ -10,14 +9,16 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-formulario-empleado',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterLink,
     FooterComponent,
-    NavBarComponent],
+    NavBarComponent
+  ],
   templateUrl: './formulario-empleado.component.html',
-  styleUrl: './formulario-empleado.component.css'
+  styleUrls: ['./formulario-empleado.component.css']
 })
 export class FormularioEmpleadoComponent {
   enviado: boolean = false;
@@ -39,13 +40,12 @@ export class FormularioEmpleadoComponent {
   constructor(
     private servicioEmpleado: EmpleadoService,
     private router: Router
-  ) { }
+  ) {}
 
-  // Detecta si hay datos llenos en el formulario sin enviar
   camposSinLlenar = (): boolean => {
-    return !this.enviado && Object.values(this.empleadoForm.controls).some(control => {
+    return Object.values(this.empleadoForm.controls).some(control => {
       const value = control.value;
-      return typeof value === 'string' ? value.trim() !== '' : value !== null && value !== '';
+      return typeof value === 'string' ? value.trim() === '' : value === null || value === '';
     });
   };
 
@@ -58,14 +58,12 @@ export class FormularioEmpleadoComponent {
         fechaRegistro: new Date().toISOString().split('T')[0]
       };
 
-      this.servicioEmpleado.guardarEmpleado(empleadoData).subscribe({
+      this.servicioEmpleado.registrarEmpleado(empleadoData).subscribe({
         next: () => {
           alert("Empleado registrado correctamente.");
           this.router.navigate(['/inicioEmpleado']);
         },
-        error: err => {
-          console.error("Error al registrar empleado", err);
-        }
+        error: err => console.error("Error al registrar empleado", err)
       });
     } else {
       this.empleadoForm.markAllAsTouched();
