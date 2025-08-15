@@ -21,34 +21,35 @@ export class InicioEmpleadoComponent {
   constructor(private authServicio: AutenticacionService, private router: Router) { }
 
   Login() {
-    if (!this.email || !this.password) {
-      this.error = "Debe ingresar correo y contraseña";
-      return;
-    }
+    if (!this.email || !this.password) return;
 
-    this.authServicio.loginAutenticacion(this.email, this.password).subscribe({
-      next: (response: any) => {
-        // Spring Security normalmente devuelve 200 OK y cookies de sesión
-        if (response.status === 200) {
-          // Guardar información del usuario manualmente (opcional)
-          const usuario = {
-            correoElectronico: this.email,
-            rol: "EMPLEADO" // o ajusta según tu lógica en Spring
-          };
-          this.authServicio.guardarUsuarioSesion(usuario);
+    const form = new FormData();
+    form.append("correoElectronico", this.email);
+    form.append("password", this.password);
 
-          const redireccion = localStorage.getItem("redirectUrl") || "/perfilEmpleado";
-          localStorage.removeItem("redirectUrl");
-          this.router.navigateByUrl(redireccion);
+    this.authServicio.loginFormData(form).subscribe({
+      next: usuario => {
+        // Guardar usuario en localStorage
+        this.authServicio.guardarUsuarioSesion(usuario);
 
-        } else {
-          this.error = "Credenciales incorrectas";
-        }
+        // Mostrar en consola los datos recibidos
+        console.log("Usuario recibido del backend:", usuario);
+
+        // Mostrar lo que realmente se guarda en localStorage
+        const userStorage = localStorage.getItem('user');
+        console.log("Usuario guardado en localStorage:", userStorage);
+
+        // Redirección según rol
+        const redireccion = usuario.rol?.toUpperCase() === 'CLIENTE' ? "/perfilCliente" : "/perfilEmpleado";
+        this.router.navigateByUrl(redireccion);
       },
-      error: (err) => {
+      error: err => {
         console.error("Error en login:", err);
-        this.error = "Error al intentar iniciar sesión.";
+        this.error = "Credenciales incorrectas o error de servidor";
       }
     });
+
+
+
   }
 }

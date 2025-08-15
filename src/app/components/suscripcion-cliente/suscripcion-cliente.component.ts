@@ -23,8 +23,13 @@ export class SuscripcionClienteComponent implements OnInit {
   ];
 
   userId!: string | null;
+  passwordOriginal: string | null = null;
 
-  constructor(private fb: FormBuilder, private clienteService: ClienteService, private router: Router) { }
+  constructor(
+    private fb: FormBuilder,
+    private clienteService: ClienteService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.tarjetaForm = this.fb.group({
@@ -39,7 +44,7 @@ export class SuscripcionClienteComponent implements OnInit {
     const userStr = localStorage.getItem('user');
     if (userStr) {
       const user = JSON.parse(userStr);
-      this.userId = user.id || null; // <-- ID como string
+      this.userId = user.id || null;
     } else {
       this.userId = null;
     }
@@ -63,7 +68,7 @@ export class SuscripcionClienteComponent implements OnInit {
     localStorage.setItem('suscripcionActiva', JSON.stringify(true));
     localStorage.setItem('tarjeta', JSON.stringify(datosTarjeta));
 
-    // Actualizar el cliente en backend con campos planos
+    // Obtener el cliente actual
     this.clienteService.buscarClientePorId(this.userId).subscribe({
       next: (clienteActual) => {
         if (!clienteActual) {
@@ -71,11 +76,12 @@ export class SuscripcionClienteComponent implements OnInit {
           return;
         }
 
-        const clienteActualizado = {
+        // Crear objeto actualizado manteniendo la contraseña original
+        const clienteActualizado: any = {
           ...clienteActual,
           suscripcionActiva: true,
           fechaActivacion: new Date().toISOString(),
-          tipoSuscripcion: datosTarjeta.suscripcion
+          tipoSuscripcion: datosTarjeta.suscripcion,
         };
 
         this.clienteService.actualizarCliente(this.userId!, clienteActualizado).subscribe({

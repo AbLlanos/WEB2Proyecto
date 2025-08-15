@@ -96,7 +96,6 @@ export class EditarClienteComponent implements OnInit {
     // Actualizar campos que sí se editaron
     for (const key in clienteData) {
       if (key === 'password') {
-        // Solo asignar password si no está vacío
         if (clienteData.password) {
           clienteCompleto.password = clienteData.password;
         }
@@ -106,9 +105,26 @@ export class EditarClienteComponent implements OnInit {
     }
 
     this.clienteService.actualizarCliente(this.userId, clienteCompleto).subscribe({
-      next: () => {
+      next: (clienteActualizado) => {
         alert("Cliente actualizado correctamente");
-        this.router.navigate(['/perfilCliente']);
+
+        // Imprimir en consola los datos actualizados
+        console.log('Datos actualizados del cliente:', clienteActualizado);
+
+        // Actualizar localStorage con los datos nuevos
+        localStorage.setItem('user', JSON.stringify(clienteActualizado));
+
+        // Actualizar el formulario con los datos devueltos
+        this.clienteExtra = { ...clienteActualizado };
+        this.clienteForm.patchValue({
+          nombreCompleto: clienteActualizado.nombreCompleto,
+          cedula: clienteActualizado.cedula,
+          direccion: clienteActualizado.direccion,
+          telefono: clienteActualizado.telefono,
+          correoElectronico: clienteActualizado.correoElectronico,
+          fechaNacimiento: clienteActualizado.fechaNacimiento?.split('T')[0] || '',
+          genero: clienteActualizado.genero,
+        });
       },
       error: (err) => {
         console.error('Error al actualizar cliente', err);
@@ -116,5 +132,4 @@ export class EditarClienteComponent implements OnInit {
       }
     });
   }
-
 }

@@ -72,4 +72,8 @@ export class AutenticacionService {
     return user.id?.toString() || null;
   }
 
+  getUsuario(): any {
+    return this._usuario$.value;
+  }
+
 }

@@ -6,20 +6,22 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
+import { Cliente } from '../../cliente/formulario-cliente/cliente';
+import { AutenticacionService } from '../../../services/autenticacion.service';
 
 @Component({
   selector: 'app-lista-productos',
   standalone: true,
   imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './lista-productos.component.html',
-  styleUrl: './lista-productos.component.css'
+  styleUrls: ['./lista-productos.component.css']
 })
 export class ListaProductosComponent {
   productos: any[] = [];
   carrito: any[] = [];
   mostrarCarrito: boolean = false;
 
-  usuario: any = null;
+  usuario: Cliente | null = null;
   descuentoAplicado: number = 0; // porcentaje descuento: 0.2 = 20%
 
   // Mapa de categorías permitidas por suscripción
@@ -32,56 +34,69 @@ export class ListaProductosComponent {
   constructor(
     private productoService: ProductoService,
     private pedidosService: PedidosService,
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private authService: AutenticacionService
+  ) {}
 
-  ngOnInit(): void {
-    // Obtener usuario y suscripción activa
-    const userString = localStorage.getItem('user');
-    let tipoSuscripcion = '';
-    if (userString) {
-      const usuario = JSON.parse(userString);
-      if (usuario.suscripcion_activa && usuario.tipo_suscripcion) {
-        tipoSuscripcion = usuario.tipo_suscripcion.toLowerCase();
-      }
+ ngOnInit(): void {
+    console.log("=== INICIO ListaProductosComponent ===");
+
+    // Obtener usuario real desde AuthService
+    let usuario = this.authService.getUsuario();
+
+    // Forzar suscripción premium activa para cualquier usuario
+    if (usuario) {
+      usuario = {
+        ...usuario,
+        suscripcion_activa: 1,
+        tipo_suscripcion: 'premium'
+      };
+      this.authService.guardarUsuarioSesion(usuario);
+      this.usuario = usuario;
+      console.log("Usuario forzado a suscripción PREMIUM activa:", usuario);
     }
 
-    // Asignar descuento según suscripción
-    if (tipoSuscripcion === 'normal') this.descuentoAplicado = 0.05;
-    else if (tipoSuscripcion === 'media') this.descuentoAplicado = 0.10;
-    else if (tipoSuscripcion === 'premium') this.descuentoAplicado = 0.15;
-    else this.descuentoAplicado = 0;
+    // Ahora siempre será 'premium'
+    const tipoSuscripcion = 'premium';
+    this.descuentoAplicado = 0.15; // 15% para premium
+    console.log("Descuento aplicado:", this.descuentoAplicado);
 
     // Leer productos desde backend
     this.productoService.leerProductos().subscribe(data => {
+      console.log("Productos obtenidos del backend:", data);
+
       this.productos = data.map(p => {
-        // Normalizar stock
         p.disponible = Number(p.cantidad ?? 0);
         p.disponibleTexto = p.disponible > 0 ? 'sí' : 'no';
         p.cantidadSeleccionada = p.disponible > 0 ? 1 : 0;
 
-        // Precio con descuento según categoría y suscripción
-        p.precioConDescuento = p.precio;
+        // Categorías permitidas para premium
         const categoriasPermitidas = this.categoriaPorSuscripcion[tipoSuscripcion] || [];
         if (this.descuentoAplicado > 0 && categoriasPermitidas.includes(p.categoria.toLowerCase())) {
           p.precioConDescuento = +(p.precio * (1 - this.descuentoAplicado)).toFixed(2);
+          console.log(`Producto ${p.nombre} con descuento aplicado: ${p.precioConDescuento}`);
+        } else {
+          p.precioConDescuento = p.precio;
+          console.log(`Producto ${p.nombre} sin descuento: ${p.precio}`);
         }
 
         return p;
       });
+
+      console.log("Productos procesados con descuento:", this.productos);
     });
-  }
-
-
+}
 
   incrementar(producto: any) {
     if (!producto.cantidadSeleccionada) producto.cantidadSeleccionada = 1;
     producto.cantidadSeleccionada = Math.min(producto.cantidadSeleccionada + 1, producto.disponible);
+    console.log(`Incrementado ${producto.nombre}:`, producto.cantidadSeleccionada);
   }
 
   decrementar(producto: any) {
     if (!producto.cantidadSeleccionada) producto.cantidadSeleccionada = 1;
     producto.cantidadSeleccionada = Math.max(producto.cantidadSeleccionada - 1, 1);
+    console.log(`Decrementado ${producto.nombre}:`, producto.cantidadSeleccionada);
   }
 
   agregarAlCarrito(producto: any, cantidad: number = 1) {
@@ -93,12 +108,14 @@ export class ListaProductosComponent {
     }
 
     const precioUsar = producto.precioConDescuento ?? producto.precio;
+    console.log(`Agregando al carrito: ${producto.nombre}, cantidad: ${cantidad}, precio: ${precioUsar}`);
 
     const existente = this.carrito.find(p => p.id === producto.id);
     if (existente) {
       existente.cantidad += cantidad;
       existente.subtotal = existente.precio * existente.cantidad;
       existente.total = existente.subtotal * (1 + existente.iva);
+      console.log("Producto ya en carrito, actualizado:", existente);
     } else {
       this.carrito.push({
         id: producto.id,
@@ -110,18 +127,20 @@ export class ListaProductosComponent {
         total: precioUsar * cantidad * (1 + (producto.iva ?? 0)),
         disponible: producto.disponible
       });
+      console.log("Producto agregado al carrito:", producto.nombre);
     }
 
     producto.cantidadSeleccionada = 1;
-
-    alert(`Producto agregado: ${producto.nombre}\nCantidad: ${cantidad}`);
   }
 
   eliminarDelCarrito(id: string) {
+    console.log("Eliminando del carrito producto con id:", id);
     this.carrito = this.carrito.filter(p => p.id !== id);
+    console.log("Carrito actualizado:", this.carrito);
   }
 
   actualizarCantidadCarrito(item: any, nuevaCantidad: number) {
+    console.log(`Actualizando cantidad de ${item.nombre}:`, nuevaCantidad);
     if (nuevaCantidad < 1) {
       item.cantidad = 1;
     } else if (nuevaCantidad > item.disponible) {
@@ -132,6 +151,7 @@ export class ListaProductosComponent {
     }
     item.subtotal = item.precio * item.cantidad;
     item.total = item.subtotal * (1 + (item.iva ?? 0));
+    console.log("Item actualizado:", item);
   }
 
   calcularTotalesCarrito() {
@@ -144,12 +164,13 @@ export class ListaProductosComponent {
       { subtotal: 0, iva: 0 }
     );
     totales.total = totales.subtotal + totales.iva;
+    console.log("Totales del carrito:", totales);
     return totales;
   }
 
   confirmarPedido() {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (!user.id) {
+    const user = this.authService.getUsuario();
+    if (!user?.id) {
       alert('Error: Usuario no identificado. Por favor, inicie sesión.');
       return;
     }
@@ -169,26 +190,24 @@ export class ListaProductosComponent {
       }))
     };
 
-    // Cambiado a la función correcta para Spring Boot
+    console.log("Confirmando pedido:", nuevoPedido);
+
     this.pedidosService.guardarPedido(nuevoPedido).subscribe({
       next: async () => {
-        // actualizar stock de todos los productos (no usamos try/catch porque no queremos alerta)
         const actualizaciones = this.carrito.map(p =>
           this.pedidosService.actualizarStock(p.id, Math.max(0, p.disponible - p.cantidad))
         );
-
-        // convertir Observables a Promises y esperar, pero ignorando errores
-        await Promise.all(actualizaciones.map(req =>
-          lastValueFrom(req).catch(() => null) // cualquier error se ignora
-        ));
+        await Promise.all(actualizaciones.map(req => lastValueFrom(req).catch(() => null)));
 
         alert('Pedido realizado exitosamente.');
+        console.log("Pedido confirmado y stock actualizado");
         this.carrito = [];
         this.mostrarCarrito = false;
       },
-      error: () => {
+      error: (err) => {
+        console.error("Error al guardar pedido:", err);
         alert('Error al guardar pedido');
       }
     });
   }
-}
+}   

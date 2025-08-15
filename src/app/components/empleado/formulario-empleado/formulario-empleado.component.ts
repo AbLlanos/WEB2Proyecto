@@ -61,7 +61,7 @@ export class FormularioEmpleadoComponent {
       this.servicioEmpleado.registrarEmpleado(empleadoData).subscribe({
         next: () => {
           alert("Empleado registrado correctamente.");
-          this.router.navigate(['/login']);
+          this.router.navigate(['/inicioEmpleado']);
         },
         error: err => console.error("Error al registrar empleado", err)
       });
