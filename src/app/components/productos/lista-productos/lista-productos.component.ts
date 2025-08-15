@@ -38,28 +38,37 @@ export class ListaProductosComponent {
     private authService: AutenticacionService
   ) {}
 
- ngOnInit(): void {
+  ngOnInit(): void {
     console.log("=== INICIO ListaProductosComponent ===");
 
     // Obtener usuario real desde AuthService
-    let usuario = this.authService.getUsuario();
-
-    // Forzar suscripción premium activa para cualquier usuario
-    if (usuario) {
-      usuario = {
-        ...usuario,
-        suscripcion_activa: 1,
-        tipo_suscripcion: 'premium'
-      };
-      this.authService.guardarUsuarioSesion(usuario);
-      this.usuario = usuario;
-      console.log("Usuario forzado a suscripción PREMIUM activa:", usuario);
+    const usuario = this.authService.getUsuario();
+    if (!usuario) {
+      console.warn("No se encontró usuario en sesión");
+      return;
     }
 
-    // Ahora siempre será 'premium'
-    const tipoSuscripcion = 'premium';
-    this.descuentoAplicado = 0.15; // 15% para premium
-    console.log("Descuento aplicado:", this.descuentoAplicado);
+    // Asignar usuario real y suscripción
+    this.usuario = usuario;
+
+    // ⚡ Cambios aquí: usar las propiedades reales del objeto
+    const tipoSuscripcion = (usuario.tipo_suscripcion || 'normal').toLowerCase();
+    const suscripcionActiva = !!usuario.suscripcion_activa;
+
+    // Definir descuento según tipo de suscripción
+    switch (tipoSuscripcion) {
+      case 'premium':
+        this.descuentoAplicado = 0.15; // 15%
+        break;
+      case 'media':
+        this.descuentoAplicado = 0.1; // 10%
+        break;
+      default:
+        this.descuentoAplicado = 0; // normal sin descuento
+    }
+
+    console.log("Usuario cargado:", usuario);
+    console.log("Tipo de suscripción:", tipoSuscripcion, "Descuento aplicado:", this.descuentoAplicado);
 
     // Leer productos desde backend
     this.productoService.leerProductos().subscribe(data => {
@@ -70,14 +79,13 @@ export class ListaProductosComponent {
         p.disponibleTexto = p.disponible > 0 ? 'sí' : 'no';
         p.cantidadSeleccionada = p.disponible > 0 ? 1 : 0;
 
-        // Categorías permitidas para premium
+        // Categorías permitidas según suscripción
         const categoriasPermitidas = this.categoriaPorSuscripcion[tipoSuscripcion] || [];
-        if (this.descuentoAplicado > 0 && categoriasPermitidas.includes(p.categoria.toLowerCase())) {
+
+        if (suscripcionActiva && this.descuentoAplicado > 0 && categoriasPermitidas.includes(p.categoria.toLowerCase())) {
           p.precioConDescuento = +(p.precio * (1 - this.descuentoAplicado)).toFixed(2);
-          console.log(`Producto ${p.nombre} con descuento aplicado: ${p.precioConDescuento}`);
         } else {
           p.precioConDescuento = p.precio;
-          console.log(`Producto ${p.nombre} sin descuento: ${p.precio}`);
         }
 
         return p;
@@ -85,7 +93,7 @@ export class ListaProductosComponent {
 
       console.log("Productos procesados con descuento:", this.productos);
     });
-}
+  }
 
   incrementar(producto: any) {
     if (!producto.cantidadSeleccionada) producto.cantidadSeleccionada = 1;
@@ -210,4 +218,4 @@ export class ListaProductosComponent {
       }
     });
   }
-}   
+}
